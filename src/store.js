@@ -1,18 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 Vue.use(Vuex)
-function loggersByCounter(loggers, id) {
-  return loggers.filter((c) => c.counter === id);
+
+function addMissingLoggers({competitions, userId, loggers, week}) {
+  const counterIds = competitions.map(comp => comp.counters.map(c => c._id)).flat();
+
+  counterIds.forEach(counterId => {
+    const logger = loggers.find(l => l.week === week && l.counter === counterId);
+    if(!logger) {
+      loggers.push({
+        count: 0,
+        week,
+        counter: counterId,
+        user: userId,
+      })
+    }
+  })
 }
 
-function loggerByWeek(loggers, week) {
-  return loggers.find((logger) => logger.week === week);
-}
 
 export default new Vuex.Store({
   state: {
-    user: {},
+    user: {data: []},
     competitions: [],
     week: 12132020,
   },
@@ -25,29 +36,30 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadDashboard({commit}, {competitions, user}) {
-      const userId = user._id;
-      const loggers = user.data;
-      const week = this.state.week;
+    loadDashboard({commit}) {
+      Promise.all([
+        axios.get("http://localhost:3001/api/competitions"),
+        axios.get("http://localhost:3001/api/users/5fb16f25060eca135194d50a"),
+      ]).then((responses) => {
+        const competitions = responses[0].data;
+        const user = responses[1].data;
 
-      competitions.forEach((comp) => {
-        comp.counters.forEach((counter) => {
-          counter.loggers = loggersByCounter(loggers, counter._id);
+        const userId = user._id;
+        const loggers = user.data;
+        const week = this.state.week;
 
-          const loggerForCurrentWeek = loggerByWeek(counter.loggers, week)
-          if (!loggerForCurrentWeek) {
-            counter.loggers.push({
-              count: 0,
-              week: week,
-              counter: counter._id,
-              user: userId,
-            });
-          }
-        });
+        addMissingLoggers({competitions, userId, loggers, week});
+
+        commit('SET_COMPETITIONS', competitions);
+        commit('SET_USER', user);
       });
-
-      commit('SET_COMPETITIONS', competitions);
-      commit('SET_USER', user);
     },
+  },
+  getters: {
+    currentLoggers(state) {
+      const loggers = state.user.data;
+      const week = state.week;
+      return loggers.filter((logger) => logger.week === week);
+    }
   }
 })

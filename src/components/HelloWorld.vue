@@ -27,14 +27,7 @@ export default {
   },
   methods: {},
   mounted() {
-    Promise.all([
-      axios.get("http://localhost:3001/api/competitions"),
-      axios.get("http://localhost:3001/api/users/5fb16f25060eca135194d50a"),
-    ]).then((responses) => {
-      const competitions = responses[0].data;
-      const user = responses[1].data;
-      this.$store.dispatch("loadDashboard", { competitions, user });
-    });
+    this.$store.dispatch("loadDashboard");
   },
 };
 </script>

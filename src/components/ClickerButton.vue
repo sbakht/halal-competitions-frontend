@@ -23,11 +23,12 @@ export default {
         return val.title.length > 0;
       },
     },
-    logger: {
-      type: Object,
-      validator: (val) => {
-        return val.count >= 0;
-      },
+  },
+  computed: {
+    logger() {
+      return this.$store.getters.currentLoggers.find(
+        (logger) => logger.counter === this.counter._id
+      );
     },
   },
   methods: {
