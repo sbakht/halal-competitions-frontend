@@ -43,7 +43,11 @@ export default new Vuex.Store({
     },
     INCREMENT(state, data) {
       const index = state.loggers.indexOf(data);
-      state.loggers[index].count++;
+      Vue.set(state.loggers[index], 'count', state.loggers[index].count + 1);
+    },
+    SET_LOGGERID(state, {oldLogger, newLogger}) {
+      const index = state.loggers.indexOf(oldLogger);
+     Vue.set(state.loggers[index], '_id', newLogger._id)
     }
   },
   actions: {
@@ -68,9 +72,11 @@ export default new Vuex.Store({
     },
     save({commit}, logger) {
       if(logger._id) {
-        console.log('PUT')
+        axios.put("http://localhost:3001/api/loggers", logger);
       }else{
-        console.log('POST')
+        axios.post("http://localhost:3001/api/loggers", logger).then(response => {
+          commit('SET_LOGGERID', {oldLogger: logger, newLogger: response.data});
+        });
       }
     }
   },
