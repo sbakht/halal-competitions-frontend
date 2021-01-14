@@ -23,7 +23,8 @@ function addMissingLoggers({competitions, userId, loggers, week}) {
 
 export default new Vuex.Store({
   state: {
-    user: {data: []},
+    userId: '',
+    loggers: [],
     competitions: [],
     week: 12132020,
   },
@@ -33,6 +34,16 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user = data;
+    },
+    SET_USERID(state, data) {
+      state.userId = data;
+    },
+    SET_LOGGERS(state, data) {
+      state.loggers = data;
+    },
+    INCREMENT(state, data) {
+      const index = state.loggers.indexOf(data);
+      state.loggers[index].count++;
     }
   },
   actions: {
@@ -51,13 +62,21 @@ export default new Vuex.Store({
         addMissingLoggers({competitions, userId, loggers, week});
 
         commit('SET_COMPETITIONS', competitions);
-        commit('SET_USER', user);
+        commit('SET_USERID', userId);
+        commit('SET_LOGGERS', loggers);
       });
     },
+    save({commit}, logger) {
+      if(logger._id) {
+        console.log('PUT')
+      }else{
+        console.log('POST')
+      }
+    }
   },
   getters: {
     currentLoggers(state) {
-      const loggers = state.user.data;
+      const loggers = state.loggers;
       const week = state.week;
       return loggers.filter((logger) => logger.week === week);
     }

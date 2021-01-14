@@ -1,11 +1,8 @@
 <template>
   <div class="container">
-    <div class="title">{{ competition.title }}</div>
+    <div class="title">{{ competition.title }} - total: {{ total }}</div>
     <div v-for="counter in competition.counters" :key="counter.id">
-      <clicker-button
-        :counter="counter"
-        @increment="increment"
-      ></clicker-button>
+      <clicker-button :counter="counter"></clicker-button>
     </div>
   </div>
 </template>
@@ -19,9 +16,15 @@ export default {
     competition: Object,
     week: Number,
   },
-  methods: {
-    increment(logger) {
-      logger.count++;
+  computed: {
+    total() {
+      const isForCounter = (logger) => logger.counter === this.counter._id;
+      const totals = this.competition.counters.map((counter) => {
+        return this.$store.getters.currentLoggers.find(
+          (logger) => logger.counter === counter._id
+        ).count;
+      });
+      return totals.reduce((a, b) => a + b, 0);
     },
   },
 };

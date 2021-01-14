@@ -26,17 +26,18 @@ export default {
   },
   computed: {
     logger() {
-      return this.$store.getters.currentLoggers.find(
-        (logger) => logger.counter === this.counter._id
-      );
+      return this.$store.getters.currentLoggers.find(this.isForCounter);
     },
   },
   methods: {
+    isForCounter(logger) {
+      return logger.counter === this.counter._id;
+    },
     onClick() {
       clearTimeout(this.timeout);
-      this.$emit("increment", this.logger);
+      this.$store.commit("INCREMENT", this.logger);
       this.timeout = setTimeout(() => {
-        this.$emit("saveToDatabase");
+        this.$store.dispatch("save", this.logger);
       }, DEBOUNCE_RATE);
     },
   },

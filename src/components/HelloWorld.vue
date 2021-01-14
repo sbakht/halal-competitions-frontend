@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <div v-for="competition in competitions" :key="competition.id">
       <user-competition
         :competition="competition"
@@ -17,9 +16,6 @@ import UserCompetition from "./UserCompetition.vue";
 export default {
   components: { UserCompetition },
   name: "HelloWorld",
-  props: {
-    msg: String,
-  },
   computed: {
     competitions() {
       return this.$store.state.competitions;
