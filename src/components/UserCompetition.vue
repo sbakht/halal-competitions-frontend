@@ -2,7 +2,11 @@
   <div class="container">
     <div class="title">{{ competition.title }}</div>
     <div v-for="counter in competition.counters" :key="counter.id">
-      <clicker-button :clicker="counter" />
+      <clicker-button
+        :counter="counter"
+        :logger="weeklyLogger(counter)"
+        @increment="increment"
+      ></clicker-button>
     </div>
   </div>
 </template>
@@ -14,6 +18,15 @@ export default {
   name: "UserCompetition",
   props: {
     competition: Object,
+    week: Number,
+  },
+  methods: {
+    weeklyLogger(counter) {
+      return counter.loggers.find((logger) => logger.week === this.week);
+    },
+    increment(logger) {
+      logger.count++;
+    },
   },
 };
 </script>

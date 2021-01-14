@@ -1,14 +1,43 @@
 <template>
-  <button>
-    {{ clicker.title }}
+  <button @click="onClick">
+    <div>{{ counter.title }}</div>
+    <div>{{ logger.count }}</div>
+    <div>{{ logger._id }}</div>
   </button>
 </template>
 
 <script>
+const DEBOUNCE_RATE = 3000;
+
 export default {
   name: "UserCompetition",
+  data() {
+    return {
+      timeout: null,
+    };
+  },
   props: {
-    clicker: Object,
+    counter: {
+      type: Object,
+      validator: (val) => {
+        return val.title.length > 0;
+      },
+    },
+    logger: {
+      type: Object,
+      validator: (val) => {
+        return val.count >= 0;
+      },
+    },
+  },
+  methods: {
+    onClick() {
+      clearTimeout(this.timeout);
+      this.$emit("increment", this.logger);
+      this.timeout = setTimeout(() => {
+        this.$emit("saveToDatabase");
+      }, DEBOUNCE_RATE);
+    },
   },
 };
 </script>

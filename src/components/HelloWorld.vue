@@ -2,7 +2,10 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div v-for="competition in competitions" :key="competition.id">
-      <user-competition :competition="competition" />
+      <user-competition
+        :competition="competition"
+        :week="$store.state.week"
+      ></user-competition>
     </div>
   </div>
 </template>
@@ -17,14 +20,20 @@ export default {
   props: {
     msg: String,
   },
-  data() {
-    return {
-      competitions: [],
-    };
+  computed: {
+    competitions() {
+      return this.$store.state.competitions;
+    },
   },
+  methods: {},
   mounted() {
-    axios.get("http://localhost:3001/api/competitions").then((response) => {
-      this.competitions = response.data;
+    Promise.all([
+      axios.get("http://localhost:3001/api/competitions"),
+      axios.get("http://localhost:3001/api/users/5fb16f25060eca135194d50a"),
+    ]).then((responses) => {
+      const competitions = responses[0].data;
+      const user = responses[1].data;
+      this.$store.dispatch("loadDashboard", { competitions, user });
     });
   },
 };
