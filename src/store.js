@@ -24,9 +24,11 @@ function addMissingLoggers({competitions, userId, loggers, week}) {
 export default new Vuex.Store({
   state: {
     userId: '',
+    users: [],
     loggers: [],
     competitions: [],
     week: 12132020,
+    allLoggers: {},
   },
   mutations: {
     SET_COMPETITIONS(state, data) {
@@ -34,6 +36,9 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       state.user = data;
+    },
+    SET_USERS(state, data) {
+      state.users = data;
     },
     SET_USERID(state, data) {
       state.userId = data;
@@ -47,7 +52,10 @@ export default new Vuex.Store({
     },
     SET_LOGGERID(state, {oldLogger, newLogger}) {
       const index = state.loggers.indexOf(oldLogger);
-     Vue.set(state.loggers[index], '_id', newLogger._id)
+      Vue.set(state.loggers[index], '_id', newLogger._id)
+    },
+    SET_ALL_LOGGERS(state, data) {
+      state.allLoggers = data;
     }
   },
   actions: {
@@ -70,6 +78,17 @@ export default new Vuex.Store({
         commit('SET_LOGGERS', loggers);
       });
     },
+    loadResults({commit}) {
+      axios.get("http://localhost:3001/api/loggers").then(({data}) => {
+        commit('SET_ALL_LOGGERS', data);
+      })
+      axios.get("http://localhost:3001/api/competitions").then(({data}) => {
+        commit('SET_COMPETITIONS', data);
+      })
+      axios.get("http://localhost:3001/api/users").then(({data}) => {
+        commit('SET_USERS', data);
+      })
+    },
     save({commit}, logger) {
       if(logger._id) {
         axios.put("http://localhost:3001/api/loggers", logger);
@@ -85,6 +104,17 @@ export default new Vuex.Store({
       const loggers = state.loggers;
       const week = state.week;
       return loggers.filter((logger) => logger.week === week);
+    },
+    // currentLoggersForAllUsers(state) {
+    //   const loggers = state.allLoggers;
+    //   const week = state.week;
+    //   return loggers.filter((logger) => logger.week === week);
+    // },
+    resultsByUsers(state) {
+      const loggersByUser = state.users.map(({_id, displayName}) => {
+        return {userId: _id, displayName, loggers: state.allLoggers.filter(logger => logger.user === _id)};
+      })
+      return loggersByUser;
     }
   }
 })
