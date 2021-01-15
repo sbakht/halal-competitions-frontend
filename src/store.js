@@ -1,6 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
+import moment from 'moment';
+
+
+function getStartWeek() {
+  // return "01042021"
+  const x = moment.utc().day(1);
+  return x.format('MMDDYYYY');
+}
 
 Vue.use(Vuex)
 
@@ -27,7 +35,7 @@ export default new Vuex.Store({
     users: [],
     loggers: [],
     competitions: [],
-    week: 12132020,
+    week: getStartWeek(),
     allLoggers: {},
   },
   mutations: {
@@ -56,10 +64,14 @@ export default new Vuex.Store({
     },
     SET_ALL_LOGGERS(state, data) {
       state.allLoggers = data;
+    },
+    SET_WEEK(state, data) {
+      state.week = data;
     }
   },
   actions: {
     loadDashboard({commit}) {
+      commit('SET_WEEK', getStartWeek());
       Promise.all([
         axios.get("http://localhost:3001/api/competitions"),
         axios.get("http://localhost:3001/api/users/5fb16f25060eca135194d50a"),
@@ -96,6 +108,13 @@ export default new Vuex.Store({
         axios.post("http://localhost:3001/api/loggers", logger).then(response => {
           commit('SET_LOGGERID', {oldLogger: logger, newLogger: response.data});
         });
+      }
+    },
+    increment({commit, state, dispatch}, logger) {
+      if(state.week === getStartWeek()) {
+        commit('INCREMENT', logger);
+      }else{
+        dispatch('loadDashboard');
       }
     }
   },

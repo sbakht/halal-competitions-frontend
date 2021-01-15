@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { find } from "../utils";
 const DEBOUNCE_RATE = 3000;
 
 export default {
@@ -26,7 +27,7 @@ export default {
   },
   computed: {
     logger() {
-      return this.$store.getters.currentLoggers.find(this.isForCounter);
+      return find(this.isForCounter, this.$store.getters.currentLoggers, {});
     },
   },
   methods: {
@@ -35,7 +36,7 @@ export default {
     },
     onClick() {
       clearTimeout(this.timeout);
-      this.$store.commit("INCREMENT", this.logger);
+      this.$store.dispatch("increment", this.logger);
       this.timeout = setTimeout(() => {
         this.$store.dispatch("save", this.logger);
       }, DEBOUNCE_RATE);

@@ -1,74 +1,44 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <!-- <div v-for="user in users" :key="user.userId">
-      {{ user.displayName }}
-    </div> -->
-    <div v-for="(loggers, week) in formattedLoggers" :key="week">
-      <div v-for="competition in competitions" :key="competition.id">
-        <div>{{ competition.title }}</div>
-        <div v-for="counter in competition.counters" :key="counter.id">
-          {{ counter.title }}
-          <div v-for="(win, i) in top3(loggers[counter._id])" :key="win._id">
-            {{ i + 1 }}. {{ userById(win.user).displayName }} {{ win.count }}
-          </div>
-        </div>
+    <template v-if="showResults">
+      <div v-for="(loggers, week) in loggersGroupedByWeek" :key="week">
+        <template v-if="week != $store.state.week">
+          <weekly-leaderboard
+            :week="week"
+            :loggers="loggers"
+          ></weekly-leaderboard>
+        </template>
       </div>
+    </template>
+    <div v-else>
+      No data has been collected yet. Check back next week for the first weeks
+      results!
     </div>
   </div>
 </template>
 
 <script>
-function groupBy(arr, key) {
-  const obj = {};
-  try {
-    arr.forEach((item) => {
-      const val = item[key];
-      if (!obj[val]) {
-        obj[val] = [];
-      }
-      obj[val].push(item);
-    });
-    return obj;
-  } catch (e) {
-    console.log(e);
-    debugger;
-  }
-}
+import WeeklyLeaderboard from "../components/WeeklyLeaderboard.vue";
+import { groupBy } from "../utils";
 
 export default {
+  components: { WeeklyLeaderboard },
   computed: {
-    loggers() {
-      return this.$store.state.allLoggers;
-    },
-    formattedLoggers() {
-      if (!this.loggers.length) {
-        return {};
-      }
-      const grouped = groupBy(this.loggers, "week");
+    loggersGroupedByWeek() {
+      const loggers = this.$store.state.allLoggers;
+      const grouped = groupBy(loggers, "week");
       Object.keys(grouped).map((key) => {
         const obj = groupBy(grouped[key], "counter");
         grouped[key] = obj;
       });
       return grouped;
     },
-    competitions() {
-      return this.$store.state.competitions;
-    },
-    users() {
-      const users = this.$store.getters.resultsByUsers;
-      return users;
-    },
-  },
-  methods: {
-    top3(arr) {
-      const copy = arr.slice().sort((a, b) => {
-        return a.count >= b.count ? a : b;
-      });
-      return copy.slice(0, 3);
-    },
-    userById(id) {
-      return this.users.find((user) => user.userId === id);
+    showResults() {
+      const keys = Object.keys(this.loggersGroupedByWeek);
+      return (
+        keys.length >= 2 ||
+        (keys.length === 1 && keys[0] !== this.$store.state.week)
+      );
     },
   },
   mounted() {

@@ -2,27 +2,41 @@
   <div class="container">
     <div class="title">{{ competition.title }} - total: {{ total }}</div>
     <div v-for="counter in competition.counters" :key="counter.id">
-      <clicker-button :counter="counter"></clicker-button>
+      <clicker-button
+        :counter="counter"
+        @increment="increment"
+      ></clicker-button>
     </div>
   </div>
 </template>
 
 <script>
 import ClickerButton from "./ClickerButton.vue";
+import { find } from "../utils";
+
 export default {
   components: { ClickerButton },
   name: "UserCompetition",
   props: {
     competition: Object,
-    week: Number,
+    week: String,
+  },
+  methods: {
+    increment(logger) {
+      logger.count++;
+    },
   },
   computed: {
     total() {
       const isForCounter = (logger) => logger.counter === this.counter._id;
+      const loggers = this.$store.getters.currentLoggers;
       const totals = this.competition.counters.map((counter) => {
-        return this.$store.getters.currentLoggers.find(
-          (logger) => logger.counter === counter._id
-        ).count;
+        const { count } = find(
+          (logger) => logger.counter === counter._id,
+          loggers,
+          { count: 0 }
+        );
+        return count;
       });
       return totals.reduce((a, b) => a + b, 0);
     },
