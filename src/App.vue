@@ -1,12 +1,16 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/results">Results</router-link>
-    </div>
+  <div>
+    <Nav></Nav>
     <router-view />
   </div>
 </template>
+
+<script>
+import Nav from "./components/Nav";
+export default {
+  components: { Nav },
+};
+</script>
 
 <style>
 #app {
