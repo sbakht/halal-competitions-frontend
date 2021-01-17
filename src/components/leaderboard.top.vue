@@ -1,17 +1,32 @@
 <template>
-  <div class="container">
-    <div class="title">{{ title }}</div>
-    <ul v-if="hasWinner">
-      <li v-for="(winner, i) in winners" :key="winner.id">
-        {{ i + 1 }}. {{ winner.displayName }} - {{ winner.count }}
-      </li>
-    </ul>
-    <div class="no-winner" v-else>No one won</div>
+  <div class="mt-14">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">
+      {{ title }}
+    </h3>
+
+    <dl
+      class="mt-5 grid grid-cols-3 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x"
+    >
+      <template v-if="hasWinner">
+        <Card
+          v-for="winner in winners"
+          :key="winner.id"
+          :title="winner.displayName"
+          :number="winner.count"
+        >
+        </Card>
+      </template>
+      <template class="no-winner" v-else>
+        <Card title="No participants" :number="0" :secondary="true"></Card>
+      </template>
+    </dl>
   </div>
 </template>
 
 <script>
+import Card from "./Card";
 export default {
+  components: { Card },
   props: {
     title: String,
     loggers: Array,
@@ -43,20 +58,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.container {
-  padding: 16px;
-  border: 1px solid gray;
-}
-
-ul {
-  list-style: none;
-}
-
-.no-winner {
-  font-style: italic;
-  color: #333;
-  font-size: 13px;
-}
-</style>

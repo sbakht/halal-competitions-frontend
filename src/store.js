@@ -32,6 +32,7 @@ function addMissingLoggers({competitions, userId, loggers, week}) {
 export default new Vuex.Store({
   state: {
     userId: '',
+    activeID: '',
     users: [],
     loggers: [],
     competitions: [],
@@ -67,6 +68,9 @@ export default new Vuex.Store({
     },
     SET_WEEK(state, data) {
       state.week = data;
+    },
+    SET_ACTIVE_ID(state, data) {
+      state.activeID = data;
     }
   },
   actions: {
@@ -85,6 +89,7 @@ export default new Vuex.Store({
 
         addMissingLoggers({competitions, userId, loggers, week});
 
+        commit('SET_ACTIVE_ID', competitions[0]._id)
         commit('SET_COMPETITIONS', competitions);
         commit('SET_USERID', userId);
         commit('SET_LOGGERS', loggers);
@@ -95,6 +100,7 @@ export default new Vuex.Store({
         commit('SET_ALL_LOGGERS', data);
       })
       axios.get("http://localhost:3001/api/competitions").then(({data}) => {
+        commit('SET_ACTIVE_ID', data[0]._id)
         commit('SET_COMPETITIONS', data);
       })
       axios.get("http://localhost:3001/api/users").then(({data}) => {
@@ -116,6 +122,9 @@ export default new Vuex.Store({
       }else{
         dispatch('loadDashboard');
       }
+    },
+    setActiveTab({commit}, id) {
+      commit('SET_ACTIVE_ID', id);
     }
   },
   getters: {
