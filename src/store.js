@@ -39,6 +39,7 @@ export default new Vuex.Store({
     competitions: [],
     week: getStartWeek(),
     allLoggers: {},
+    token: '',
   },
   mutations: {
     SET_COMPETITIONS(state, data) {
@@ -72,6 +73,9 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_ID(state, data) {
       state.activeID = data;
+    },
+    SET_TOKEN(state, data) {
+      state.token = 'Bearer ' + data;
     }
   },
   actions: {
@@ -112,11 +116,11 @@ export default new Vuex.Store({
         commit('SET_USERS', data);
       })
     },
-    save({commit}, logger) {
+    save({commit, state}, logger) {
       if(logger._id) {
-        axios.put("http://localhost:3001/api/loggers", logger);
+        axios.put("http://localhost:3001/api/loggers", logger, { headers: {authorization: state.token }});
       }else{
-        axios.post("http://localhost:3001/api/loggers", logger).then(response => {
+        axios.post("http://localhost:3001/api/loggers", logger, {authorization: state.token}).then(response => {
           commit('SET_LOGGERID', {oldLogger: logger, newLogger: response.data});
         });
       }
@@ -130,6 +134,14 @@ export default new Vuex.Store({
     },
     setActiveTab({commit}, id) {
       commit('SET_ACTIVE_ID', id);
+    },
+    register({},{username, password}) {
+      return axios.post('http://localhost:3001/api/users', {username, password});
+    },
+    login({commit},{username, password}) {
+      return axios.post('http://localhost:3001/api/login', {username, password}).then(({data}) => {
+        commit("SET_TOKEN", data.accessToken)
+      });
     }
   },
   getters: {
@@ -161,6 +173,9 @@ export default new Vuex.Store({
     },
     activeCompetition(state) {
       return state.competitions.find( (comp) => comp._id === state.activeID) || {};
-    } 
+    },
+    isLoggedIn(state) {
+      return !!state.token;
+    }
   }
 })

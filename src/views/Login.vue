@@ -8,7 +8,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" @submit="onSubmit">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
               Username
@@ -17,9 +17,10 @@
               <input
                 id="email"
                 name="email"
-                type="email"
-                autocomplete="email"
+                type="text"
+                autocomplete="username"
                 required
+                v-model="username"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -39,12 +40,16 @@
                 type="password"
                 autocomplete="current-password"
                 required
+                v-model="password"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
+            <p class="mt-2 text-sm text-red-600" v-if="error">
+              {{ error }}
+            </p>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between hidden">
             <div class="flex items-center">
               <input
                 id="remember_me"
@@ -156,3 +161,44 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      error: "",
+    };
+  },
+  methods: {
+    validate() {
+      return true;
+    },
+    onSubmit(e) {
+      e.preventDefault();
+      this.error = "";
+      if (this.validate()) {
+        this.$store
+          .dispatch("login", {
+            username: this.username,
+            password: this.password,
+          })
+          .then(() => {
+            this.$router.push("dashboard");
+          })
+          .catch((error) => {
+            try {
+              if (error.response.data.invalidCombo) {
+                this.error = "Invalid username/password combination.";
+              }
+            } catch (e) {
+              this.error =
+                "There was an error logging in. Please try again later.";
+            }
+          });
+      }
+    },
+  },
+};
+</script>

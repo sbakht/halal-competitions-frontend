@@ -12,16 +12,37 @@
           </div>
           <div class="hidden md:block">
             <div class="flex items-baseline ml-10 space-x-4">
-              <nav-link to="/" name="Dashboard"></nav-link>
+              <nav-link
+                :class="{ hidden: isLoggedIn }"
+                to="/"
+                name="Home"
+              ></nav-link>
+              <nav-link
+                :class="{ hidden: !isLoggedIn }"
+                to="/dashboard"
+                name="Dashboard"
+              ></nav-link>
               <nav-link to="/results" name="Results"></nav-link>
             </div>
           </div>
         </div>
         <div class="hidden md:block">
           <div class="flex items-center ml-4 md:ml-6">
-            <nav-link to="/login" name="Login"></nav-link>
-            <nav-link to="/register" name="Register"></nav-link>
-            <nav-link-settings></nav-link-settings>
+            <nav-link
+              :class="{ hidden: isLoggedIn }"
+              to="/login"
+              name="Login"
+            ></nav-link>
+            <nav-link
+              :class="{ hidden: isLoggedIn }"
+              to="/register"
+              name="Register"
+            ></nav-link>
+            <nav-link
+              :class="{ hidden: !isLoggedIn }"
+              to="/logout"
+              name="Logout"
+            ></nav-link>
           </div>
         </div>
         <div class="flex -mr-2 md:hidden">
@@ -80,10 +101,14 @@
 
 <script>
 import NavLink from "./nav.link.vue";
-import NavLinkSettings from "./nav.link.settings.vue";
 import NavMobileMenu from "./nav.mobile.menu.vue";
 export default {
-  components: { NavLink, NavLinkSettings, NavMobileMenu },
+  components: { NavLink, NavMobileMenu },
+  computed: {
+    isLoggedIn() {
+      return !!this.$store.getters.isLoggedIn;
+    },
+  },
 };
 </script>
 

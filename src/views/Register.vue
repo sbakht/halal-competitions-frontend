@@ -8,7 +8,8 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form class="space-y-6" action="#" method="POST">
+        <!-- <form class="space-y-6" action="#" method="POST"> -->
+        <form class="space-y-6" @submit="onSubmit">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
               Username
@@ -17,14 +18,19 @@
               <input
                 id="email"
                 name="email"
-                type="email"
-                autocomplete="email"
+                type="text"
+                autocomplete="username"
                 required
+                v-model="username"
+                @change="changeUsername"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
             <p class="mt-2 text-sm text-gray-500" id="email-description">
               Don't use your reddit username!
+            </p>
+            <p class="mt-2 text-sm text-red-600" v-if="usernameError">
+              {{ usernameError }}
             </p>
           </div>
 
@@ -42,6 +48,8 @@
                 type="password"
                 autocomplete="current-password"
                 required
+                v-model="password"
+                @change="changePass"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -61,9 +69,14 @@
                 type="password"
                 autocomplete="current-password"
                 required
+                v-model="confirmPassword"
+                @change="changePass"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
+            <p class="mt-2 text-sm text-red-600" v-if="passwordError">
+              {{ passwordError }}
+            </p>
           </div>
 
           <div>
@@ -155,3 +168,78 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      confirmPassword: "",
+      usernameError: "",
+      passwordError: "",
+    };
+  },
+  methods: {
+    validate() {
+      let valid = true;
+
+      if (this.username.length < 3) {
+        this.usernameError = "Username must be at least 3 characters long.";
+        valid = false;
+      }
+
+      if (this.username.length > 20) {
+        this.usernameError = "Username must be at most 20 characters long.";
+        valid = false;
+      }
+
+      if (this.password !== this.confirmPassword) {
+        this.passwordError = "Passwords must match.";
+        return false;
+      }
+
+      if (this.password.length < 6) {
+        this.passwordError = "Password must be atleast 6 characters long";
+        valid = false;
+      }
+
+      if (this.password.length > 30) {
+        this.passwordError = "Password must be at most 30 characters long";
+        valid = false;
+      }
+
+      return valid;
+    },
+    onSubmit(e) {
+      e.preventDefault();
+      if (this.validate()) {
+        this.$store
+          .dispatch("register", {
+            username: this.username,
+            password: this.password,
+          })
+          .then(() => {
+            this.$router.push("login");
+          })
+          .catch((error) => {
+            try {
+              if (error.response.data.usernameTaken) {
+                this.usernameError = "Username is already taken.";
+              }
+            } catch (e) {
+              this.passwordError =
+                "There was an error creating your account. Please try again later.";
+            }
+          });
+      }
+    },
+    changePass() {
+      this.passwordError = "";
+    },
+    changeUsername() {
+      this.usernameError = "";
+    },
+  },
+};
+</script>
