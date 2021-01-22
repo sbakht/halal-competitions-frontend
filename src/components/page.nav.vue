@@ -19,6 +19,8 @@
         </div>
         <div class="hidden md:block">
           <div class="flex items-center ml-4 md:ml-6">
+            <nav-link to="/login" name="Login"></nav-link>
+            <nav-link to="/register" name="Register"></nav-link>
             <nav-link-settings></nav-link-settings>
           </div>
         </div>

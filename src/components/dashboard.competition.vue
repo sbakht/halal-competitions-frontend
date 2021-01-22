@@ -1,22 +1,21 @@
 <template>
-  <div class="container">
-    <div class="title">{{ competition.title }} - total: {{ total }}</div>
-    <div v-for="counter in competition.counters" :key="counter.id">
-      <clicker-button
+  <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <template v-for="counter in competition.counters">
+      <dashboard-competition-increment
         :counter="counter"
         @increment="increment"
-      ></clicker-button>
-    </div>
-  </div>
+        :key="counter.id"
+      ></dashboard-competition-increment>
+    </template>
+  </dl>
 </template>
 
 <script>
-import ClickerButton from "./ClickerButton.vue";
 import { find } from "../utils";
+import DashboardCompetitionIncrement from "./dashboard.competition.increment.vue";
 
 export default {
-  components: { ClickerButton },
-  name: "UserCompetition",
+  components: { DashboardCompetitionIncrement },
   props: {
     competition: Object,
     week: String,
@@ -43,18 +42,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.container {
-  display: flex;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-bottom: 25px;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 12px;
-}
-</style>

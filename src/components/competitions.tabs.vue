@@ -20,14 +20,14 @@
     <div class="hidden sm:block">
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex" aria-label="Tabs">
-          <competitions-tabs-links
+          <competitions-tabs-item
             v-for="competition in competitions"
             :id="competition._id"
             :name="competition.title"
             :key="competition._id"
             :isActive="competition._id === activeID"
             @change="onChange"
-          ></competitions-tabs-links>
+          ></competitions-tabs-item>
         </nav>
       </div>
     </div>
@@ -35,10 +35,9 @@
 </template>
 
 <script>
-import Links from "./competitions.tabs.links";
-import CompetitionsTabsLinks from "./competitions.tabs.links.vue";
+import CompetitionsTabsItem from "./competitions.tabs.item.vue";
 export default {
-  components: { CompetitionsTabsLinks },
+  components: { CompetitionsTabsItem },
   computed: {
     competitions() {
       return this.$store.state.competitions;

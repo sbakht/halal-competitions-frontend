@@ -14,7 +14,6 @@
 <script>
 import LeaderboardTop from "../components/leaderboard.top.vue";
 import LeaderboardCompetitionDate from "../components/leaderboard.competition.date";
-import { groupBy } from "../utils";
 
 export default {
   components: { LeaderboardTop, LeaderboardCompetitionDate },
@@ -24,11 +23,7 @@ export default {
   },
   computed: {
     competition() {
-      return (
-        this.$store.state.competitions.find(
-          (comp) => comp._id === this.$store.state.activeID
-        ) || {}
-      );
+      return this.$store.getters.activeCompetition;
     },
   },
 };

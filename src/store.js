@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
 import moment from 'moment';
+import { groupBy } from "./utils.js";
 
 
 function getStartWeek() {
@@ -74,7 +75,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadDashboard({commit}) {
+    loadDashboard({commit, state}) {
       commit('SET_WEEK', getStartWeek());
       Promise.all([
         axios.get("http://localhost:3001/api/competitions"),
@@ -89,18 +90,22 @@ export default new Vuex.Store({
 
         addMissingLoggers({competitions, userId, loggers, week});
 
-        commit('SET_ACTIVE_ID', competitions[0]._id)
+        if(!state.activeID) {
+          commit('SET_ACTIVE_ID', competitions[0]._id)
+        }
         commit('SET_COMPETITIONS', competitions);
         commit('SET_USERID', userId);
         commit('SET_LOGGERS', loggers);
       });
     },
-    loadResults({commit}) {
+    loadResults({commit, state}) {
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
         commit('SET_ALL_LOGGERS', data);
       })
       axios.get("http://localhost:3001/api/competitions").then(({data}) => {
-        commit('SET_ACTIVE_ID', data[0]._id)
+        if(!state.activeID) {
+          commit('SET_ACTIVE_ID', data[0]._id)
+        }
         commit('SET_COMPETITIONS', data);
       })
       axios.get("http://localhost:3001/api/users").then(({data}) => {
@@ -143,6 +148,19 @@ export default new Vuex.Store({
         return {userId: _id, displayName, loggers: state.allLoggers.filter(logger => logger.user === _id)};
       })
       return loggersByUser;
-    }
+    },
+    loggersByWeek(state) {
+      const loggers = state.allLoggers;
+      const grouped = groupBy(loggers, "week");
+
+      Object.keys(grouped).map((key) => {
+        const obj = groupBy(grouped[key], "counter");
+        grouped[key] = obj;
+      });
+      return grouped;
+    },
+    activeCompetition(state) {
+      return state.competitions.find( (comp) => comp._id === state.activeID) || {};
+    } 
   }
 })

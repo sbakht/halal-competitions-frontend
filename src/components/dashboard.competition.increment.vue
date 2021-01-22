@@ -1,8 +1,16 @@
 <template>
-  <button @click="onClick">
-    <div>{{ counter.title }}</div>
-    <div>{{ logger.count }}</div>
-    <div>{{ logger._id }}</div>
+  <button
+    class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+    @click="onClick"
+  >
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-sm font-medium text-gray-500 truncate">
+        {{ counter.title }}
+      </dt>
+      <dd class="mt-1 text-3xl font-semibold text-gray-900">
+        {{ logger.count }}
+      </dd>
+    </div>
   </button>
 </template>
 
@@ -11,7 +19,6 @@ import { find } from "../utils";
 const DEBOUNCE_RATE = 3000;
 
 export default {
-  name: "UserCompetition",
   data() {
     return {
       timeout: null,

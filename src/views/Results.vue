@@ -1,12 +1,6 @@
 <template>
   <div>
-    <header class="bg-white shadow-sm">
-      <div
-        class="flex justify-between max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8"
-      >
-        <h1 class="text-lg leading-6 font-semibold text-gray-900">Results</h1>
-      </div>
-    </header>
+    <page-heading title="Results"></page-heading>
     <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
@@ -29,21 +23,15 @@
 </template>
 
 <script>
+import PageHeading from "../components/page.heading.vue";
 import CompetitionsTabs from "../components/competitions.tabs.vue";
 import LeaderboardCompetition from "../components/leaderboard.competition.vue";
-import { groupBy } from "../utils";
 
 export default {
-  components: { LeaderboardCompetition, CompetitionsTabs },
+  components: { PageHeading, LeaderboardCompetition, CompetitionsTabs },
   computed: {
     loggersGroupedByWeek() {
-      const loggers = this.$store.state.allLoggers;
-      const grouped = groupBy(loggers, "week");
-      Object.keys(grouped).map((key) => {
-        const obj = groupBy(grouped[key], "counter");
-        grouped[key] = obj;
-      });
-      return grouped;
+      return this.$store.getters.loggersByWeek;
     },
     showResults() {
       const keys = Object.keys(this.loggersGroupedByWeek);
