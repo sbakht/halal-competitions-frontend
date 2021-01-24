@@ -5,6 +5,7 @@ import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import Home from './views/Home.vue';
 import store from './store'
+import Results from './views/Results.vue';
 
 Vue.use(Router)
 
@@ -25,27 +26,46 @@ export default new Router({
         if(store.getters.isLoggedIn) {
           next();
         }else{
-          next('/');
+          next('/login');
         }
       }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter(from, to, next) {
+        if(store.getters.isLoggedIn) {
+          next('/dashboard');
+        }else{
+          next();
+        }
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      beforeEnter(from, to, next) {
+        if(store.getters.isLoggedIn) {
+          next('/dashboard');
+        }else{
+          next();
+        }
+      }
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      beforeEnter(from, to, next) {
+        store.dispatch('logout');
+        next('/')
+      }
     },
     {
       path: '/results',
       name: 'results',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "results" */ './views/Results.vue')
+      component: Results 
     }
   ]
 })

@@ -39,7 +39,7 @@ export default new Vuex.Store({
     competitions: [],
     week: getStartWeek(),
     allLoggers: {},
-    token: '',
+    token: window.localStorage.getItem('token'),
   },
   mutations: {
     SET_COMPETITIONS(state, data) {
@@ -75,7 +75,13 @@ export default new Vuex.Store({
       state.activeID = data;
     },
     SET_TOKEN(state, data) {
-      state.token = 'Bearer ' + data;
+      if(data) {
+        window.localStorage.setItem('token', data);
+        state.token = data;
+      }else{
+        window.localStorage.clear();
+        state.token = '';
+      }
     }
   },
   actions: {
@@ -83,7 +89,7 @@ export default new Vuex.Store({
       commit('SET_WEEK', getStartWeek());
       Promise.all([
         axios.get("http://localhost:3001/api/competitions"),
-        axios.get("http://localhost:3001/api/users/5fb16f25060eca135194d50a"),
+        axios.get("http://localhost:3001/api/user", { headers: {authorization: 'Bearer ' + state.token }}),
       ]).then((responses) => {
         const competitions = responses[0].data;
         const user = responses[1].data;
@@ -118,9 +124,9 @@ export default new Vuex.Store({
     },
     save({commit, state}, logger) {
       if(logger._id) {
-        axios.put("http://localhost:3001/api/loggers", logger, { headers: {authorization: state.token }});
+        axios.put("http://localhost:3001/api/loggers", logger, { headers: {authorization: 'Bearer ' + state.token }});
       }else{
-        axios.post("http://localhost:3001/api/loggers", logger, {authorization: state.token}).then(response => {
+        axios.post("http://localhost:3001/api/loggers", logger, { headers: {authorization: 'Bearer ' + state.token }}).then(response => {
           commit('SET_LOGGERID', {oldLogger: logger, newLogger: response.data});
         });
       }
@@ -142,6 +148,9 @@ export default new Vuex.Store({
       return axios.post('http://localhost:3001/login', {username, password}).then(({data}) => {
         commit("SET_TOKEN", data.accessToken)
       });
+    },
+    logout({commit}) {
+      commit("SET_TOKEN", '')
     }
   },
   getters: {
@@ -150,11 +159,6 @@ export default new Vuex.Store({
       const week = state.week;
       return loggers.filter((logger) => logger.week === week);
     },
-    // currentLoggersForAllUsers(state) {
-    //   const loggers = state.allLoggers;
-    //   const week = state.week;
-    //   return loggers.filter((logger) => logger.week === week);
-    // },
     resultsByUsers(state) {
       const loggersByUser = state.users.map(({_id, displayName}) => {
         return {userId: _id, displayName, loggers: state.allLoggers.filter(logger => logger.user === _id)};

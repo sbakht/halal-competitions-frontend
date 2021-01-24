@@ -106,7 +106,7 @@ export default {
   components: { NavLink, NavMobileMenu },
   computed: {
     isLoggedIn() {
-      return !!this.$store.getters.isLoggedIn;
+      return this.$store.getters.isLoggedIn;
     },
   },
 };

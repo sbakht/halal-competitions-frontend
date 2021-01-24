@@ -1,14 +1,22 @@
 <template>
   <router-link
+    v-if="to"
     :to="to"
     class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
     >{{ name }}</router-link
   >
+  <div
+    v-else
+    class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white cursor-pointer"
+    @click="cb"
+  >
+    {{ name }}
+  </div>
 </template>
 
 <script>
 export default {
-  props: ["to", "name"],
+  props: ["to", "name", "cb"],
 };
 </script>
 
