@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { groupBy } from "./utils.js";
 
 
 function getStartWeek() {
-  // return "01042021"
-  const x = moment.utc().day(1);
-  return x.format('MMDDYYYY');
+  return "01252021"
+  const day = dayjs().day()
+  if(day === 0) {
+    return dayjs().day(-6).format('MMDDYYYY')
+  }
+  return dayjs().day(1).format('MMDDYYYY')
 }
 
 Vue.use(Vuex)
@@ -169,11 +172,32 @@ export default new Vuex.Store({
       const loggers = state.allLoggers;
       const grouped = groupBy(loggers, "week");
 
-      Object.keys(grouped).map((key) => {
-        const obj = groupBy(grouped[key], "counter");
-        grouped[key] = obj;
+      return Object.keys(grouped).map((week) => {
+        const loggers = grouped[week]
+        const obj = groupBy(loggers, "counter");
+        return {week, loggers: obj}
+      }).sort((a, b) => {
+        const s1 = a.week;
+        const s2 = b.week;
+
+        const y1 = s1.substr(4,7)
+        const y2 = s2.substr(4,7)
+        if(y1 > y2) {
+          return -1;
+        }
+        
+        const w1 = s1.substr(2,2)
+        const w2 = s2.substr(2,2)
+        if(w1 > w2) {
+          return -1;
+        }
+
+        const d1 = s1.substr(0,2)
+        const d2 = s2.substr(0,2)
+        if(d1 > d2) {
+          return -1;
+        }
       });
-      return grouped;
     },
     activeCompetition(state) {
       return state.competitions.find( (comp) => comp._id === state.activeID) || {};

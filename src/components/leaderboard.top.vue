@@ -11,7 +11,7 @@
         <Card
           v-for="winner in winners"
           :key="winner.id"
-          :title="winner.displayName"
+          :title="winner.username"
           :number="winner.count"
         >
         </Card>
@@ -37,7 +37,7 @@ export default {
     },
     winners() {
       const copy = this.loggers.slice().sort((a, b) => {
-        return a.count >= b.count ? a : b;
+        return a.count >= b.count ? -1 : 1;
       });
       const top = copy.slice(0, 3);
 
@@ -45,7 +45,7 @@ export default {
         const user = this.users.find((user) => user._id === logger.user) || {};
         return {
           id: user._id,
-          displayName: user.displayName,
+          username: user.username,
           count: logger.count,
         };
       });

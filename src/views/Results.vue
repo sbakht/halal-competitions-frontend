@@ -5,11 +5,11 @@
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
         <template v-if="showResults">
-          <div v-for="(loggers, week) in loggersGroupedByWeek" :key="week">
+          <div v-for="week in loggersGroupedByWeek" :key="week.week">
             <leaderboard-competition
-              v-if="week != $store.state.week"
-              :week="week"
-              :loggers="loggers"
+              v-if="week.week != $store.state.week"
+              :week="week.week"
+              :loggers="week.loggers"
             ></leaderboard-competition>
           </div>
         </template>
