@@ -43,6 +43,7 @@ export default new Vuex.Store({
     week: getStartWeek(),
     allLoggers: {},
     token: window.localStorage.getItem('token'),
+    isMobileMenuOpen: false
   },
   mutations: {
     SET_COMPETITIONS(state, data) {
@@ -85,10 +86,14 @@ export default new Vuex.Store({
         window.localStorage.clear();
         state.token = '';
       }
+    },
+    SET_MOBILE_MENU(state, data) {
+      state.isMobileMenuOpen = data;
     }
   },
   actions: {
     loadDashboard({commit, state}) {
+      commit("SET_MOBILE_MENU", false)
       commit('SET_WEEK', getStartWeek());
       Promise.all([
         axios.get("http://localhost:3001/api/competitions"),
@@ -112,6 +117,7 @@ export default new Vuex.Store({
       });
     },
     loadResults({commit, state}) {
+      commit("SET_MOBILE_MENU", false)
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
         commit('SET_ALL_LOGGERS', data);
       })
@@ -135,6 +141,7 @@ export default new Vuex.Store({
       }
     },
     increment({commit, state, dispatch}, logger) {
+      commit("SET_MOBILE_MENU", false)
       if(state.week === getStartWeek()) {
         commit('INCREMENT', logger);
       }else{
@@ -142,6 +149,7 @@ export default new Vuex.Store({
       }
     },
     setActiveTab({commit}, id) {
+      commit("SET_MOBILE_MENU", false)
       commit('SET_ACTIVE_ID', id);
     },
     register({},{username, password}) {
@@ -153,7 +161,14 @@ export default new Vuex.Store({
       });
     },
     logout({commit}) {
+      commit("SET_MOBILE_MENU", false)
       commit("SET_TOKEN", '')
+    },
+    openMobileMenu({commit}) {
+      commit("SET_MOBILE_MENU", true)
+    },
+    closeMobileMenu({commit}) {
+      commit("SET_MOBILE_MENU", false)
     }
   },
   getters: {

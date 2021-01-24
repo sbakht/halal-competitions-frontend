@@ -41,7 +41,7 @@
             <nav-link
               :class="{ hidden: !isLoggedIn }"
               to="/logout"
-              name="Logout"
+              name="Log out"
             ></nav-link>
           </div>
         </div>
@@ -49,6 +49,7 @@
           <!-- Mobile menu button -->
           <button
             class="inline-flex items-center justify-center p-2 text-gray-400 bg-gray-800 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            @click="toggleMobile"
           >
             <span class="sr-only">Open main menu</span>
             <!--
@@ -63,6 +64,7 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
               aria-hidden="true"
+              :class="{ hidden: isMobileOpen }"
             >
               <path
                 stroke-linecap="round"
@@ -77,12 +79,13 @@
               Menu open: "block", Menu closed: "hidden"
             -->
             <svg
-              class="hidden w-6 h-6"
+              class="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               aria-hidden="true"
+              :class="{ hidden: !isMobileOpen }"
             >
               <path
                 stroke-linecap="round"
@@ -95,7 +98,7 @@
         </div>
       </div>
     </div>
-    <nav-mobile-menu></nav-mobile-menu>
+    <nav-mobile-menu :isOpen="isMobileOpen"></nav-mobile-menu>
   </nav>
 </template>
 
@@ -104,13 +107,22 @@ import NavLink from "./nav.link.vue";
 import NavMobileMenu from "./nav.mobile.menu.vue";
 export default {
   components: { NavLink, NavMobileMenu },
+  methods: {
+    toggleMobile() {
+      if (this.isMobileOpen) {
+        this.$store.dispatch("closeMobileMenu");
+      } else {
+        this.$store.dispatch("openMobileMenu");
+      }
+    },
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    isMobileOpen() {
+      return this.$store.state.isMobileMenuOpen;
+    },
   },
 };
 </script>
-
-<style scoped>
-</style>

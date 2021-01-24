@@ -1,24 +1,19 @@
 <template>
-  <div class="mt-14">
+  <div class="mt-14" v-if="hasWinner">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
       {{ title }}
     </h3>
 
     <dl
-      class="mt-5 grid grid-cols-3 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x"
+      class="mt-5 grid grid-cols-3 rounded-lg bg-white overflow-hidden shadow divide-gray-200 divide-x"
     >
-      <template v-if="hasWinner">
-        <Card
-          v-for="winner in winners"
-          :key="winner.id"
-          :title="winner.username"
-          :number="winner.count"
-        >
-        </Card>
-      </template>
-      <template class="no-winner" v-else>
-        <Card title="No participants" :number="0" :secondary="true"></Card>
-      </template>
+      <Card
+        v-for="winner in winners"
+        :key="winner.id"
+        :title="winner.username"
+        :number="winner.count"
+      >
+      </Card>
     </dl>
   </div>
 </template>
