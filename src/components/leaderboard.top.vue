@@ -15,20 +15,6 @@
           :number="winner.count"
         >
         </Card>
-        <Card
-          v-for="winner in winners"
-          :key="winner.id"
-          :title="winner.displayName"
-          :number="winner.count"
-        >
-        </Card>
-        <Card
-          v-for="winner in winners"
-          :key="winner.id"
-          :title="winner.displayName"
-          :number="winner.count"
-        >
-        </Card>
       </template>
       <template class="no-winner" v-else>
         <Card title="No participants" :number="0" :secondary="true"></Card>

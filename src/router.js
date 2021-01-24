@@ -4,6 +4,7 @@ import Dashboard from './views/Dashboard.vue'
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import Home from './views/Home.vue';
+import store from './store'
 
 Vue.use(Router)
 
@@ -19,7 +20,14 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      beforeEnter(from, to, next) {
+        if(store.getters.isLoggedIn) {
+          next();
+        }else{
+          next('/');
+        }
+      }
     },
     {
       path: '/login',

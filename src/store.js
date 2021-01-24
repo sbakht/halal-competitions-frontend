@@ -139,7 +139,7 @@ export default new Vuex.Store({
       return axios.post('http://localhost:3001/api/users', {username, password});
     },
     login({commit},{username, password}) {
-      return axios.post('http://localhost:3001/api/login', {username, password}).then(({data}) => {
+      return axios.post('http://localhost:3001/login', {username, password}).then(({data}) => {
         commit("SET_TOKEN", data.accessToken)
       });
     }
