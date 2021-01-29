@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "deploy": "node gh-pages-deploy.js"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
@@ -25,7 +24,6 @@
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "execa": "latest",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [
