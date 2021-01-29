@@ -23,6 +23,7 @@ export default new Router({
       name: 'dashboard',
       component: Dashboard,
       beforeEnter(from, to, next) {
+        store.dispatch('closeMobileMenu')
         if(store.getters.isLoggedIn) {
           next();
         }else{
@@ -35,6 +36,7 @@ export default new Router({
       name: 'login',
       component: Login,
       beforeEnter(from, to, next) {
+        store.dispatch('closeMobileMenu')
         if(store.getters.isLoggedIn) {
           next('/dashboard');
         }else{
@@ -47,6 +49,7 @@ export default new Router({
       name: 'register',
       component: Register,
       beforeEnter(from, to, next) {
+        store.dispatch('closeMobileMenu')
         if(store.getters.isLoggedIn) {
           next('/dashboard');
         }else{
@@ -65,7 +68,11 @@ export default new Router({
     {
       path: '/results',
       name: 'results',
-      component: Results 
+      component: Results,
+      beforeEnter(from, to, next) {
+        store.dispatch('closeMobileMenu')
+        next();
+      }
     }
   ]
 })

@@ -117,7 +117,6 @@ export default new Vuex.Store({
       });
     },
     loadResults({commit, state}) {
-      commit("SET_MOBILE_MENU", false)
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
         commit('SET_ALL_LOGGERS', data);
       })
@@ -141,7 +140,6 @@ export default new Vuex.Store({
       }
     },
     increment({commit, state, dispatch}, logger) {
-      commit("SET_MOBILE_MENU", false)
       if(state.week === getStartWeek()) {
         commit('INCREMENT', logger);
       }else{
@@ -149,7 +147,6 @@ export default new Vuex.Store({
       }
     },
     setActiveTab({commit}, id) {
-      commit("SET_MOBILE_MENU", false)
       commit('SET_ACTIVE_ID', id);
     },
     register({},{username, password}) {
@@ -161,7 +158,6 @@ export default new Vuex.Store({
       });
     },
     logout({commit}) {
-      commit("SET_MOBILE_MENU", false)
       commit("SET_TOKEN", '')
     },
     openMobileMenu({commit}) {
