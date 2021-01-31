@@ -3,8 +3,8 @@
     <page-heading title="Results"></page-heading>
     <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <competitions-tabs></competitions-tabs>
         <template v-if="showResults">
+          <competitions-tabs></competitions-tabs>
           <div v-for="week in loggersGroupedByWeek" :key="week.week">
             <leaderboard-competition
               v-if="week.week != $store.state.week"
@@ -13,7 +13,7 @@
             ></leaderboard-competition>
           </div>
         </template>
-        <div v-else>
+        <div v-else class="text-lg text-center">
           No data has been collected yet. Check back next week for the first
           weeks results!
         </div>
