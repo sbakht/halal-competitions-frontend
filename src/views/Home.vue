@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="bg-gray-50 h-screen">
+    <!-- <div class="bg-gray-50 h-screen">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex font-bold pt-12">
           <div
@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
