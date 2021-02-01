@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="antialiased">
     <Nav></Nav>
     <router-view />
   </div>

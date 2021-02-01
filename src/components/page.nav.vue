@@ -4,11 +4,10 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img
-              class="w-8 h-8"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-              alt="Workflow"
-            />
+            <div class="text-white font-bold tracking-wide">
+              <span>Halal</span>
+              <span class="text-green-400">Competitions</span>
+            </div>
           </div>
           <div class="hidden md:block">
             <div class="flex items-baseline ml-10 space-x-4">
