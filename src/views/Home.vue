@@ -4,7 +4,9 @@
       <div class="bg-black bg-opacity-70 flex justify-center">
         <div class="max-w-7xl mx-auto text-white py-24">
           <div class="my-6">
-            <div class="arabic text-8xl">فَٱسۡتَبِقُواْ ٱلۡخَيۡرَٰتِۚ</div>
+            <div class="arabic text-8xl text-center">
+              فَٱسۡتَبِقُواْ ٱلۡخَيۡرَٰتِۚ
+            </div>
             <p
               class="text-gray-400 font-semibold mt-4 ml- text-center text-2xl"
             >
