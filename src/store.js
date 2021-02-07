@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { groupBy } from "./utils.js";
+import firebase from "firebase/app";
 
 
 function getStartWeek() {
@@ -32,7 +33,6 @@ function addMissingLoggers({competitions, userId, loggers, week}) {
   })
 }
 
-
 export default new Vuex.Store({
   state: {
     userId: '',
@@ -42,7 +42,7 @@ export default new Vuex.Store({
     competitions: [],
     week: getStartWeek(),
     allLoggers: {},
-    token: window.localStorage.getItem('token'),
+    token: '',
     isMobileMenuOpen: false
   },
   mutations: {
@@ -80,10 +80,8 @@ export default new Vuex.Store({
     },
     SET_TOKEN(state, data) {
       if(data) {
-        window.localStorage.setItem('token', data);
         state.token = data;
       }else{
-        window.localStorage.clear();
         state.token = '';
       }
     },
@@ -149,16 +147,28 @@ export default new Vuex.Store({
     setActiveTab({commit}, id) {
       commit('SET_ACTIVE_ID', id);
     },
-    register({},{username, password}) {
-      return axios.post('http://localhost:3001/api/users', {username, password});
+    register({}, {username, password}) {
+      return firebase.auth().createUserWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+          var user = userCredential.user;
+          console.log(user);
+        });
     },
-    login({commit},{username, password}) {
-      return axios.post('http://localhost:3001/login', {username, password}).then(({data}) => {
-        commit("SET_TOKEN", data.accessToken)
+    login({dispatch}, {username, password}) {
+      return firebase.auth().signInWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          dispatch('setUser', user)
+        });
+    },
+    setUser({commit}, user) {
+      console.log('setUser', user)
+      commit("SET_TOKEN", user)
+    },
+    logout({dispatch}) {
+      firebase.auth().signOut().then(() => {
+        dispatch('setUser');
       });
-    },
-    logout({commit}) {
-      commit("SET_TOKEN", '')
     },
     openMobileMenu({commit}) {
       commit("SET_MOBILE_MENU", true)

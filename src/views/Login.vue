@@ -188,11 +188,12 @@ export default {
             this.$router.push("dashboard");
           })
           .catch((error) => {
-            try {
-              if (error.response.data.invalidCombo) {
-                this.error = "Invalid username/password combination.";
-              }
-            } catch (e) {
+            if (
+              error.code === "auth/wrong-password" ||
+              error.code === "auth/user-not-found"
+            ) {
+              this.error = "Invalid username/password combination.";
+            } else {
               this.error =
                 "There was an error logging in. Please try again later.";
             }

@@ -223,11 +223,9 @@ export default {
             this.$router.push("login");
           })
           .catch((error) => {
-            try {
-              if (error.response.data.usernameTaken) {
-                this.usernameError = "Username is already taken.";
-              }
-            } catch (e) {
+            if (error.code === "auth/email-already-in-use") {
+              this.usernameError = "Username is already taken.";
+            } else {
               this.passwordError =
                 "There was an error creating your account. Please try again later.";
             }
