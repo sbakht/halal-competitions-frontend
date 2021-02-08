@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { find } from "../utils";
 const DEBOUNCE_RATE = 3000;
 
 export default {
@@ -35,7 +34,7 @@ export default {
       clearTimeout(this.timeout);
       this.$store.dispatch("increment", this.logger);
       this.timeout = setTimeout(() => {
-        this.$store.dispatch("save", this.logger);
+        this.$store.dispatch("save");
       }, DEBOUNCE_RATE);
     },
   },

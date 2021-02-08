@@ -101,14 +101,14 @@ function addMissingLoggers({competitions, userId, loggers, week}) {
 export default new Vuex.Store({
   state: {
     keys: keys,
-    userId: '',
+    userId: null,
     activeID: '',
     users: [],
     loggers: [],
     competitions: competitionsJSON,
     week: getStartWeek(),
     allLoggers: {},
-    token: '',
+    user: null,
     isMobileMenuOpen: false
   },
   mutations: {
@@ -121,15 +121,12 @@ export default new Vuex.Store({
     SET_USERS(state, data) {
       state.users = data;
     },
-    SET_USERID(state, data) {
-      state.userId = data;
-    },
     SET_LOGGERS(state, data) {
       state.loggers = data;
     },
     INCREMENT(state, data) {
-      const index = state.loggers.indexOf(data);
-      Vue.set(state.loggers[index], 'count', state.loggers[index].count + 1);
+      state.loggers[data.id] = state.loggers[data.id] + 1;
+      // Vue.set(state.loggers[data.id], state.loggers[data.id].count + 1);
     },
     SET_LOGGERID(state, {oldLogger, newLogger}) {
       const index = state.loggers.indexOf(oldLogger);
@@ -144,12 +141,15 @@ export default new Vuex.Store({
     SET_ACTIVE_ID(state, data) {
       state.activeID = data;
     },
-    SET_TOKEN(state, data) {
-      if(data) {
-        state.token = data;
+    SET_USER(state, user) {
+      if(user) {
+        state.user = user;
       }else{
-        state.token = '';
+        state.user = null;
       }
+    },
+    SET_DOC(state, data) {
+      state.doc = data;
     },
     SET_MOBILE_MENU(state, data) {
       state.isMobileMenuOpen = data;
@@ -161,45 +161,28 @@ export default new Vuex.Store({
       commit('SET_WEEK', getStartWeek());
 
       const loggersRef = firebase.firestore().collection('loggers');
+      const userid = state.user && state.user.uid;
 
-      loggersRef.where('userid', '==', '9OOllbgAIYhWApDpU2hfhAzx4VMN').where('week', '<', new Date(2021, 2, 2)).get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data())
-          const trackedLoggers = doc.data().count;
+      if(userid) {
+        loggersRef.where('userid', '==', userid).where('week', '<', new Date(2021, 2, 2)).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            commit('SET_DOC', doc);
+            const trackedLoggers = doc.data().count;
 
-          competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-            if(!trackedLoggers.hasOwnProperty(loggerId)) {
-              trackedLoggers[loggerId] = 0;
-            }
-          }))
+            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
+              if(!trackedLoggers.hasOwnProperty(loggerId)) {
+                trackedLoggers[loggerId] = 0;
+              }
+            }))
 
-          commit('SET_LOGGERS', trackedLoggers);
+            commit('SET_LOGGERS', trackedLoggers);
+          });
         });
-      });
+      }
 
       if(!state.activeID) {
         commit('SET_ACTIVE_ID', competitionsJSON[0].id)
       }
-
-      // Promise.all([
-      //   axios.get("http://localhost:3001/api/competitions"),
-      //   axios.get("http://localhost:3001/api/user", { headers: {authorization: 'Bearer ' + state.token }}),
-      // ]).then((responses) => {
-      //   const competitions = responses[0].data;
-      //   const user = responses[1].data;
-
-      //   const userId = user._id;
-      //   const loggers = user.data;
-      //   const week = this.state.week;
-
-      //   addMissingLoggers({competitions, userId, loggers, week});
-
-      //   if(!state.activeID) {
-      //     commit('SET_ACTIVE_ID', competitions[0]._id)
-      //   }
-      //   commit('SET_COMPETITIONS', competitions);
-      //   commit('SET_LOGGERS', loggers);
-      // });
     },
     loadResults({commit, state}) {
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
@@ -215,14 +198,9 @@ export default new Vuex.Store({
         commit('SET_USERS', data);
       })
     },
-    save({commit, state}, logger) {
-      if(logger._id) {
-        axios.put("http://localhost:3001/api/loggers", logger, { headers: {authorization: 'Bearer ' + state.token }});
-      }else{
-        axios.post("http://localhost:3001/api/loggers", logger, { headers: {authorization: 'Bearer ' + state.token }}).then(response => {
-          commit('SET_LOGGERID', {oldLogger: logger, newLogger: response.data});
-        });
-      }
+    save({commit, state}) {
+      const loggersRef = firebase.firestore().collection('loggers');
+      loggersRef.doc(state.doc.id).update({count: state.loggers})
     },
     increment({commit, state, dispatch}, logger) {
       if(state.week === getStartWeek()) {
@@ -238,7 +216,6 @@ export default new Vuex.Store({
       return firebase.auth().createUserWithEmailAndPassword(username, password)
         .then((userCredential) => {
           var user = userCredential.user;
-          console.log(user);
         });
     },
     login({dispatch}, {username, password}) {
@@ -248,12 +225,8 @@ export default new Vuex.Store({
           dispatch('setUser', user)
         });
     },
-    setUser({commit}, user) {
-      console.log('setUser', user)
-      commit("SET_TOKEN", user)
-      if(user) {
-        commit("SET_USERID", user.uid)
-      }
+    setUser({commit}, user = null) {
+      commit("SET_USER", user)
     },
     logout({dispatch}) {
       firebase.auth().signOut().then(() => {
@@ -313,7 +286,7 @@ export default new Vuex.Store({
       state.competitions.find( (comp) => comp.id === state.activeID) || {};
     },
     isLoggedIn(state) {
-      return !!state.token;
+      return !!state.user;
     }
   }
 })

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { find } from "../utils";
 import DashboardCompetitionIncrement from "./dashboard.competition.increment.vue";
 
 export default {
@@ -28,19 +27,6 @@ export default {
   computed: {
     loggers() {
       return this.$store.getters.activeLoggers;
-    },
-    total() {
-      const isForCounter = (logger) => logger.counter === this.counter._id;
-      const loggers = this.$store.getters.currentLoggers;
-      const totals = this.competition.counters.map((counter) => {
-        const { count } = find(
-          (logger) => logger.counter === counter._id,
-          loggers,
-          { count: 0 }
-        );
-        return count;
-      });
-      return totals.reduce((a, b) => a + b, 0);
     },
   },
 };
