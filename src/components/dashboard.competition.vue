@@ -1,10 +1,10 @@
 <template>
   <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-    <template v-for="counter in competition.counters">
+    <template v-for="logger in loggers">
       <dashboard-competition-increment
-        :counter="counter"
+        :logger="logger"
         @increment="increment"
-        :key="counter.id"
+        :key="logger.id"
       ></dashboard-competition-increment>
     </template>
   </dl>
@@ -26,6 +26,9 @@ export default {
     },
   },
   computed: {
+    loggers() {
+      return this.$store.getters.activeLoggers;
+    },
     total() {
       const isForCounter = (logger) => logger.counter === this.counter._id;
       const loggers = this.$store.getters.currentLoggers;

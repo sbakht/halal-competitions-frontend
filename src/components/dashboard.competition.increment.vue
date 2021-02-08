@@ -5,7 +5,7 @@
   >
     <div class="px-4 py-5 sm:p-6">
       <dt class="text-sm font-medium text-gray-500 truncate">
-        {{ counter.title }}
+        {{ title }}
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
         {{ logger.count }}
@@ -24,23 +24,13 @@ export default {
       timeout: null,
     };
   },
-  props: {
-    counter: {
-      type: Object,
-      validator: (val) => {
-        return val.title.length > 0;
-      },
-    },
-  },
+  props: ["logger"],
   computed: {
-    logger() {
-      return find(this.isForCounter, this.$store.getters.currentLoggers, {});
+    title() {
+      return this.$store.state.keys[this.logger.id].title;
     },
   },
   methods: {
-    isForCounter(logger) {
-      return logger.counter === this.counter._id;
-    },
     onClick() {
       clearTimeout(this.timeout);
       this.$store.dispatch("increment", this.logger);

@@ -10,8 +10,8 @@
       >
         <option
           v-for="competition in competitions"
-          :value="competition._id"
-          :key="competition._id"
+          :value="competition.id"
+          :key="competition.id"
         >
           {{ competition.title }}
         </option>
@@ -22,10 +22,10 @@
         <nav class="-mb-px flex" aria-label="Tabs">
           <competitions-tabs-item
             v-for="competition in competitions"
-            :id="competition._id"
+            :id="competition.id"
             :name="competition.title"
-            :key="competition._id"
-            :isActive="competition._id === activeID"
+            :key="competition.id"
+            :isActive="competition.id === activeID"
             @change="onChange"
           ></competitions-tabs-item>
         </nav>
