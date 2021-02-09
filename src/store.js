@@ -108,7 +108,7 @@ export default new Vuex.Store({
     competitions: competitionsJSON,
     week: getStartWeek(),
     allLoggers: {},
-    user: null,
+    user: window.localStorage.getItem('user'),
     isMobileMenuOpen: false
   },
   mutations: {
@@ -144,8 +144,10 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       if(user) {
         state.user = user;
+        window.localStorage.setItem('user', user)
       }else{
         state.user = null;
+        window.localStorage.removeItem('user')
       }
     },
     SET_DOC(state, data) {
@@ -167,7 +169,7 @@ export default new Vuex.Store({
         loggersRef.where('userid', '==', userid).where('week', '<', new Date(2021, 2, 2)).get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             commit('SET_DOC', doc);
-            const trackedLoggers = doc.data().count;
+            const trackedLoggers = doc.data().loggers;
 
             competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
               if(!trackedLoggers.hasOwnProperty(loggerId)) {
@@ -200,7 +202,7 @@ export default new Vuex.Store({
     },
     save({commit, state}) {
       const loggersRef = firebase.firestore().collection('loggers');
-      loggersRef.doc(state.doc.id).update({count: state.loggers})
+      loggersRef.doc(state.doc.id).update({loggers: state.loggers})
     },
     increment({commit, state, dispatch}, logger) {
       if(state.week === getStartWeek()) {
