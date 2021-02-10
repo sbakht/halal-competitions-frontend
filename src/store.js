@@ -15,6 +15,20 @@ function getStartWeek() {
   return dayjs().day(1).format('MMDDYYYY')
 }
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+
+function dateRange() {
+  const currentDate =  firebase.firestore.Timestamp.now().toDate();
+  const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
+
+  return {start: monday, end: monday.addDays(7)}
+}
+
 Vue.use(Vuex)
 
 const keys = {
@@ -108,7 +122,8 @@ export default new Vuex.Store({
     competitions: competitionsJSON,
     week: getStartWeek(),
     allLoggers: {},
-    user: window.localStorage.getItem('user'),
+    user: null,
+    userid: window.localStorage.getItem('userid'),
     isMobileMenuOpen: false
   },
   mutations: {
@@ -144,10 +159,12 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       if(user) {
         state.user = user;
-        window.localStorage.setItem('user', user)
+        state.userid = user.uid;
+        window.localStorage.setItem('userid', user.uid)
       }else{
         state.user = null;
-        window.localStorage.removeItem('user')
+        state.userid = null;
+        window.localStorage.removeItem('userid')
       }
     },
     SET_DOC(state, data) {
@@ -163,10 +180,21 @@ export default new Vuex.Store({
       commit('SET_WEEK', getStartWeek());
 
       const loggersRef = firebase.firestore().collection('loggers');
-      const userid = state.user && state.user.uid;
+      const userid = state.userid;
 
       if(userid) {
-        loggersRef.where('userid', '==', userid).where('week', '<', new Date(2021, 2, 2)).get().then((querySnapshot) => {
+        const {start, end} = dateRange();
+        loggersRef.where('userid', '==', userid).where('date', '>=', start).where('date', '<', end).get().then((querySnapshot) => {
+          if(querySnapshot.size === 0) {
+            const trackedLoggers = {};
+
+            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
+                trackedLoggers[loggerId] = 0;
+            }))
+            commit('SET_LOGGERS', trackedLoggers);
+            return;
+          }
+
           querySnapshot.forEach((doc) => {
             commit('SET_DOC', doc);
             const trackedLoggers = doc.data().loggers;
@@ -202,7 +230,13 @@ export default new Vuex.Store({
     },
     save({commit, state}) {
       const loggersRef = firebase.firestore().collection('loggers');
-      loggersRef.doc(state.doc.id).update({loggers: state.loggers})
+      if(state.doc) {
+        loggersRef.doc(state.doc.id).update({loggers: state.loggers})
+      }else{
+        loggersRef.add({userid: state.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
+          commit("SET_DOC", ref);
+        })
+      }
     },
     increment({commit, state, dispatch}, logger) {
       if(state.week === getStartWeek()) {
@@ -288,7 +322,7 @@ export default new Vuex.Store({
       state.competitions.find( (comp) => comp.id === state.activeID) || {};
     },
     isLoggedIn(state) {
-      return !!state.user;
+      return !!state.userid;
     }
   }
 })

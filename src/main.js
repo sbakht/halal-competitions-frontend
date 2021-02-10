@@ -16,11 +16,6 @@ import "firebase/analytics";
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
 
 var firebaseConfig = {
   apiKey: "AIzaSyAfIeG5JZSQ00sYE_Gg8JhxTr7XNCRj0rE",
@@ -42,6 +37,11 @@ var db = firebase.firestore();
 db.useEmulator("localhost", 8083);
 firebase.auth().useEmulator('http://localhost:8081/');
 
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
 
 
 // db.collection("users").add({
@@ -59,7 +59,7 @@ firebase.auth().useEmulator('http://localhost:8081/');
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch('setUser', user);
-    router.push({name: 'dashboard'});
+    // router.push({name: 'dashboard'});
   } else {
     store.dispatch('setUser');
   }
