@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
-import { groupBy, dateRange } from "./utils.js";
-import {competitionsJSON, competitionKeys} from "./data";
+import { groupBy } from "./utils.js";
+import {competitionsJSON} from "./data";
 import firebase from "firebase/app";
 import User from './state/User'
 import View from './state/View'
 import Tab from './state/Tab'
-import Increment from './state/Increment'
+import Logger from './state/Logger'
 
+// TODO
+// Preserve last clicked tab
+// loaders
+// fix results page
 
 Vue.use(Vuex)
 
@@ -17,7 +21,7 @@ export default new Vuex.Store({
     User,
     View,
     Tab,
-    // Increment
+    Logger
   },
   state: {
     users: [],
@@ -32,13 +36,6 @@ export default new Vuex.Store({
     SET_USERS(state, data) {
       state.users = data;
     },
-    SET_LOGGERS(state, data) {
-      state.loggers = data;
-    },
-    INCREMENT(state, data) {
-      state.loggers[data.id] = state.loggers[data.id] + 1;
-      // Vue.set(state.loggers[data.id], state.loggers[data.id].count + 1);
-    },
     SET_LOGGERID(state, {oldLogger, newLogger}) {
       const index = state.loggers.indexOf(oldLogger);
       Vue.set(state.loggers[index], '_id', newLogger._id)
@@ -46,45 +43,8 @@ export default new Vuex.Store({
     SET_ALL_LOGGERS(state, data) {
       state.allLoggers = data;
     },
-    SET_DOC(state, data) {
-      state.doc = data;
-    },
   },
   actions: {
-    loadDashboard({commit, state, dispatch}) {
-      commit("SET_MOBILE_MENU", false)
-
-      const loggersRef = firebase.firestore().collection('loggers');
-      const userid = state.User.userid;
-
-      if(userid) {
-        const {start, end} = dateRange();
-        loggersRef.where('userid', '==', userid).where('date', '>=', start).where('date', '<', end).get().then((querySnapshot) => {
-          if(querySnapshot.size === 0) {
-            const trackedLoggers = {};
-
-            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-                trackedLoggers[loggerId] = 0;
-            }))
-            commit('SET_LOGGERS', trackedLoggers);
-            return;
-          }
-
-          querySnapshot.forEach((doc) => {
-            commit('SET_DOC', doc);
-            const trackedLoggers = doc.data().loggers;
-
-            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-              if(!trackedLoggers.hasOwnProperty(loggerId)) {
-                trackedLoggers[loggerId] = 0;
-              }
-            }))
-
-            commit('SET_LOGGERS', trackedLoggers);
-          });
-        });
-      }
-    },
     loadResults({commit, state}) {
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
         commit('SET_ALL_LOGGERS', data);
@@ -96,32 +56,8 @@ export default new Vuex.Store({
         commit('SET_USERS', data);
       })
     },
-    save({commit, state}) {
-      const loggersRef = firebase.firestore().collection('loggers');
-      if(state.doc) {
-        loggersRef.doc(state.doc.id).update({loggers: state.loggers})
-      }else{
-        loggersRef.add({userid: state.User.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
-          commit("SET_DOC", ref);
-        })
-      }
-    },
-    increment({commit, state, dispatch}, logger) {
-      // TODO: reset listener to auto reset on new week
-      commit('INCREMENT', logger);
-    },
-    register({}, {username, password}) {
-      return firebase.auth().createUserWithEmailAndPassword(username, password)
-        .then((userCredential) => {
-          var user = userCredential.user;
-        });
-    },
   },
   getters: {
-    activeLoggers(state) {
-      const newIds = Object.keys(state.loggers).filter(id => competitionKeys[id].competition === state.Tab.activeTabId);
-      return newIds.map(id => ({ id, title: competitionKeys[id].title, count: state.loggers[id]}));
-    },
     resultsByUsers(state) {
       const loggersByUser = state.users.map(({_id, displayName}) => {
         return {userId: _id, displayName, loggers: state.allLoggers.filter(logger => logger.user === _id)};
@@ -158,9 +94,6 @@ export default new Vuex.Store({
           return -1;
         }
       });
-    },
-    activeCompetition(state) {
-      state.competitions.find( (comp) => comp.id === state.Tab.activeTabId) || {};
     },
   }
 })

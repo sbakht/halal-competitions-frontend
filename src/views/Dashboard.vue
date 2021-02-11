@@ -5,8 +5,12 @@
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
-          :competition="competition"
+          v-if="loaded"
+          :loggers="loggers"
         ></dashboard-competition>
+        <div class="flex justify-center items-center" v-else>
+          <img src="../assets/loader.gif" />
+        </div>
       </div>
     </main>
   </div>
@@ -21,13 +25,16 @@ export default {
   name: "dashboard",
   components: { PageHeading, CompetitionsTabs, DashboardCompetition },
   name: "HelloWorld",
-  computed: {
-    competition() {
-      return this.$store.getters.activeCompetition;
-    },
-  },
   mounted() {
     this.$store.dispatch("loadDashboard");
+  },
+  computed: {
+    loggers() {
+      return this.$store.getters.activeLoggers;
+    },
+    loaded() {
+      return Object.keys(this.loggers).length > 0;
+    },
   },
 };
 </script>

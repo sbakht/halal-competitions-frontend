@@ -15,18 +15,11 @@ import DashboardCompetitionIncrement from "./dashboard.competition.increment.vue
 
 export default {
   components: { DashboardCompetitionIncrement },
-  props: {
-    competition: Object,
-  },
   methods: {
     increment(logger) {
       logger.count++;
     },
   },
-  computed: {
-    loggers() {
-      return this.$store.getters.activeLoggers;
-    },
-  },
+  props: ["loggers"],
 };
 </script>

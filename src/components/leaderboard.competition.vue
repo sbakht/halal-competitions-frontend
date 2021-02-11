@@ -21,10 +21,5 @@ export default {
     week: String,
     loggers: Object,
   },
-  computed: {
-    competition() {
-      return this.$store.getters.activeCompetition;
-    },
-  },
 };
 </script>

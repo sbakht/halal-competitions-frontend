@@ -30,6 +30,12 @@ export default {
           dispatch('setUser', userCredential.user)
         });
     },
+    register({dispatch}, {username, password}) {
+      return firebase.auth().createUserWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+          dispatch('login', {username, password})
+        });
+    },
     logout({dispatch}) {
       firebase.auth().signOut().then(() => {
         dispatch('setUser');
