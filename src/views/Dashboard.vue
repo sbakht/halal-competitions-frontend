@@ -6,7 +6,6 @@
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           :competition="competition"
-          :week="week"
         ></dashboard-competition>
       </div>
     </main>
@@ -23,9 +22,6 @@ export default {
   components: { PageHeading, CompetitionsTabs, DashboardCompetition },
   name: "HelloWorld",
   computed: {
-    week() {
-      return this.$store.state.week;
-    },
     competition() {
       return this.$store.getters.activeCompetition;
     },

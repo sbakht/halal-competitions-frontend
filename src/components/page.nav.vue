@@ -120,7 +120,7 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     isMobileOpen() {
-      return this.$store.state.isMobileMenuOpen;
+      return this.$store.state.View.isMobileMenuOpen;
     },
   },
 };

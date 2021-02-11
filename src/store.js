@@ -1,137 +1,33 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
-import dayjs from 'dayjs';
-import { groupBy } from "./utils.js";
+import { groupBy, dateRange } from "./utils.js";
+import {competitionsJSON, competitionKeys} from "./data";
 import firebase from "firebase/app";
+import User from './state/User'
+import View from './state/View'
+import Tab from './state/Tab'
+import Increment from './state/Increment'
 
-
-function getStartWeek() {
-  // return "01252021"
-  const day = dayjs().day()
-  if(day === 0) {
-    return dayjs().day(-6).format('MMDDYYYY')
-  }
-  return dayjs().day(1).format('MMDDYYYY')
-}
-
-Date.prototype.addDays = function(days) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-}
-
-
-function dateRange() {
-  const currentDate =  firebase.firestore.Timestamp.now().toDate();
-  const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
-
-  return {start: monday, end: monday.addDays(7)}
-}
 
 Vue.use(Vuex)
 
-const keys = {
-  dhikr_1: {
-    competition: 'dhikr',
-    title: 'SubhanAllah'
-  },
-  dhikr_2: {
-    competition: 'dhikr',
-    title: 'Alhamdulillah'
-  },
-  dhikr_3: {
-    competition: 'dhikr',
-    title: 'Allahu Akbar'
-  },
-  dhikr_4: {
-    competition: 'dhikr',
-    title: 'la ilaha ilAllah'
-  },
-  mindful_1: {
-    competition: 'mindful',
-    title: 'Listen to Quran'
-  }
-}
-
-const competitionsJSON = [
-  {
-    id: 'dhikr',
-    title: 'Tasbih',
-    counters: {
-      dhikr_1: {
-        title: 'SubhanAllah'
-      },
-      dhikr_2: {
-        title: 'Alhamdulillah'
-      },
-      dhikr_3: {
-        title: 'Allahu Akbar'
-      },
-      dhikr_4: {
-        title: 'la ilaha ilAllah'
-      },
-    }
-  },
-  {
-    id: 'mindful',
-    title: 'Mindful Minutes',
-    counters: {
-      mindful_1: {
-        title: 'Listen to Quran'
-      }
-    }
-  },
-  {
-    id: 'charity',
-    title: 'Charity',
-    counters: {
-    }
-  },
-  {
-    id: 'fitness',
-    title: 'Fitness',
-    counters: {
-    }
-  }
-]
-
-function addMissingLoggers({competitions, userId, loggers, week}) {
-  const counterIds = competitions.map(comp => comp.counters.map(c => c._id)).flat();
-
-  counterIds.forEach(counterId => {
-    const logger = loggers.find(l => l.week === week && l.counter === counterId);
-    if(!logger) {
-      loggers.push({
-        count: 0,
-        week,
-        counter: counterId,
-        user: userId,
-      })
-    }
-  })
-}
-
 export default new Vuex.Store({
+  modules: {
+    User,
+    View,
+    Tab,
+    // Increment
+  },
   state: {
-    keys: keys,
-    userId: null,
-    activeID: '',
     users: [],
     loggers: [],
-    competitions: competitionsJSON,
-    week: getStartWeek(),
+    competitions: competitionsJSON, // TODO do we need this in state?
     allLoggers: {},
-    user: null,
-    userid: window.localStorage.getItem('userid'),
-    isMobileMenuOpen: false
   },
   mutations: {
     SET_COMPETITIONS(state, data) {
       state.competitions = data;
-    },
-    SET_USER(state, data) {
-      state.user = data;
     },
     SET_USERS(state, data) {
       state.users = data;
@@ -150,37 +46,16 @@ export default new Vuex.Store({
     SET_ALL_LOGGERS(state, data) {
       state.allLoggers = data;
     },
-    SET_WEEK(state, data) {
-      state.week = data;
-    },
-    SET_ACTIVE_ID(state, data) {
-      state.activeID = data;
-    },
-    SET_USER(state, user) {
-      if(user) {
-        state.user = user;
-        state.userid = user.uid;
-        window.localStorage.setItem('userid', user.uid)
-      }else{
-        state.user = null;
-        state.userid = null;
-        window.localStorage.removeItem('userid')
-      }
-    },
     SET_DOC(state, data) {
       state.doc = data;
     },
-    SET_MOBILE_MENU(state, data) {
-      state.isMobileMenuOpen = data;
-    }
   },
   actions: {
-    loadDashboard({commit, state}) {
+    loadDashboard({commit, state, dispatch}) {
       commit("SET_MOBILE_MENU", false)
-      commit('SET_WEEK', getStartWeek());
 
       const loggersRef = firebase.firestore().collection('loggers');
-      const userid = state.userid;
+      const userid = state.User.userid;
 
       if(userid) {
         const {start, end} = dateRange();
@@ -209,19 +84,12 @@ export default new Vuex.Store({
           });
         });
       }
-
-      if(!state.activeID) {
-        commit('SET_ACTIVE_ID', competitionsJSON[0].id)
-      }
     },
     loadResults({commit, state}) {
       axios.get("http://localhost:3001/api/loggers").then(({data}) => {
         commit('SET_ALL_LOGGERS', data);
       })
       axios.get("http://localhost:3001/api/competitions").then(({data}) => {
-        if(!state.activeID) {
-          commit('SET_ACTIVE_ID', data[0]._id)
-        }
         commit('SET_COMPETITIONS', data);
       })
       axios.get("http://localhost:3001/api/users").then(({data}) => {
@@ -233,20 +101,14 @@ export default new Vuex.Store({
       if(state.doc) {
         loggersRef.doc(state.doc.id).update({loggers: state.loggers})
       }else{
-        loggersRef.add({userid: state.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
+        loggersRef.add({userid: state.User.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
           commit("SET_DOC", ref);
         })
       }
     },
     increment({commit, state, dispatch}, logger) {
-      if(state.week === getStartWeek()) {
-        commit('INCREMENT', logger);
-      }else{
-        dispatch('loadDashboard');
-      }
-    },
-    setActiveTab({commit}, id) {
-      commit('SET_ACTIVE_ID', id);
+      // TODO: reset listener to auto reset on new week
+      commit('INCREMENT', logger);
     },
     register({}, {username, password}) {
       return firebase.auth().createUserWithEmailAndPassword(username, password)
@@ -254,32 +116,11 @@ export default new Vuex.Store({
           var user = userCredential.user;
         });
     },
-    login({dispatch}, {username, password}) {
-      return firebase.auth().signInWithEmailAndPassword(username, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          dispatch('setUser', user)
-        });
-    },
-    setUser({commit}, user = null) {
-      commit("SET_USER", user)
-    },
-    logout({dispatch}) {
-      firebase.auth().signOut().then(() => {
-        dispatch('setUser');
-      });
-    },
-    openMobileMenu({commit}) {
-      commit("SET_MOBILE_MENU", true)
-    },
-    closeMobileMenu({commit}) {
-      commit("SET_MOBILE_MENU", false)
-    }
   },
   getters: {
     activeLoggers(state) {
-      const newIds = Object.keys(state.loggers).filter(id => state.keys[id].competition === state.activeID);
-      return newIds.map(id => ({ id, count: state.loggers[id]}));
+      const newIds = Object.keys(state.loggers).filter(id => competitionKeys[id].competition === state.Tab.activeTabId);
+      return newIds.map(id => ({ id, title: competitionKeys[id].title, count: state.loggers[id]}));
     },
     resultsByUsers(state) {
       const loggersByUser = state.users.map(({_id, displayName}) => {
@@ -319,10 +160,7 @@ export default new Vuex.Store({
       });
     },
     activeCompetition(state) {
-      state.competitions.find( (comp) => comp.id === state.activeID) || {};
+      state.competitions.find( (comp) => comp.id === state.Tab.activeTabId) || {};
     },
-    isLoggedIn(state) {
-      return !!state.userid;
-    }
   }
 })

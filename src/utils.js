@@ -1,3 +1,5 @@
+import firebase from "firebase/app";
+
 export const find = function find(fn, arr, df) {
   if(df === undefined) {
     throw new Error();
@@ -27,4 +29,17 @@ export const groupBy = function groupBy(arr, key) {
   } catch (e) {
     console.error(e);
   }
+}
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+
+export function dateRange() {
+  const currentDate =  firebase.firestore.Timestamp.now().toDate();
+  const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
+
+  return {start: monday, end: monday.addDays(7)}
 }

@@ -17,7 +17,6 @@ export default {
   components: { DashboardCompetitionIncrement },
   props: {
     competition: Object,
-    week: String,
   },
   methods: {
     increment(logger) {

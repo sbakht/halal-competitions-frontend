@@ -25,7 +25,7 @@
             :id="competition.id"
             :name="competition.title"
             :key="competition.id"
-            :isActive="competition.id === activeID"
+            :isActive="competition.id === activeTabId"
             @change="onChange"
           ></competitions-tabs-item>
         </nav>
@@ -42,8 +42,8 @@ export default {
     competitions() {
       return this.$store.state.competitions;
     },
-    activeID() {
-      return this.$store.state.activeID;
+    activeTabId() {
+      return this.$store.state.Tab.activeTabId;
     },
   },
   methods: {
