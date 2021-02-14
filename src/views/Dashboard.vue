@@ -1,16 +1,14 @@
 <template>
   <div>
     <page-heading title="Dashboard"></page-heading>
-    <main>
+    <main class="mb-16">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           v-if="loaded"
           :loggers="loggers"
         ></dashboard-competition>
-        <div class="flex justify-center items-center" v-else>
-          <img src="../assets/loader.gif" />
-        </div>
+        <loader v-else></loader>
       </div>
     </main>
   </div>
@@ -20,10 +18,11 @@
 import PageHeading from "../components/page.heading.vue";
 import CompetitionsTabs from "../components/competitions.tabs.vue";
 import DashboardCompetition from "../components/dashboard.competition.vue";
+import Loader from "../components/loader.vue";
 
 export default {
   name: "dashboard",
-  components: { PageHeading, CompetitionsTabs, DashboardCompetition },
+  components: { PageHeading, CompetitionsTabs, DashboardCompetition, Loader },
   name: "HelloWorld",
   mounted() {
     this.$store.dispatch("loadDashboard");
@@ -33,7 +32,7 @@ export default {
       return this.$store.getters.activeLoggers;
     },
     loaded() {
-      return Object.keys(this.loggers).length > 0;
+      return this.$store.state.Logger.loadedDashboard;
     },
   },
 };

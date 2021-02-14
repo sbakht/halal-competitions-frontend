@@ -1,12 +1,33 @@
 import firebase from "firebase/app";
-import { groupBy, dateRange } from "../utils.js";
+import { dateRange } from "../utils.js";
 import {competitionsJSON, competitionKeys} from "../data";
+
+function addUntrackedLoggers(loggers) {
+  competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
+      if(!loggers.hasOwnProperty(loggerId)) {
+        loggers[loggerId] = 0;
+      }
+  }))
+}
+
+function getUsersLoggers(snapshot) {
+  let loggers;
+  if(snapshot.size === 0) {
+    loggers = {};
+  }else{
+    snapshot.forEach(doc => {
+      loggers = doc.data().loggers;
+    })
+  }
+  return loggers;
+}
 
 export default {
   state: () => {
     return {
       loggers: [],
-      doc: null
+      doc: null,
+      loadedDashboard: false,
     }
   },
   mutations: {
@@ -19,13 +40,21 @@ export default {
     SET_DOC(state, data) {
       state.doc = data;
     },
+    SET_LOADEDDASHBOARD(state, data) {
+      state.loadedDashboard = data;
+    }
   },
   actions: {
     increment({commit}, logger) {
       // TODO: reset listener to auto reset on new week
       commit('INCREMENT', logger);
     },
-    loadDashboard({commit, rootState}) {
+    setDoc({commit}, snapshot) {
+      snapshot.forEach(doc => {
+        commit("SET_DOC", doc);
+      })
+    },
+    loadDashboard({commit, dispatch, rootState}) {
       commit("SET_MOBILE_MENU", false)
 
       const loggersRef = firebase.firestore().collection('loggers');
@@ -33,38 +62,24 @@ export default {
 
       if(userid) {
         const {start, end} = dateRange();
-        loggersRef.where('userid', '==', userid).where('date', '>=', start).where('date', '<', end).get().then((querySnapshot) => {
-          if(querySnapshot.size === 0) {
-            const trackedLoggers = {};
+        loggersRef.where('userid', '==', userid).where('date', '>=', start).where('date', '<', end).get().then((snapshot) => {
 
-            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-                trackedLoggers[loggerId] = 0;
-            }))
-            commit('SET_LOGGERS', trackedLoggers);
-            return;
-          }
+          const loggers = getUsersLoggers(snapshot);
+          addUntrackedLoggers(loggers);
 
-          querySnapshot.forEach((doc) => {
-            commit("SET_DOC", doc);
-            const trackedLoggers = doc.data().loggers;
-
-            competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-              if(!trackedLoggers.hasOwnProperty(loggerId)) {
-                trackedLoggers[loggerId] = 0;
-              }
-            }))
-
-            commit('SET_LOGGERS', trackedLoggers);
-          });
+          dispatch('setDoc', snapshot)
+          commit('SET_LOGGERS', loggers);
+          commit('SET_LOADEDDASHBOARD', true);
         });
       }
     },
     save({commit, state, rootState}) {
       const loggersRef = firebase.firestore().collection('loggers');
+      // TODO change email to username
       if(state.doc) {
-        loggersRef.doc(state.doc.id).update({loggers: state.loggers})
+        loggersRef.doc(state.doc.id).update({username:rootState.User.user.email, loggers: state.loggers})
       }else{
-        loggersRef.add({userid: rootState.User.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
+        loggersRef.add({username: rootState.User.user.email, userid: rootState.User.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
           commit("SET_DOC", ref);
         })
       }

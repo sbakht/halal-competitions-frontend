@@ -1,16 +1,5 @@
 import firebase from "firebase/app";
 
-export const find = function find(fn, arr, df) {
-  if(df === undefined) {
-    throw new Error();
-  }
-
-  const result = arr.find(fn)
-  if (typeof result !== 'undefined') {
-    return result;
-  }
-  return df
-}
 
 export const groupBy = function groupBy(arr, key) {
   if (!arr.length) {
@@ -36,10 +25,16 @@ Date.prototype.addDays = function(days) {
   return date;
 }
 
-
 export function dateRange() {
   const currentDate =  firebase.firestore.Timestamp.now().toDate();
   const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
 
   return {start: monday, end: monday.addDays(7)}
+}
+
+export function dateRangeLastWeek() {
+  const currentDate =  firebase.firestore.Timestamp.now().toDate();
+  const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
+
+  return {start: monday.addDays(-7), end: monday}
 }
