@@ -41,7 +41,11 @@ export default {
           orderedLoggersByScore[competitionKey] = data;
         }
       })
-      return filterToActive(orderedLoggersByScore, rootState.Tab.activeTabId)
+      const {start, end} = dateRangeLastWeek();
+      return {
+        start, end,
+        data: filterToActive(orderedLoggersByScore, rootState.Tab.activeTabId)
+      }
     }
   },
 }

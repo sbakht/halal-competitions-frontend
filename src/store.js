@@ -13,12 +13,10 @@ import { competitionsJSON } from './data'
 // make pwa work
 // alert when beaten
 // settings section
-// add week info to title of results page
 // use custom login with username instead of email
 // add actual clicker data info from subreddit
 
 Vue.use(Vuex)
-
 
 
 export default new Vuex.Store({

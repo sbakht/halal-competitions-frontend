@@ -77,7 +77,7 @@ export default {
       const loggersRef = firebase.firestore().collection('loggers');
       // TODO change email to username
       if(state.doc) {
-        loggersRef.doc(state.doc.id).update({username:rootState.User.user.email, loggers: state.loggers})
+        loggersRef.doc(state.doc.id).update({loggers: state.loggers})
       }else{
         loggersRef.add({username: rootState.User.user.email, userid: rootState.User.userid, loggers: state.loggers, date: firebase.firestore.Timestamp.now()}).then(ref => {
           commit("SET_DOC", ref);
