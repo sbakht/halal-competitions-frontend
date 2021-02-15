@@ -27,7 +27,7 @@
               />
             </div>
             <p class="mt-2 text-sm text-gray-500" id="email-description">
-              Don't use your reddit username!
+              Don't use your reddit username or real name!
             </p>
             <p class="mt-2 text-sm text-red-600" v-if="usernameError">
               {{ usernameError }}
