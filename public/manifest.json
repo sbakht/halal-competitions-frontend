@@ -1,6 +1,6 @@
 {
-  "name": "halal-competitions-new",
-  "short_name": "halal-competitions-new",
+  "name": "halal-competitions",
+  "short_name": "halal-competitions",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -13,7 +13,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#4DBA87"

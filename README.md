@@ -1,4 +1,4 @@
-# halal-competitions-new
+# halal-competitions
 
 ## Project setup
 ```
