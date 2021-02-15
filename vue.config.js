@@ -1,5 +1,1 @@
-module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/halal-competitions-frontend/'
-    : '/'
-}
+module.exports = {}
