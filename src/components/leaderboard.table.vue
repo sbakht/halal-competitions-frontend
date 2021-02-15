@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-md mt-16">
+  <div class="md:max-w-md mt-8">
     <div class="text-gray-900 font-semibold">{{ data.title }}</div>
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="flex flex-col mt-3">

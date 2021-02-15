@@ -14,7 +14,6 @@ import { competitionsJSON } from './data'
 // alert when beaten
 // settings section
 // use custom login with username instead of email
-// add actual clicker data info from subreddit
 
 Vue.use(Vuex)
 
