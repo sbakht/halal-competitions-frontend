@@ -34,8 +34,8 @@ firebase.analytics();
 
 var db = firebase.firestore();
 
-db.useEmulator("localhost", 8083);
-firebase.auth().useEmulator('http://localhost:8081/');
+// db.useEmulator("localhost", 8083);
+// firebase.auth().useEmulator('http://localhost:8081/');
 
 new Vue({
   router,
