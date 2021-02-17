@@ -5,6 +5,7 @@ import View from './state/View'
 import Tab from './state/Tab'
 import Logger from './state/Logger'
 import Result from './state/Result';
+import Race from './state/Race';
 import { competitionsJSON } from './data'
 
 // TODO
@@ -12,6 +13,7 @@ import { competitionsJSON } from './data'
 // tailwind minimizer
 // make pwa work
 // ------- release
+// do we need to add untracked loggers?
 // firebase security
 // column count options
 // decrement option
@@ -28,6 +30,7 @@ export default new Vuex.Store({
     Tab,
     Logger,
     Result,
+    Race,
   },
   state: {
     competitions: competitionsJSON

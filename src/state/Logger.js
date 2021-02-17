@@ -62,7 +62,7 @@ export default {
 
       if(userid) {
         const {start, end} = dateRange();
-        loggersRef.where('userid', '==', userid).where('date', '>=', start).where('date', '<', end).get().then((snapshot) => {
+        loggersRef.where('userid', '==', userid).where('created', '>=', start).where('created', '<', end).get().then((snapshot) => {
 
           const loggers = getUsersLoggers(snapshot);
           addUntrackedLoggers(loggers);
