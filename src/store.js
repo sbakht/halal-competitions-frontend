@@ -8,12 +8,15 @@ import Result from './state/Result';
 import { competitionsJSON } from './data'
 
 // TODO
+// use custom login with username instead of email
+// tailwind minimizer
+// make pwa work
+// ------- release
+// firebase security
 // column count options
 // decrement option
-// make pwa work
 // alert when beaten
 // settings section
-// use custom login with username instead of email
 
 Vue.use(Vuex)
 
