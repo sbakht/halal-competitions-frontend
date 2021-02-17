@@ -4,6 +4,7 @@ export default {
   state: () => {
     return {
       racers: [],
+      oldRacers: window.localStorage.getItem('updatedRacers') || []
     }
   },
   mutations: {
@@ -23,7 +24,10 @@ export default {
 
       if(user) {
         loggersRef.where('lastUpdated', '>', user.lastUpdated).get().then((snapshot) => {
-          commit('SET_RACERS', snapshot.map(doc => doc.data()))
+          const updatedRacers = snapshot.map(doc => doc.data());
+          window.localStorage.setItem('oldRacers', window.localStorage.getItem('updatedRacers'))
+          window.localStorage.setItem('updatedRacers', updatedRacers)
+          commit('SET_RACERS', updatedRacers);
         });
       }
     },
