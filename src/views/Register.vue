@@ -9,15 +9,18 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <!-- <form class="space-y-6" action="#" method="POST"> -->
-        <form class="space-y-6" @submit="onSubmit">
+        <form class="space-y-8" @submit="onSubmit">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+            >
               Username
             </label>
             <div class="mt-1">
               <input
-                id="email"
-                name="email"
+                id="username"
+                name="username"
                 type="text"
                 autocomplete="username"
                 required
@@ -31,6 +34,27 @@
             </p>
             <p class="mt-2 text-sm text-red-600" v-if="usernameError">
               {{ usernameError }}
+            </p>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <div class="mt-1">
+              <input
+                id="email"
+                name="email"
+                type="text"
+                autocomplete="email"
+                required
+                v-model="email"
+                @change="changeEmail"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <p class="mt-2 text-sm text-red-600" v-if="emailError">
+              {{ emailError }}
             </p>
           </div>
 
@@ -53,12 +77,10 @@
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
 
-          <div>
             <label
               for="password"
-              class="block text-sm font-medium text-gray-700"
+              class="block text-sm font-medium text-gray-700 mt-4"
             >
               Confirm password
             </label>
@@ -174,10 +196,12 @@ export default {
   data() {
     return {
       username: "",
+      email: "",
       password: "",
       confirmPassword: "",
       usernameError: "",
       passwordError: "",
+      emailError: "",
     };
   },
   methods: {
@@ -191,6 +215,11 @@ export default {
 
       if (this.username.length > 20) {
         this.usernameError = "Username must be at most 20 characters long.";
+        valid = false;
+      }
+
+      if (this.email.length < 4) {
+        this.emailError = "Please enter a valid email";
         valid = false;
       }
 
@@ -216,6 +245,7 @@ export default {
       if (this.validate()) {
         this.$store
           .dispatch("register", {
+            email: this.email,
             username: this.username,
             password: this.password,
           })
@@ -237,6 +267,9 @@ export default {
     },
     changeUsername() {
       this.usernameError = "";
+    },
+    changeEmail() {
+      this.emailError = "";
     },
   },
 };

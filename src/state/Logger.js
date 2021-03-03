@@ -80,7 +80,7 @@ export default {
         loggersRef.doc(state.doc.id).update({loggers: state.loggers, lastUpdated: firebase.firestore.Timestamp.now()})
       }else{
         loggersRef.add({
-          username: rootState.User.user.email,
+          username: rootState.User.user.username,
           userid: rootState.User.userid,
           loggers: state.loggers,
           created: firebase.firestore.Timestamp.now(),

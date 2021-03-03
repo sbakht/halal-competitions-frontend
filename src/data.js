@@ -95,7 +95,42 @@ export const competitionKeys = {
     title: 'la ilaha ilAllah'
   },
   mindful_1: {
-    competition: 'mindful',
-    title: 'Listen to Quran'
-  }
+    title: 'Recitation (min)'
+  },
+  mindful_2: {
+    title: 'Audio/translation (min)'
+  },
+  mindful_3: {
+    title: 'Islamic lectures (min)'
+  },
+  charity_1: {
+    title: 'Sadaqah amount (USD)'
+  },
+  fitness_1: {
+    title: 'Pushups'
+  },
+  fitness_2: {
+    title: 'Pull ups'
+  },
+  fitness_3: {
+    title: 'Sit ups'
+  },
+  fitness_4: {
+    title: 'Squats'
+  },
+  fitness_5: {
+    title: 'Jogging (km)'
+  },
+  fitness_6: {
+    title: 'Walking (km)'
+  },
+  fitness_7: {
+    title: 'Plank (min)'
+  },
+  fitness_8: {
+    title: 'Lunges'
+  },
+  fitness_9: {
+    title: 'Other (calories burned)'
+  },
 }

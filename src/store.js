@@ -9,7 +9,6 @@ import Race from './state/Race';
 import { competitionsJSON } from './data'
 
 // TODO
-// use custom login with username instead of email
 // tailwind minimizer
 // make pwa work
 // ------- release

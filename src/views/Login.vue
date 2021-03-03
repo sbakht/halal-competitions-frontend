@@ -11,7 +11,7 @@
         <form class="space-y-6" @submit="onSubmit">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
-              Username
+              Email
             </label>
             <div class="mt-1">
               <input
@@ -181,7 +181,7 @@ export default {
       if (this.validate()) {
         this.$store
           .dispatch("login", {
-            username: this.username,
+            email: this.username,
             password: this.password,
           })
           .then(() => {
