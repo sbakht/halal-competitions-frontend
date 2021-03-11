@@ -12,6 +12,7 @@ import { competitionsJSON } from './data'
 // tailwind minimizer
 // make pwa work
 // ------- release
+// rewrite user persistance mechanism
 // do we need to add untracked loggers?
 // firebase security
 // column count options

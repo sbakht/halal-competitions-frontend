@@ -76,11 +76,12 @@ export default {
     save({commit, state, rootState}) {
       const loggersRef = firebase.firestore().collection('loggers');
       // TODO change email to username
+        debugger;
       if(state.doc) {
         loggersRef.doc(state.doc.id).update({loggers: state.loggers, lastUpdated: firebase.firestore.Timestamp.now()})
       }else{
         loggersRef.add({
-          username: rootState.User.user.username,
+          username: rootState.User.username,
           userid: rootState.User.userid,
           loggers: state.loggers,
           created: firebase.firestore.Timestamp.now(),
