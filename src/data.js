@@ -116,42 +116,55 @@ export const competitionKeys = {
     title: 'Salat `ala an-Nabi'
   },
   mindful_1: {
+    competition: 'mindful',
     title: 'Recitation (min)'
   },
   mindful_2: {
+    competition: 'mindful',
     title: 'Audio/translation (min)'
   },
   mindful_3: {
+    competition: 'mindful',
     title: 'Islamic lectures (min)'
   },
   charity_1: {
+    competition: 'charity',
     title: 'Sadaqah amount (USD)'
   },
   fitness_1: {
+    competition: 'fitness',
     title: 'Pushups'
   },
   fitness_2: {
+    competition: 'fitness',
     title: 'Pull ups'
   },
   fitness_3: {
+    competition: 'fitness',
     title: 'Sit ups'
   },
   fitness_4: {
+    competition: 'fitness',
     title: 'Squats'
   },
   fitness_5: {
+    competition: 'fitness',
     title: 'Jogging (km)'
   },
   fitness_6: {
+    competition: 'fitness',
     title: 'Walking (km)'
   },
   fitness_7: {
+    competition: 'fitness',
     title: 'Plank (min)'
   },
   fitness_8: {
+    competition: 'fitness',
     title: 'Lunges'
   },
   fitness_9: {
+    competition: 'fitness',
     title: 'Other (calories burned)'
   },
 }
