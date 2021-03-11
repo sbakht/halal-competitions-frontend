@@ -20,8 +20,8 @@ export default {
   actions: {
     loadResults({commit}) {
       const loggersRef = firebase.firestore().collection('loggers');
-      const {start, end} = dateRange();
-      loggersRef.where('date', '>=', start).where('date', '<', end).get().then((snapshot) => {
+      const {start, end} = dateRangeLastWeek();
+      loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
 
         console.assert(snapshot.size > 0, {snapshot, start, end});
         const data = [];
