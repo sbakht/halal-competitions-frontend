@@ -35,7 +35,7 @@ export default class LoggerService {
   }
 
   create(state, rootState) {
-    return this.getRef().add({
+    this.getRef().add({
       username: rootState.User.username,
       userid: rootState.User.userid,
       loggers: state.loggers,
