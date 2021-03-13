@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { dateRange, dateRangeLastWeek } from "../utils";
+import { dateRange } from "../utils";
 
 function getTimestamp() {
   return firebase.firestore.Timestamp.now()
@@ -8,7 +8,7 @@ function getTimestamp() {
 export default class LoggerService {
 
   fetchAll() {
-    const {start, end} = dateRangeLastWeek();
+    const {start, end} = dateRange();
     return this.getRef().where('created', '>=', start).where('created', '<', end).get()
   }
 
