@@ -1,4 +1,3 @@
-import { dateRange } from "../utils.js";
 import {competitionsJSON, competitionKeys} from "../data";
 import LoggerService from '../service/Logger';
 
@@ -30,7 +29,7 @@ export default {
     SET_LOGGERS(state, data) {
       state.loggers = data;
     },
-    SET_LOADEDDASHBOARD(state, data) {
+    SET_LOADED(state, data) {
       state.loadedDashboard = data;
     }
   },
@@ -39,20 +38,16 @@ export default {
       // TODO: reset listener to auto reset on new week
       commit('INCREMENT', logger);
     },
-    loadDashboard({commit, dispatch, rootState}) {
+    loadDashboard({commit, rootState}) {
       commit("SET_MOBILE_MENU", false)
 
-      const loggersRef = loggerService.getRef();
       const userid = rootState.User.userid;
 
       if(userid) {
-        const {start, end} = dateRange();
-        loggersRef.where('userid', '==', userid).where('created', '>=', start).where('created', '<', end).limit(1).get().then(({docs}) => {
-          loggerService.setDoc(docs[0]);
-
+        loggerService.fetch(userid).then(({docs}) => {
           addUntrackedLoggers(getLoggers(docs));
           commit('SET_LOGGERS', getLoggers(docs));
-          commit('SET_LOADEDDASHBOARD', true);
+          commit('SET_LOADED', true);
         });
       }
     },
@@ -65,5 +60,8 @@ export default {
       const newIds = Object.keys(state.loggers).filter(id => competitionKeys[id].competition === rootState.Tab.activeTabId);
       return newIds.map(id => ({ id, title: competitionKeys[id].title, count: state.loggers[id]}));
     },
+    isDashboardLoaded(state) {
+      return state.loadedDashboard;
+    }
   },
 }

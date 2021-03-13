@@ -19,21 +19,18 @@ import PageHeading from "../components/page.heading.vue";
 import CompetitionsTabs from "../components/competitions.tabs.vue";
 import DashboardCompetition from "../components/dashboard.competition.vue";
 import Loader from "../components/loader.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  name: "dashboard",
   components: { PageHeading, CompetitionsTabs, DashboardCompetition, Loader },
-  name: "HelloWorld",
   mounted() {
     this.$store.dispatch("loadDashboard");
   },
   computed: {
-    loggers() {
-      return this.$store.getters.activeLoggers;
-    },
-    loaded() {
-      return this.$store.state.Logger.loadedDashboard;
-    },
+    ...mapGetters({
+      loggers: "activeLoggers",
+      loaded: "isDashboardLoaded",
+    }),
   },
 };
 </script>

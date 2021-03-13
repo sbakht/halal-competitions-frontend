@@ -1,18 +1,22 @@
 import firebase from "firebase/app";
+import { dateRange } from "../utils";
 
 function getTimestamp() {
   return firebase.firestore.Timestamp.now()
 }
 
 export default class LoggerService {
-  constructor() {
 
-  }
-
-  setDoc(doc) {
-    if(doc) {
-      this.doc = doc;
-    }
+  fetch(userid) {
+    const {start, end} = dateRange();
+    return this.getRef().where('userid', '==', userid)
+                    .where('created', '>=', start)
+                    .where('created', '<', end)
+                    .limit(1).get()
+                    .then(({docs}) => {
+      this._setDoc(docs[0]);
+      return {docs}
+    })
   }
 
   save({state, rootState}) {
@@ -38,10 +42,16 @@ export default class LoggerService {
       created: getTimestamp(),
       lastUpdated: getTimestamp(),
     })
-    .then(doc => this.setDoc(doc));
+    .then(doc => this._setDoc(doc));
   }
 
   getRef() {
     return firebase.firestore().collection('loggers');
+  }
+
+  _setDoc(doc) {
+    if(doc) {
+      this.doc = doc;
+    }
   }
 }
