@@ -28,7 +28,7 @@
               <tbody>
                 <!-- Odd row -->
                 <tr
-                  v-for="(user, i) in data.users"
+                  v-for="(user, i) in top(data.users)"
                   :key="user.username"
                   class="bg-white"
                   :class="{ 'bg-gray-50': i % 2 === 1 }"
@@ -56,5 +56,10 @@ import LeaderboardCompetitionDate from "../components/leaderboard.competition.da
 export default {
   components: { LeaderboardTop, LeaderboardCompetitionDate },
   props: ["data"],
+  methods: {
+    top(arr) {
+      return arr.slice(0, 5);
+    },
+  },
 };
 </script>
