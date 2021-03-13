@@ -50,3 +50,9 @@ export function dateRangeLastWeek() {
 
   return {start: monday.addDays(-7), end: monday}
 }
+
+export function mapObj(obj, cb) {
+  return Object.keys(obj).map(key => {
+    return cb(key, obj[key]);
+  })
+}

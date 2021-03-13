@@ -9,6 +9,9 @@
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
         {{ logger.count }}
+        <span class="text-gray-300 text-2xl" v-if="target">
+          ({{ target }})</span
+        >
       </dd>
     </div>
   </button>
@@ -23,7 +26,7 @@ export default {
       timeout: null,
     };
   },
-  props: ["logger"],
+  props: ["logger", "target"],
   methods: {
     onClick() {
       clearTimeout(this.timeout);

@@ -38,16 +38,17 @@ export default {
       // TODO: reset listener to auto reset on new week
       commit('INCREMENT', logger);
     },
-    loadDashboard({commit, rootState}) {
+    loadDashboard({dispatch, commit, rootState}) {
       commit("SET_MOBILE_MENU", false)
 
       const userid = rootState.User.userid;
 
       if(userid) {
-        loggerService.fetch(userid).then(({docs}) => {
+        loggerService.fetchById(userid).then(({docs}) => {
           addUntrackedLoggers(getLoggers(docs));
           commit('SET_LOGGERS', getLoggers(docs));
           commit('SET_LOADED', true);
+          dispatch('loadRacers')
         });
       }
     },
