@@ -1,6 +1,4 @@
 import Nav from './nav';
-import Vue from 'vue';
-import Vuex from 'vuex';
 
 export default {
   title: 'Nav',
@@ -20,10 +18,10 @@ const Template = (args, { argTypes }) => ({
 });
 
 export const Guest = Template.bind({})
-Guest.args = {isLoggedIn: false}
+Guest.args = {isLoggedIn: false, isMobileMenuOpen: false}
 
 export const LoggedIn = Template.bind({})
-LoggedIn.args = {...Guest.args, isLoggedIn: true}
+LoggedIn.args = {isLoggedIn: true, isMobileMenuOpen: false}
 
 export const MobileGuest = Template.bind({})
 MobileGuest.args = {isLoggedIn: false, isMobileMenuOpen: false}

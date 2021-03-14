@@ -26,7 +26,6 @@
 <script>
 import PageHeading from "../components/page.heading.vue";
 import CompetitionsTabs from "../components/competitions.tabs.vue";
-import LeaderboardCompetition from "../components/leaderboard.competition.vue";
 import LeaderboardTables from "../components/leaderboard.tables.vue";
 import Loader from "../components/loader.vue";
 import LeaderboardCompetitionDate from "../components/leaderboard.competition.date.vue";
@@ -34,7 +33,6 @@ import LeaderboardCompetitionDate from "../components/leaderboard.competition.da
 export default {
   components: {
     PageHeading,
-    LeaderboardCompetition,
     CompetitionsTabs,
     LeaderboardTables,
     Loader,

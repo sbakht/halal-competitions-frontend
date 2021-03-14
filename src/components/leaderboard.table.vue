@@ -50,11 +50,10 @@
 </template>
 
 <script>
-import LeaderboardTop from "../components/leaderboard.top.vue";
 import LeaderboardCompetitionDate from "../components/leaderboard.competition.date";
 
 export default {
-  components: { LeaderboardTop, LeaderboardCompetitionDate },
+  components: { LeaderboardCompetitionDate },
   props: ["data"],
   methods: {
     top(arr) {
