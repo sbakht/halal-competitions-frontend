@@ -6,9 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
-    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "build-storybook": "vue-cli-service storybook:build -c config/storybook",
-    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "chromatic": "npx chromatic --project-token 21ebf6d7283e"
   },
   "dependencies": {
