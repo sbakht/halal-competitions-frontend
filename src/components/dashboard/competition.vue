@@ -5,26 +5,21 @@
         :logger="logger"
         @increment="increment"
         :key="logger.id"
-        :target="targetScores[logger.id]"
       ></dashboard-competition-increment>
     </template>
   </dl>
 </template>
 
 <script>
-import DashboardCompetitionIncrement from "./dashboard.competition.increment.vue";
-import { mapGetters } from "vuex";
+import DashboardCompetitionIncrement from "./increment.vue";
 
 export default {
   components: { DashboardCompetitionIncrement },
-  computed: {
-    ...mapGetters(["targetScores"]),
-  },
+  props: ["loggers"],
   methods: {
     increment(logger) {
       logger.count++;
     },
   },
-  props: ["loggers"],
 };
 </script>

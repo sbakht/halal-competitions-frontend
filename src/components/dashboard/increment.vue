@@ -9,8 +9,8 @@
       </dt>
       <dd class="mt-1 text-3xl font-semibold text-gray-900">
         {{ logger.count }}
-        <span class="text-gray-300 text-2xl" v-if="target">
-          ({{ target }})</span
+        <span class="text-gray-300 text-2xl" v-if="logger.target">
+          ({{ logger.target }})</span
         >
       </dd>
     </div>
@@ -26,7 +26,9 @@ export default {
       timeout: null,
     };
   },
-  props: ["logger", "target"],
+  props: {
+    logger: Object,
+  },
   methods: {
     onClick() {
       clearTimeout(this.timeout);

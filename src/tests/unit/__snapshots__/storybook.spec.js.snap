@@ -1,5 +1,199 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Competition Primary 1`] = `
+<dl
+  class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"
+>
+  <button
+    class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+  >
+    <div
+      class="px-4 py-5 sm:p-6"
+    >
+      <dt
+        class="text-sm font-medium text-gray-500 truncate"
+      >
+        
+      Beans
+    
+      </dt>
+       
+      <dd
+        class="mt-1 text-3xl font-semibold text-gray-900"
+      >
+        
+      0
+      
+        <!---->
+      </dd>
+    </div>
+  </button>
+  <button
+    class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+  >
+    <div
+      class="px-4 py-5 sm:p-6"
+    >
+      <dt
+        class="text-sm font-medium text-gray-500 truncate"
+      >
+        
+      Cool
+    
+      </dt>
+       
+      <dd
+        class="mt-1 text-3xl font-semibold text-gray-900"
+      >
+        
+      10
+      
+        <!---->
+      </dd>
+    </div>
+  </button>
+  <button
+    class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+  >
+    <div
+      class="px-4 py-5 sm:p-6"
+    >
+      <dt
+        class="text-sm font-medium text-gray-500 truncate"
+      >
+        
+      Meme
+    
+      </dt>
+       
+      <dd
+        class="mt-1 text-3xl font-semibold text-gray-900"
+      >
+        
+      15
+      
+        <span
+          class="text-gray-300 text-2xl"
+        >
+          
+        (25)
+        </span>
+      </dd>
+    </div>
+  </button>
+  <button
+    class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+  >
+    <div
+      class="px-4 py-5 sm:p-6"
+    >
+      <dt
+        class="text-sm font-medium text-gray-500 truncate"
+      >
+        
+      Line Wrap
+    
+      </dt>
+       
+      <dd
+        class="mt-1 text-3xl font-semibold text-gray-900"
+      >
+        
+      125
+      
+        <!---->
+      </dd>
+    </div>
+  </button>
+</dl>
+`;
+
+exports[`Storyshots Increment Target 1`] = `
+<button
+  class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+>
+  <div
+    class="px-4 py-5 sm:p-6"
+  >
+    <dt
+      class="text-sm font-medium text-gray-500 truncate"
+    >
+      
+      Meme
+    
+    </dt>
+     
+    <dd
+      class="mt-1 text-3xl font-semibold text-gray-900"
+    >
+      
+      15
+      
+      <span
+        class="text-gray-300 text-2xl"
+      >
+        
+        (25)
+      </span>
+    </dd>
+  </div>
+</button>
+`;
+
+exports[`Storyshots Increment Value 1`] = `
+<button
+  class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+>
+  <div
+    class="px-4 py-5 sm:p-6"
+  >
+    <dt
+      class="text-sm font-medium text-gray-500 truncate"
+    >
+      
+      Cool
+    
+    </dt>
+     
+    <dd
+      class="mt-1 text-3xl font-semibold text-gray-900"
+    >
+      
+      10
+      
+      <!---->
+    </dd>
+  </div>
+</button>
+`;
+
+exports[`Storyshots Increment Zero 1`] = `
+<button
+  class="bg-gray-50 overflow-hidden shadow-md rounded-lg focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200"
+>
+  <div
+    class="px-4 py-5 sm:p-6"
+  >
+    <dt
+      class="text-sm font-medium text-gray-500 truncate"
+    >
+      
+      Beans
+    
+    </dt>
+     
+    <dd
+      class="mt-1 text-3xl font-semibold text-gray-900"
+    >
+      
+      0
+      
+      <!---->
+    </dd>
+  </div>
+</button>
+`;
+
 exports[`Storyshots Leaderboard Tables Mobile 1`] = `
 <div>
   <div>

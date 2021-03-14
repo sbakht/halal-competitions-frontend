@@ -6,7 +6,7 @@
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           v-if="loaded"
-          :loggers="loggers"
+          :loggers="loggersWithTarget"
         ></dashboard-competition>
         <loader v-else></loader>
       </div>
@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import PageHeading from "../components/page.heading.vue";
+import PageHeading from "../components/helpers/page.heading.vue";
 import CompetitionsTabs from "../components/tabs/tabs.vue";
-import DashboardCompetition from "../components/dashboard.competition.vue";
-import Loader from "../components/loader/loader.vue";
+import DashboardCompetition from "../components/dashboard/competition.vue";
+import Loader from "../components/helpers/loader.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -30,7 +30,14 @@ export default {
     ...mapGetters({
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
+      targetScores: "targetScores",
     }),
+    loggersWithTarget() {
+      this.loggers.forEach((logger) => {
+        logger.target = this.targetScores[logger.id];
+      });
+      return loggers;
+    },
   },
 };
 </script>
