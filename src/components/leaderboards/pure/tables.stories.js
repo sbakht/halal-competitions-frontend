@@ -20,7 +20,7 @@ const data = [
     {username: 'Steve Ross', count: 75},
     {username: 'CoolGuy23', count: 40},
     {username: 'Memer', count: 32},
-    {username: 'Steve Ross', count: 45},
+    {username: 'Luke', count: 45},
     {username: 'Bro', count: 8},
   ]},
   { title: 'Alhamdulillah' , users: [

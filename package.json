@@ -5,10 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev": "vue-cli-service serve",
-    "storybook": "vue-cli-service storybook:serve -p 6006",
+    "test": "vue-cli-service test:unit --watch",
     "build-storybook": "vue-cli-service storybook:build",
-    "chromatic": "npx chromatic --project-token 21ebf6d7283e"
+    "chromatic": "npx chromatic --project-token 21ebf6d7283e",
+    "dev": "vue-cli-service serve",
+    "storybook": "vue-cli-service storybook:serve -p 6006"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
@@ -22,14 +23,18 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^6.0.26",
     "@storybook/addon-links": "^6.0.26",
+    "@storybook/addon-storyshots": "6.0.26",
     "@storybook/vue": "^6.0.26",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@vue/cli-plugin-babel": "^3.12.0",
     "@vue/cli-plugin-pwa": "^3.12.0",
+    "@vue/cli-plugin-unit-jest": "^4.5.11",
     "@vue/cli-service": "^3.12.0",
+    "@vue/test-utils": "^1.0.3",
     "autoprefixer": "^9.8.6",
     "chromatic": "^5.7.0",
     "postcss": "^7.0.35",
+    "storybook-vue-router": "^1.0.7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue-cli-plugin-storybook": "~2.0.0",
     "vue-template-compiler": "^2.6.10"
