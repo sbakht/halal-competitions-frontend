@@ -55,12 +55,7 @@
 import NavLink from "./nav.link.vue";
 export default {
   components: { NavLink },
-  props: ["isOpen"],
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-  },
+  props: ["isOpen", "isLoggedIn"],
 };
 </script>
 

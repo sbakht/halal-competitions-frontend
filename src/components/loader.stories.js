@@ -2,7 +2,6 @@ import Loader from './loader.vue';
 
 export default {
   title: 'Loader',
-  component: Loader,
 }
 
 const Template = (args, { argTypes }) => ({

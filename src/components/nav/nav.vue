@@ -63,7 +63,7 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
               aria-hidden="true"
-              :class="{ hidden: isMobileOpen }"
+              :class="{ hidden: isMobileMenuOpen }"
             >
               <path
                 stroke-linecap="round"
@@ -84,7 +84,7 @@
               viewBox="0 0 24 24"
               stroke="currentColor"
               aria-hidden="true"
-              :class="{ hidden: !isMobileOpen }"
+              :class="{ hidden: !isMobileMenuOpen }"
             >
               <path
                 stroke-linecap="round"
@@ -97,7 +97,10 @@
         </div>
       </div>
     </div>
-    <nav-mobile-menu :isOpen="isMobileOpen"></nav-mobile-menu>
+    <nav-mobile-menu
+      :isLoggedIn="isLoggedIn"
+      :isOpen="isMobileMenuOpen"
+    ></nav-mobile-menu>
   </nav>
 </template>
 
@@ -106,21 +109,14 @@ import NavLink from "./nav.link.vue";
 import NavMobileMenu from "./nav.mobile.menu.vue";
 export default {
   components: { NavLink, NavMobileMenu },
+  props: ["isLoggedIn", "isMobileMenuOpen"],
   methods: {
     toggleMobile() {
-      if (this.isMobileOpen) {
+      if (this.isMobileMenuOpen) {
         this.$store.dispatch("closeMobileMenu");
       } else {
         this.$store.dispatch("openMobileMenu");
       }
-    },
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-    isMobileOpen() {
-      return this.$store.state.View.isMobileMenuOpen;
     },
   },
 };
