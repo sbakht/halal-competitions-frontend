@@ -6,7 +6,7 @@
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           v-if="loaded"
-          :loggers="loggersWithTarget"
+          :loggers="loggers"
         ></dashboard-competition>
         <loader v-else></loader>
       </div>
@@ -30,14 +30,7 @@ export default {
     ...mapGetters({
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
-      targetScores: "targetScores",
     }),
-    loggersWithTarget() {
-      this.loggers.forEach((logger) => {
-        logger.target = this.targetScores[logger.id];
-      });
-      return loggers;
-    },
   },
 };
 </script>

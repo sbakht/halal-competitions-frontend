@@ -47,8 +47,14 @@ new Vue({
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     store.dispatch('setUser', user);
-    // router.push({name: 'dashboard'});
+    if (router.currentRoute.path === '/dashboard') {
+      store.dispatch('loadDashboard')
+    }
   } else {
     store.dispatch('setUser');
+    if (router.currentRoute.meta.authRequired) {
+      router.push('/login');
+    }
   }
+  store.dispatch('completeAuth')
 });

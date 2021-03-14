@@ -11,6 +11,10 @@ function addUntrackedLoggers(loggers) {
   }))
 }
 
+function getNextHighestScore(count, scores) {
+  return scores.sort().find(score => score > count); 
+}
+
 function getLoggers(docs) {
   return (docs.length && docs[0].data().loggers) || {};
 }
@@ -45,8 +49,9 @@ export default {
 
       if(userid) {
         loggerService.fetchById(userid).then(({docs}) => {
-          addUntrackedLoggers(getLoggers(docs));
-          commit('SET_LOGGERS', getLoggers(docs));
+          const loggers = getLoggers(docs);
+          addUntrackedLoggers(loggers);
+          commit('SET_LOGGERS', loggers);
           commit('SET_LOADED', true);
           dispatch('loadRacers')
         });
@@ -58,8 +63,18 @@ export default {
   },
   getters: {
     activeLoggers(state, getters, rootState) {
+      const scores = getters.scores;
+
       const newIds = Object.keys(state.loggers).filter(id => competitionKeys[id].competition === rootState.Tab.activeTabId);
-      return newIds.map(id => ({ id, title: competitionKeys[id].title, count: state.loggers[id]}));
+      return  newIds.map(id => {
+        const count = state.loggers[id];
+        return { 
+          id, 
+          title: competitionKeys[id].title, 
+          count, 
+          target: getNextHighestScore(count, scores[id])
+        };
+      });
     },
     isDashboardLoaded(state) {
       return state.loadedDashboard;

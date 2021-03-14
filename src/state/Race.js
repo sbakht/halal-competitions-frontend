@@ -25,9 +25,6 @@ function getAllScores(state) {
   return result; 
 }
 
-function getNextHighestScore(count, scores) {
-  return scores.sort().find(score => score > count); 
-}
 
 export default {
   state: () => {
@@ -54,15 +51,8 @@ export default {
     },
   },
   getters: {
-    targetScores(state, getters, rootState) {
-      const scores = getAllScores(state);
-      const activeLoggers = getters.activeLoggers;
-
-      const result = {};
-      activeLoggers.forEach(({id, count}) => {
-        result[id] = getNextHighestScore(count, scores[id]);
-      })
-      return result;
+    scores(state) {
+      return getAllScores(state);
     }
   },
 }

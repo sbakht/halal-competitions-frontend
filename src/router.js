@@ -6,10 +6,11 @@ import Register from './views/Register.vue';
 import Home from './views/Home.vue';
 import store from './store'
 import Results from './views/Results.vue';
+import firebase from "firebase/app";
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -22,40 +23,19 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      beforeEnter(from, to, next) {
-        store.dispatch('closeMobileMenu')
-        if(store.getters.isLoggedIn) {
-          next();
-        }else{
-          next('/login');
-        }
-      }
+      meta: { authRequired: true }
     },
     {
       path: '/login',
       name: 'login',
       component: Login,
-      beforeEnter(from, to, next) {
-        store.dispatch('closeMobileMenu')
-        if(store.getters.isLoggedIn) {
-          next('/dashboard');
-        }else{
-          next();
-        }
-      }
+      meta: { anonOnly: true }
     },
     {
       path: '/register',
       name: 'register',
       component: Register,
-      beforeEnter(from, to, next) {
-        store.dispatch('closeMobileMenu')
-        if(store.getters.isLoggedIn) {
-          next('/dashboard');
-        }else{
-          next();
-        }
-      }
+      meta: { anonOnly: true }
     },
     {
       path: '/logout',
@@ -69,10 +49,21 @@ export default new Router({
       path: '/results',
       name: 'results',
       component: Results,
-      beforeEnter(from, to, next) {
-        store.dispatch('closeMobileMenu')
-        next();
-      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('closeMobileMenu');
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (store.state.User.pendingAuth || firebase.auth().currentUser) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

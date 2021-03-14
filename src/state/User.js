@@ -14,9 +14,9 @@ function getUsername(user) {
 export default {
   state: () => {
     return {
+      pendingAuth: true,
       user: null,
-      userid: window.localStorage.getItem('userid'),
-      username: window.localStorage.getItem('username'),
+      userid: null,
     }
   },
   mutations: {
@@ -24,31 +24,26 @@ export default {
       if(user) {
         state.user = user;
         state.userid = user.uid;
-        window.localStorage.setItem('userid', user.uid)
       }else{
         state.user = null;
         state.userid = null;
-        state.username = null;
-        window.localStorage.removeItem('userid')
       }
     },
-    SET_USERNAME(state, name) {
-      state.username = name;
-      window.localStorage.setItem('username', name)
-    }
+    SET_PENDING_AUTH(state, val) {
+      state.pendingAuth = val;
+    },
   },
   actions: {
+    completeAuth({commit}) {
+      commit("SET_PENDING_AUTH", false);
+    },
     setUser({commit}, user = null) {
       commit("SET_USER", user)
     },
-    login({dispatch, commit}, {email, password}) {
+    login({dispatch}, {email, password}) {
       return firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            getUsername(userCredential.user).then((username) => {
-              userCredential.user.username = username;
-              commit('SET_USERNAME', username);
-              dispatch('setUser', userCredential.user);
-            })
+            dispatch('setUser', userCredential.user);
         });
     },
     register({dispatch}, {username, email, password}) {

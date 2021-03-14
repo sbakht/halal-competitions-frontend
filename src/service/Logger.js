@@ -5,6 +5,17 @@ function getTimestamp() {
   return firebase.firestore.Timestamp.now()
 }
 
+function getUsername(userid) {
+  const usersRef = firebase.firestore().collection('users');
+  let username;
+  return usersRef.where('userid', '==', userid).get().then((snapshot) => {
+    snapshot.forEach(doc => {
+      username = doc.data().username;
+    })
+    return username;
+  });
+}
+
 export default class LoggerService {
 
   fetchAll() {
@@ -40,14 +51,16 @@ export default class LoggerService {
   }
 
   create(state, rootState) {
-    this.getRef().add({
-      username: rootState.User.username,
-      userid: rootState.User.userid,
-      loggers: state.loggers,
-      created: getTimestamp(),
-      lastUpdated: getTimestamp(),
+    getUsername(rootState.User.userid).then((username) => {
+      this.getRef().add({
+        username,
+        userid: rootState.User.userid,
+        loggers: state.loggers,
+        created: getTimestamp(),
+        lastUpdated: getTimestamp(),
+      })
+      .then(doc => this._setDoc(doc));
     })
-    .then(doc => this._setDoc(doc));
   }
 
   getRef() {
