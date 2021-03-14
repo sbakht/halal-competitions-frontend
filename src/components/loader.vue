@@ -5,7 +5,5 @@
 </template>
 
 <script>
-export default {
-  props: ["loaded"],
-};
+export default {};
 </script>

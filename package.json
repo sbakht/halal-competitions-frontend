@@ -4,8 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "build-storybook": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
+    "chromatic": "npx chromatic --project-token 21ebf6d7283e"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
@@ -17,13 +21,18 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/vue": "^6.0.26",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@vue/cli-plugin-babel": "^3.12.0",
     "@vue/cli-plugin-pwa": "^3.12.0",
     "@vue/cli-service": "^3.12.0",
     "autoprefixer": "^9.8.6",
+    "chromatic": "^5.7.0",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "vue-cli-plugin-storybook": "~2.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [
