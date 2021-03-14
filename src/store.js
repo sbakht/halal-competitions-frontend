@@ -32,7 +32,9 @@ export default new Vuex.Store({
     Result,
     Race,
   },
-  state: {
-    competitions: competitionsJSON
-  },
+  getters: {
+    competitions() {
+      return competitionsJSON;
+    }
+  }
 })

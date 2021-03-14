@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import NavLink from "./nav.link.vue";
+import NavLink from "./link.vue";
 export default {
   components: { NavLink },
   props: ["isOpen", "isLoggedIn"],

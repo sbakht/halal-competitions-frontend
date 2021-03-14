@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import LeaderboardTable from "./leaderboard.table.vue";
+import LeaderboardTable from "./table.vue";
 
 export default {
   components: {

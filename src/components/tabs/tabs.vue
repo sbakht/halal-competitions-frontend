@@ -20,14 +20,14 @@
     <div class="hidden sm:block">
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex" aria-label="Tabs">
-          <competitions-tabs-item
+          <tab-item
             v-for="competition in competitions"
             :id="competition.id"
             :name="competition.title"
             :key="competition.id"
             :isActive="competition.id === activeTabId"
             @change="onChange"
-          ></competitions-tabs-item>
+          ></tab-item>
         </nav>
       </div>
     </div>
@@ -35,16 +35,15 @@
 </template>
 
 <script>
-import CompetitionsTabsItem from "./competitions.tabs.item.vue";
+import TabItem from "./pure/item.vue";
+import { mapGetters } from "vuex";
 export default {
-  components: { CompetitionsTabsItem },
+  components: { TabItem },
   computed: {
-    competitions() {
-      return this.$store.state.competitions;
-    },
-    activeTabId() {
-      return this.$store.state.Tab.activeTabId;
-    },
+    ...mapGetters({
+      competitions: "competitions",
+      activeTabId: "Tab/activeTabId",
+    }),
   },
   methods: {
     onChange(e) {
@@ -54,7 +53,7 @@ export default {
       } else {
         id = e;
       }
-      this.$store.dispatch("setActiveTab", id);
+      this.$store.dispatch("Tab/setActiveTab", id);
     },
   },
 };

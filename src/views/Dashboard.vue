@@ -16,7 +16,7 @@
 
 <script>
 import PageHeading from "../components/page.heading.vue";
-import CompetitionsTabs from "../components/competitions.tabs.vue";
+import CompetitionsTabs from "../components/tabs/tabs.vue";
 import DashboardCompetition from "../components/dashboard.competition.vue";
 import Loader from "../components/loader/loader.vue";
 import { mapGetters } from "vuex";

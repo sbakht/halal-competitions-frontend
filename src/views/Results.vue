@@ -4,9 +4,7 @@
     <main class="mb-16">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
-        <leaderboard-competition-date
-          :start="startDate"
-        ></leaderboard-competition-date>
+        <leaderboard-date :start="startDate"></leaderboard-date>
         <loader v-if="!loaded"></loader>
         <template v-else>
           <leaderboard-tables
@@ -25,10 +23,10 @@
 
 <script>
 import PageHeading from "../components/page.heading.vue";
-import CompetitionsTabs from "../components/competitions.tabs.vue";
-import LeaderboardTables from "../components/leaderboards/leaderboard.tables.vue";
+import CompetitionsTabs from "../components/tabs/tabs.vue";
+import LeaderboardTables from "../components/leaderboards/pure/tables";
 import Loader from "../components/loader/loader.vue";
-import LeaderboardCompetitionDate from "../components/leaderboards/leaderboard.competition.date.vue";
+import LeaderboardDate from "../components/leaderboards/pure/date";
 
 export default {
   components: {
@@ -36,7 +34,7 @@ export default {
     CompetitionsTabs,
     LeaderboardTables,
     Loader,
-    LeaderboardCompetitionDate,
+    LeaderboardDate,
   },
   computed: {
     startDate() {

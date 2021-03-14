@@ -1,4 +1,5 @@
 export default {
+  namespaced: true,
   state: () => {
     return {
       activeTabId: window.localStorage.getItem('activeTabId') || 'dhikr',
@@ -16,5 +17,8 @@ export default {
     },
   },
   getters: {
+    activeTabId(state) {
+      return state.activeTabId
+    }
   },
 }

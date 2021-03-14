@@ -18,5 +18,8 @@ export default {
     }
   },
   getters: {
+    isMobileMenuOpen(state) {
+      return state.isMobileMenuOpen
+    }
   },
 }

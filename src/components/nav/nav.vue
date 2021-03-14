@@ -105,8 +105,8 @@
 </template>
 
 <script>
-import NavLink from "./nav.link.vue";
-import NavMobileMenu from "./nav.mobile.menu.vue";
+import NavLink from "./pure/link.vue";
+import NavMobileMenu from "./pure/mobilemenu.vue";
 export default {
   components: { NavLink, NavMobileMenu },
   props: ["isLoggedIn", "isMobileMenuOpen"],

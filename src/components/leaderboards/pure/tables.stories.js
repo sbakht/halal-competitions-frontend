@@ -1,7 +1,7 @@
-import Leaderboards from './leaderboard.tables'
+import Leaderboards from './tables'
 
 export default {
-  title: 'Leaderboards',
+  title: 'Leaderboard Tables',
 }
 
 function setMobile(story) {

@@ -50,10 +50,7 @@
 </template>
 
 <script>
-import LeaderboardCompetitionDate from "./leaderboard.competition.date";
-
 export default {
-  components: { LeaderboardCompetitionDate },
   props: ["data"],
   methods: {
     top(arr) {
