@@ -37,6 +37,11 @@ var db = firebase.firestore();
 // db.useEmulator("localhost", 8083);
 // firebase.auth().useEmulator('http://localhost:8081/');
 
+// removing legacy data
+localStorage.removeItem('username')
+localStorage.removeItem('userid')
+localStorage.removeItem('user')
+
 new Vue({
   router,
   store,
