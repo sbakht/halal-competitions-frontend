@@ -54,6 +54,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     store.dispatch('setUser', user);
     if (router.currentRoute.path === '/dashboard') {
       store.dispatch('loadDashboard')
+    }else if(router.currentRoute.path === "/") {
+      router.push('/dashboard')
     }
   } else {
     store.dispatch('setUser');
