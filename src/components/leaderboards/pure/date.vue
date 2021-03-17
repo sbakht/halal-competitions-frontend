@@ -4,9 +4,9 @@
       <div class="w-full border-t border-gray-300 border-none"></div>
     </div>
     <div class="relative flex justify-center">
-      <span class="px-3 bg-white text-lg font-medium text-gray-900">{{
-        start.format()
-      }}</span>
+      <span class="px-3 bg-white text-lg font-medium text-gray-900"
+        >Week of {{ start.format() }}</span
+      >
     </div>
   </div>
 </template>

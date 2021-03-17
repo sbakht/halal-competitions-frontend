@@ -4,9 +4,12 @@
     <main class="mb-16">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <competitions-tabs></competitions-tabs>
-        <leaderboard-date :start="startDate"></leaderboard-date>
         <loader v-if="!loaded"></loader>
         <template v-else>
+          <leaderboard-date
+            v-if="showResults"
+            :start="startDate"
+          ></leaderboard-date>
           <leaderboard-tables
             v-if="showResults"
             :data="orderedByScore"
