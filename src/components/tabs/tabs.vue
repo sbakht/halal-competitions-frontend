@@ -12,6 +12,7 @@
           v-for="competition in competitions"
           :value="competition.id"
           :key="competition.id"
+          :selected="competition.id === activeTabId"
         >
           {{ competition.title }}
         </option>
