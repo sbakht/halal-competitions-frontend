@@ -54,7 +54,8 @@ export default {
   props: ["data"],
   methods: {
     top(arr) {
-      return arr.slice(0, 5);
+      return arr;
+      // return arr.slice(0, 5);
     },
   },
 };
