@@ -1,6 +1,6 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div v-if="show" class="rounded-md bg-green-50 p-4">
+  <div v-if="show" class="rounded-md bg-green-50 p-4 mb-5">
     <div class="flex">
       <div class="flex-shrink-0">
         <!-- Heroicon name: solid/check-circle -->
