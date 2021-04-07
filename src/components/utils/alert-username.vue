@@ -63,6 +63,7 @@ export default {
   methods: {
     dismiss() {
       localStorage.setItem("hide_alert_username", true);
+      this.show = false;
     },
   },
 };
