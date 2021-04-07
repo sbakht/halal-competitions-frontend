@@ -1,9 +1,9 @@
 <template>
   <div>
     <page-heading title="Dashboard"></page-heading>
-    <alert-username></alert-username>
     <main class="mb-16">
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <alert-username></alert-username>
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           v-if="loaded"
