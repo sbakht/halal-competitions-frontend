@@ -30,7 +30,7 @@
               />
             </div>
             <p class="mt-2 text-sm text-gray-500" id="email-description">
-              Don't use your reddit username or real name!
+              Please use usernames that are not real names of people so that we are sure that everyone is competing anonymously. An example of an acceptable username is - Happy Muslim 92
             </p>
             <p class="mt-2 text-sm text-red-600" v-if="usernameError">
               {{ usernameError }}
