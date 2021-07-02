@@ -4,11 +4,10 @@
       slot-scope="{ incrementFn }"
       class="
         bg-gray-50
-        overflow-hidden
-        shadow-md
         rounded-lg
         focus:outline-none
         focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200
+        w-full
       "
       @click="incrementFn(logger)"
     >
@@ -31,8 +30,9 @@ export default {
 
 <style scoped>
 button {
-  margin: 12px;
+  margin-top: 12px;
   padding: 12px;
   cursor: pointer;
+  height: 100vh;
 }
 </style>
