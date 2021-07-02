@@ -42,10 +42,10 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("loadDashboard");
+    this.$store.dispatch("Logger/loadDashboard");
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("Logger", {
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
     }),

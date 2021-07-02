@@ -9,20 +9,66 @@
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
       <router-link
         to="/"
-        class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+        class="
+          block
+          px-3
+          py-2
+          text-base
+          font-medium
+          text-gray-300
+          rounded-md
+          hover:bg-gray-700
+          hover:text-white
+        "
         :class="{ hidden: isLoggedIn }"
         >Home</router-link
       >
       <router-link
         to="/dashboard"
-        class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+        class="
+          block
+          px-3
+          py-2
+          text-base
+          font-medium
+          text-gray-300
+          rounded-md
+          hover:bg-gray-700
+          hover:text-white
+        "
         :class="{ hidden: !isLoggedIn }"
         >Dashboard</router-link
+      >
+      <router-link
+        to="/stats"
+        class="
+          block
+          px-3
+          py-2
+          text-base
+          font-medium
+          text-gray-300
+          rounded-md
+          hover:bg-gray-700
+          hover:text-white
+        "
+        :class="{ hidden: !isLoggedIn }"
+        >Your Statistics</router-link
       >
 
       <router-link
         to="/results"
-        class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+        class="
+          block
+          px-3
+          py-2
+          text-base
+          font-medium
+          text-gray-300
+          rounded-md
+          hover:bg-gray-700
+          hover:text-white
+        "
         >Results</router-link
       >
     </div>
@@ -30,19 +76,49 @@
       <div class="px-2 mt-3 space-y-1 mb-1">
         <router-link
           to="/login"
-          class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+          class="
+            block
+            px-3
+            py-2
+            text-base
+            font-medium
+            text-gray-300
+            rounded-md
+            hover:bg-gray-700
+            hover:text-white
+          "
           :class="{ hidden: isLoggedIn }"
           >Login</router-link
         >
         <router-link
           to="/register"
-          class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+          class="
+            block
+            px-3
+            py-2
+            text-base
+            font-medium
+            text-gray-300
+            rounded-md
+            hover:bg-gray-700
+            hover:text-white
+          "
           :class="{ hidden: isLoggedIn }"
           >Register</router-link
         >
         <router-link
           to="/logout"
-          class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+          class="
+            block
+            px-3
+            py-2
+            text-base
+            font-medium
+            text-gray-300
+            rounded-md
+            hover:bg-gray-700
+            hover:text-white
+          "
           :class="{ hidden: !isLoggedIn }"
           >Log out</router-link
         >

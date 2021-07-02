@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Dashboard from './views/Dashboard.vue'
+import Stats from './views/Stats.vue'
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import Home from './views/Home.vue';
@@ -23,6 +24,12 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
+      meta: { authRequired: true }
+    },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: Stats,
       meta: { authRequired: true }
     },
     {

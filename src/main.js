@@ -49,12 +49,14 @@ new Vue({
 }).$mount('#app')
 
 
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     store.dispatch('setUser', user);
     if (router.currentRoute.path === '/dashboard') {
-      store.dispatch('loadDashboard')
-    }else if(router.currentRoute.path === "/") {
+      store.dispatch('Logger/loadDashboard')
+    } else if (router.currentRoute.path === "/stats") {
+      store.dispatch('Logger/loadStats')
+    } else if (router.currentRoute.path === "/") {
       router.push('/dashboard')
     }
   } else {

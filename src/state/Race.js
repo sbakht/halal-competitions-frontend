@@ -1,11 +1,11 @@
-import {competitionKeys} from "../data";
+import { competitionKeys } from "../data";
 import LoggerService from "../service/Logger";
 
 const loggerService = new LoggerService();
 
 function getUsersLoggers(snapshot) {
   let loggers = [];
-  if(snapshot.size > 0) {
+  if (snapshot.size > 0) {
     snapshot.forEach(doc => {
       loggers.push(doc.data().loggers);
     })
@@ -19,10 +19,10 @@ function getAllScores(state) {
   loggerKeys.map(key => {
     const x = state.racers.map(racer => {
       return racer[key] || 0;
-    }) 
+    })
     result[key] = x;
   })
-  return result; 
+  return result;
 }
 
 
@@ -38,12 +38,12 @@ export default {
     },
   },
   actions: {
-    setDoc({commit}, snapshot) {
+    setDoc({ commit }, snapshot) {
       snapshot.forEach(doc => {
         commit("SET_DOC", doc);
       })
     },
-    loadRacers({commit}) {
+    loadRacers({ commit }) {
       loggerService.fetchAll().then((snapshot) => {
         const loggers = getUsersLoggers(snapshot);
         commit('SET_RACERS', loggers);

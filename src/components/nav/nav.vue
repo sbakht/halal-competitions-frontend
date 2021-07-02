@@ -21,6 +21,11 @@
                 to="/dashboard"
                 name="Dashboard"
               ></nav-link>
+              <nav-link
+                :class="{ hidden: !isLoggedIn }"
+                to="/stats"
+                name="Your Statistics"
+              ></nav-link>
               <nav-link to="/results" name="Results"></nav-link>
             </div>
           </div>
@@ -47,7 +52,22 @@
         <div class="flex -mr-2 md:hidden">
           <!-- Mobile menu button -->
           <button
-            class="inline-flex items-center justify-center p-2 text-gray-400 bg-gray-800 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              p-2
+              text-gray-400
+              bg-gray-800
+              rounded-md
+              hover:text-white
+              hover:bg-gray-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-offset-gray-800
+              focus:ring-white
+            "
             @click="toggleMobile"
           >
             <span class="sr-only">Open main menu</span>

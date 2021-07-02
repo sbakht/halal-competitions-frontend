@@ -10,9 +10,9 @@ export default {
   methods: {
     onClick(data) {
       clearTimeout(this.timeout);
-      this.$store.dispatch("increment", data);
+      this.$store.dispatch("Logger/increment", data);
       this.timeout = setTimeout(() => {
-        this.$store.dispatch("save");
+        this.$store.dispatch("Logger/save");
       }, DEBOUNCE_RATE);
     },
   },
