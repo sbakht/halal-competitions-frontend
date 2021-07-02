@@ -37,6 +37,20 @@
                 >
                   Total
                 </th>
+                <th
+                  scope="col"
+                  class="
+                    px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Average per week
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -59,6 +73,9 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {{ item.count }}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {{ item.avg }}
                 </td>
               </tr>
             </tbody>
