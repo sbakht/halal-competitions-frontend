@@ -7,6 +7,7 @@ import Register from './views/Register.vue';
 import Home from './views/Home.vue';
 import store from './store'
 import Results from './views/Results.vue';
+import Challenges from './views/Challenges.vue';
 import firebase from "firebase/app";
 
 Vue.use(Router)
@@ -25,6 +26,11 @@ const router = new Router({
       name: 'dashboard',
       component: Dashboard,
       meta: { authRequired: true }
+    },
+    {
+      path: '/challenges',
+      name: 'challenges',
+      component: Challenges,
     },
     {
       path: '/stats',

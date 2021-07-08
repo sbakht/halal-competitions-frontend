@@ -26,6 +26,7 @@
                 to="/stats"
                 name="Your Statistics"
               ></nav-link>
+              <nav-link to="/challenges" name="Challenges"></nav-link>
               <nav-link to="/results" name="Results"></nav-link>
             </div>
           </div>
