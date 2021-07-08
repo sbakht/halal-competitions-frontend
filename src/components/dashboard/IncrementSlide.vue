@@ -33,6 +33,6 @@ button {
   margin-top: 12px;
   padding: 12px;
   cursor: pointer;
-  height: 100vh;
+  height: 100%;
 }
 </style>

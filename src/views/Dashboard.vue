@@ -3,7 +3,7 @@
     <page-heading title="Dashboard">
       <ViewModeIcons v-model="isCarouselMode" />
     </page-heading>
-    <main class="mb-16">
+    <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <alert-username></alert-username>
         <competitions-tabs></competitions-tabs>
