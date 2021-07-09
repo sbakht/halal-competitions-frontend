@@ -11,43 +11,43 @@
           </div>
           <div class="hidden md:block">
             <div class="flex items-baseline ml-10 space-x-4">
-              <nav-link
+              <NavLink
                 :class="{ hidden: isLoggedIn }"
                 to="/"
                 name="Home"
-              ></nav-link>
-              <nav-link
+              ></NavLink>
+              <NavLink
                 :class="{ hidden: !isLoggedIn }"
                 to="/dashboard"
                 name="Dashboard"
-              ></nav-link>
-              <nav-link
+              ></NavLink>
+              <NavLink
                 :class="{ hidden: !isLoggedIn }"
                 to="/stats"
                 name="Your Statistics"
-              ></nav-link>
-              <nav-link to="/challenges" name="Challenges"></nav-link>
-              <nav-link to="/results" name="Results"></nav-link>
+              ></NavLink>
+              <NavLink to="/challenges" name="Challenges"></NavLink>
+              <NavLink to="/results" name="Results"></NavLink>
             </div>
           </div>
         </div>
         <div class="hidden md:block">
           <div class="flex items-center ml-4 md:ml-6">
-            <nav-link
+            <NavLink
               :class="{ hidden: isLoggedIn }"
               to="/login"
               name="Login"
-            ></nav-link>
-            <nav-link
+            ></NavLink>
+            <NavLink
               :class="{ hidden: isLoggedIn }"
               to="/register"
               name="Register"
-            ></nav-link>
-            <nav-link
+            ></NavLink>
+            <NavLink
               :class="{ hidden: !isLoggedIn }"
               to="/logout"
               name="Log out"
-            ></nav-link>
+            ></NavLink>
           </div>
         </div>
         <div class="flex -mr-2 md:hidden">
@@ -72,48 +72,12 @@
             @click="toggleMobile"
           >
             <span class="sr-only">Open main menu</span>
-            <!--
-              Heroicon name: menu
-
-              Menu open: "hidden", Menu closed: "block"
-            -->
-            <svg
-              class="block w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            <MenuIcon
+              v-if="!isMobileMenuOpen"
+              class="block h-6 w-6"
               aria-hidden="true"
-              :class="{ hidden: isMobileMenuOpen }"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <!--
-              Heroicon name: x
-
-              Menu open: "block", Menu closed: "hidden"
-            -->
-            <svg
-              class="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-              :class="{ hidden: !isMobileMenuOpen }"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            />
+            <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -126,21 +90,25 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import NavLink from "./pure/link.vue";
+import { mapGetters, mapState } from "vuex";
+import NavLink from "./pure/NavLink.vue";
 import NavMobileMenu from "./pure/mobilemenu.vue";
+import { MenuIcon, XIcon } from "@heroicons/vue/outline";
 
 export default {
-  components: { NavLink, NavMobileMenu },
+  components: { NavLink, NavMobileMenu, MenuIcon, XIcon },
   computed: {
-    ...mapGetters(["isLoggedIn", "isMobileMenuOpen"]),
+    ...mapGetters(["isLoggedIn"]),
+    ...mapState("Nav", {
+      isMobileMenuOpen: (state) => state.isMobileMenuOpen,
+    }),
   },
   methods: {
     toggleMobile() {
       if (this.isMobileMenuOpen) {
-        this.$store.dispatch("closeMobileMenu");
+        this.$store.dispatch("Nav/closeMobileMenu");
       } else {
-        this.$store.dispatch("openMobileMenu");
+        this.$store.dispatch("Nav/openMobileMenu");
       }
     },
   },

@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import User from './User'
-import View from './View'
+import Nav from './Nav'
 import Tab from './Tab'
 import Logger from './Logger'
 import Result from './Result';
@@ -16,7 +16,7 @@ export default createStore({
   },
   modules: {
     User,
-    View,
+    Nav,
     Tab,
     Logger,
     Result,

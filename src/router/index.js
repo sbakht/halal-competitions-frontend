@@ -7,7 +7,7 @@ import Register from '../views/Register.vue';
 import store from '../store'
 import Results from '../views/Results.vue';
 import Challenges from '../views/Challenges.vue';
-// import firebase from "firebase/app";
+import firebase from "firebase/app";
 
 const routes = [
   {
@@ -63,5 +63,19 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('Nav/closeMobileMenu');
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (store.state.User.pendingAuth || firebase.auth().currentUser) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

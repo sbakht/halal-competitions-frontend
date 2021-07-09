@@ -52,7 +52,7 @@ export default {
       commit('INCREMENT', logger);
     },
     loadDashboard({ dispatch, commit, rootState }) {
-      commit("SET_MOBILE_MENU", false, { root: true })
+      commit("Nav/SET_MOBILE_MENU", false, { root: true })
 
       const userid = rootState.User.userid;
 
@@ -67,7 +67,7 @@ export default {
       }
     },
     loadStats({ commit, rootState }) {
-      commit("SET_MOBILE_MENU", false, { root: true })
+      commit("Nav/SET_MOBILE_MENU", false, { root: true })
 
       const userid = rootState.User.userid;
 

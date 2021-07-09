@@ -17,13 +17,19 @@
 
 <script>
 export default {
-  props: ["to", "name"],
+  props: {
+    to: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 <style scoped>
 .router-link-exact-active {
   @apply bg-gray-900 text-white;

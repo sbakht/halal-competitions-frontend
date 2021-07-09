@@ -1,4 +1,5 @@
 export default {
+  namespaced: true,
   state: () => {
     return {
       isMobileMenuOpen: false
@@ -10,16 +11,11 @@ export default {
     }
   },
   actions: {
-    openMobileMenu({commit}) {
+    openMobileMenu({ commit }) {
       commit("SET_MOBILE_MENU", true)
     },
-    closeMobileMenu({commit}) {
+    closeMobileMenu({ commit }) {
       commit("SET_MOBILE_MENU", false)
-    }
-  },
-  getters: {
-    isMobileMenuOpen(state) {
-      return state.isMobileMenuOpen
     }
   },
 }
