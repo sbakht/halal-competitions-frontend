@@ -92,7 +92,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import NavLink from "./pure/NavLink.vue";
-import NavMobileMenu from "./pure/mobilemenu.vue";
+import NavMobileMenu from "./pure/MobileMenu.vue";
 import { MenuIcon, XIcon } from "@heroicons/vue/outline";
 
 export default {
