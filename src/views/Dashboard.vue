@@ -5,8 +5,7 @@
     </page-heading>
     <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <alert-username></alert-username>
-        <alert-updates></alert-updates>
+        <TheAlerts />
         <competitions-tabs></competitions-tabs>
         <dashboard-competition
           v-if="loaded"
@@ -25,9 +24,8 @@ import CompetitionsTabs from "@/components/tabs/tabs.vue";
 import DashboardCompetition from "@/components/dashboard/competition.vue";
 import Loader from "@/components/helpers/loader.vue";
 import { mapGetters } from "vuex";
-import AlertUsername from "@/components/utils/alert-username.vue";
-import AlertUpdates from "@/components/utils/alert-updates.vue";
 import ViewModeIcons from "@/components/dashboard/ViewModeIcons.vue";
+import TheAlerts from "@/components/alerts/TheAlerts.vue";
 
 export default {
   components: {
@@ -35,9 +33,8 @@ export default {
     CompetitionsTabs,
     DashboardCompetition,
     Loader,
-    AlertUsername,
-    AlertUpdates,
     ViewModeIcons,
+    TheAlerts,
   },
   data() {
     return {
