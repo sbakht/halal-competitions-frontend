@@ -59,7 +59,7 @@ export default {
         data: filterToActive(orderedLoggersByScore, rootState.Tab.activeTabId)
       }
     },
-    totalCum(state, getters, rootState) {
+    totalCum(state) {
       const keys = Object.keys(competitionKeys);
       const totals = {};
       keys.forEach(competitionKey => {

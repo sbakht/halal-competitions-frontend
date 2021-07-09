@@ -16,7 +16,22 @@
               <router-link to="/register" tag="button">
                 <button
                   type="button"
-                  class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="
+                    inline-flex
+                    items-center
+                    px-6
+                    py-3
+                    border border-transparent
+                    text-base
+                    font-medium
+                    rounded-full
+                    shadow-lg
+                    text-white
+                    bg-green-600
+                    hover:bg-green-700
+                    focus:outline-none
+                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                  "
                 >
                   Start Competing
                 </button>
@@ -30,14 +45,40 @@
     <div class="bg-gray-50">
       <div class="max-w-7xl mx-auto px-6 py-12">
         <div
-          class="rounded-lg bg-gray-200 overflow-hidden shadow divide-y divide-gray-200 sm:divide-y-0 sm:grid sm:grid-cols-2 sm:gap-px"
+          class="
+            rounded-lg
+            bg-gray-200
+            overflow-hidden
+            shadow
+            divide-y divide-gray-200
+            sm:divide-y-0
+            sm:grid sm:grid-cols-2
+            sm:gap-px
+          "
         >
           <div
-            class="rounded-tl-lg rounded-tr-lg sm:rounded-tr-none relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+            class="
+              rounded-tl-lg rounded-tr-lg
+              sm:rounded-tr-none
+              relative
+              group
+              bg-white
+              p-6
+              focus-within:ring-2
+              focus-within:ring-inset
+              focus-within:ring-indigo-500
+            "
           >
             <div>
               <span
-                class="rounded-lg inline-flex p-3 bg-teal-50 text-teal-700 ring-4 ring-white"
+                class="
+                  rounded-lg
+                  inline-flex
+                  p-3
+                  bg-teal-50
+                  text-teal-700
+                  ring-4 ring-white
+                "
               >
                 <!-- Heroicon name: outline/clock -->
                 <svg
@@ -73,11 +114,27 @@
           </div>
 
           <div
-            class="sm:rounded-tr-lg relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+            class="
+              sm:rounded-tr-lg
+              relative
+              group
+              bg-white
+              p-6
+              focus-within:ring-2
+              focus-within:ring-inset
+              focus-within:ring-indigo-500
+            "
           >
             <div>
               <span
-                class="rounded-lg inline-flex p-3 bg-purple-50 text-purple-700 ring-4 ring-white"
+                class="
+                  rounded-lg
+                  inline-flex
+                  p-3
+                  bg-purple-50
+                  text-purple-700
+                  ring-4 ring-white
+                "
               >
                 <!-- Heroicon name: outline/badge-check -->
                 <svg
@@ -112,11 +169,26 @@
           </div>
 
           <div
-            class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+            class="
+              relative
+              group
+              bg-white
+              p-6
+              focus-within:ring-2
+              focus-within:ring-inset
+              focus-within:ring-indigo-500
+            "
           >
             <div>
               <span
-                class="rounded-lg inline-flex p-3 bg-light-blue-50 text-light-blue-700 ring-4 ring-white"
+                class="
+                  rounded-lg
+                  inline-flex
+                  p-3
+                  bg-light-blue-50
+                  text-light-blue-700
+                  ring-4 ring-white
+                "
               >
                 <!-- Heroicon name: outline/users -->
                 <svg
@@ -151,11 +223,26 @@
           </div>
 
           <div
-            class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+            class="
+              relative
+              group
+              bg-white
+              p-6
+              focus-within:ring-2
+              focus-within:ring-inset
+              focus-within:ring-indigo-500
+            "
           >
             <div>
               <span
-                class="rounded-lg inline-flex p-3 bg-yellow-50 text-yellow-700 ring-4 ring-white"
+                class="
+                  rounded-lg
+                  inline-flex
+                  p-3
+                  bg-yellow-50
+                  text-yellow-700
+                  ring-4 ring-white
+                "
               >
                 <!-- Heroicon name: outline/cash -->
                 <svg

@@ -5,42 +5,73 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service test:unit --watch",
-    "build-storybook": "vue-cli-service storybook:build",
-    "chromatic": "npx chromatic --project-token 21ebf6d7283e",
-    "dev": "vue-cli-service serve",
-    "storybook": "vue-cli-service storybook:serve -p 6006"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.2.1",
-    "core-js": "^2.6.5",
+    "@headlessui/vue": "^1.2.0",
+    "@heroicons/vue": "^1.0.1",
+    "axios": "^0.21.1",
+    "core-js": "^2.6.12",
     "firebase": "^8.2.6",
+    "ramda": "^0.27.1",
     "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.0.26",
-    "@storybook/addon-links": "^6.0.26",
-    "@storybook/addon-storyshots": "6.0.26",
-    "@storybook/vue": "^6.0.26",
-    "@tailwindcss/postcss7-compat": "^2.0.2",
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-pwa": "^3.12.0",
-    "@vue/cli-plugin-unit-jest": "^4.5.11",
-    "@vue/cli-service": "^3.12.0",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/test-utils": "^2.0.0-0",
     "autoprefixer": "^9.8.6",
-    "chromatic": "^5.7.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
     "postcss": "^7.0.35",
-    "storybook-vue-router": "^1.0.7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "vue-cli-plugin-storybook": "~2.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2",
+    "typescript": "~3.9.3",
+    "vue-jest": "^5.0.0-0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions"
-  ]
+    "last 2 versions",
+    "not dead"
+  ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest",
+    "transform": {
+      "^.+\\.vue$": "vue-jest"
+    }
+  }
 }

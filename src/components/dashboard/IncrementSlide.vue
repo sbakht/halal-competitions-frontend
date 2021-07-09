@@ -1,29 +1,30 @@
 <template>
-  <LogicIncremental>
-    <button
-      slot-scope="{ incrementFn }"
-      class="
-        bg-gray-50
-        rounded-lg
-        focus:outline-none
-        focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200
-        w-full
-      "
-      @click="incrementFn(logger)"
-    >
-      <BaseIncrement :data="logger" />
-    </button>
-  </LogicIncremental>
+  <button
+    class="
+      bg-gray-50
+      rounded-lg
+      focus:outline-none
+      focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200
+      w-full
+    "
+    @click="increment(logger)"
+  >
+    <BaseIncrement :data="logger" />
+  </button>
 </template>
 
 <script>
-import LogicIncremental from "./LogicIncremental.vue";
 import BaseIncrement from "./BaseIncrement.vue";
+import isIncrement from "@/composables/isIncrement";
 
 export default {
-  components: { LogicIncremental, BaseIncrement },
+  components: { BaseIncrement },
   props: {
     logger: Object,
+  },
+  setup() {
+    const { increment } = isIncrement();
+    return { increment };
   },
 };
 </script>

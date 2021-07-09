@@ -36,7 +36,6 @@ export default class LoggerService {
   }
 
   fetchAllById(userid) {
-    const { start, end } = dateRange();
     return this.getRef().where('userid', '==', userid)
       .get()
       .then(({ docs }) => {

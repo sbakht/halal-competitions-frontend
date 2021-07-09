@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-4">
     <button
-      @click="$emit('input', true)"
+      @click="$emit('update:modelValue', true)"
       class="rounded-lg p-1"
       :class="{ 'bg-gray-200': value === true }"
     >
@@ -21,7 +21,7 @@
       </svg>
     </button>
     <button
-      @click="$emit('input', false)"
+      @click="$emit('update:modelValue', false)"
       class="rounded-lg p-1"
       :class="{ 'bg-gray-200': value === false }"
     >
@@ -46,7 +46,7 @@
 <script>
 export default {
   props: {
-    value: {
+    modelValue: {
       type: Boolean,
       required: true,
     },

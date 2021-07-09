@@ -1,11 +1,11 @@
 import { competitionsJSON, competitionKeys } from "../data";
-import LoggerService from '../service/Logger';
+import LoggerService from '../service/Logger.js';
 
 const loggerService = new LoggerService();
 
 function addUntrackedLoggers(loggers) {
   competitionsJSON.forEach(comp => Object.keys(comp.counters).forEach(loggerId => {
-    if (!loggers.hasOwnProperty(loggerId)) {
+    if (!loggers[loggerId]) {
       loggers[loggerId] = 0;
     }
   }))

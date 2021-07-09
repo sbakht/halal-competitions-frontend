@@ -6,8 +6,9 @@
 </template>
 
 <script>
-import Nav from "./components/nav/nav";
+import Nav from "@/components/nav/nav";
 import { mapGetters } from "vuex";
+
 export default {
   components: { Nav },
   computed: {
