@@ -16,7 +16,6 @@
 import PageHeading from "@/components/helpers/page.heading.vue";
 import Loader from "@/components/helpers/loader.vue";
 import { mapState } from "vuex";
-// import AlertUsername from "@/components/utils/alert-username.vue";
 import BaseTable from "@/components/dashboard/BaseTable.vue";
 import { competitionKeys } from "../data";
 
@@ -29,7 +28,6 @@ export default {
   components: {
     PageHeading,
     Loader,
-    // AlertUsername,
     BaseTable,
   },
   data() {
