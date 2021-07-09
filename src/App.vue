@@ -1,18 +1,14 @@
 <template>
   <div class="antialiased">
-    <Nav :isLoggedIn="isLoggedIn" :isMobileMenuOpen="isMobileMenuOpen"></Nav>
+    <TheNav />
     <router-view />
   </div>
 </template>
 
 <script>
-import Nav from "@/components/nav/nav";
-import { mapGetters } from "vuex";
+import TheNav from "@/components/nav/TheNav";
 
 export default {
-  components: { Nav },
-  computed: {
-    ...mapGetters(["isLoggedIn", "isMobileMenuOpen"]),
-  },
+  components: { TheNav },
 };
 </script>

@@ -126,11 +126,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import NavLink from "./pure/link.vue";
 import NavMobileMenu from "./pure/mobilemenu.vue";
+
 export default {
   components: { NavLink, NavMobileMenu },
-  props: ["isLoggedIn", "isMobileMenuOpen"],
+  computed: {
+    ...mapGetters(["isLoggedIn", "isMobileMenuOpen"]),
+  },
   methods: {
     toggleMobile() {
       if (this.isMobileMenuOpen) {
