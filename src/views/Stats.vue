@@ -58,6 +58,7 @@ export default {
           name: competitionKeys[key].title,
           count: this.totals[key],
           avg: Math.trunc(this.totals[key] / this.loggers.length),
+          avgPerDay: Math.trunc(this.totals[key] / (this.loggers.length * 7)),
         };
       });
       sort(totals);
