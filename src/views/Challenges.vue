@@ -38,9 +38,10 @@ export default {
   data() {
     return {
       challenges: [
-        { id: "dhikr_1", goal: 2000 },
-        { id: "dhikr_2", goal: 2000 },
-        { id: "dhikr_3", goal: 2000 },
+        { id: "dhikr_4", goal: 10000 },
+        { id: "dhikr_5", goal: 10000 },
+        { id: "fitness_1", goal: 500 },
+        { id: "mindful_2", goal: 120 },
       ],
     };
   },
