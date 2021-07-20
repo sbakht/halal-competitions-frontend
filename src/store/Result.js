@@ -26,7 +26,28 @@ export default {
         console.assert(snapshot.size > 0, { snapshot, start, end });
         const data = [];
         snapshot.forEach(doc => data.push(doc.data()));
-        commit('SET_RESULTS', data);
+
+        // TODO REMOVE ONCE FIXED
+        function lastUpdated(item) {
+          return item.lastUpdated.seconds + item.lastUpdated.nanoseconds;
+        }
+        const data2 = data.reduce((accum, val) => {
+          console.log(accum, val);
+          const found = accum.find(v => v.username === val.username);
+          if (!found) {
+            const found = data.filter(v => v.username === val.username);
+            const highest = found.sort((v1, v2) => {
+              if (lastUpdated(v1) >= lastUpdated(v2)) {
+                return -1
+              }
+              return 1;
+            })
+            return [...accum, highest[0]]
+          }
+          return accum;
+        }, []);
+
+        commit('SET_RESULTS', data2);
         commit("SET_LOADED", true);
       });
     },
