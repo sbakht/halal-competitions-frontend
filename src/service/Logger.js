@@ -71,7 +71,8 @@ export default class LoggerService {
       })
         .then(doc => this._setDoc(doc))
         .then(() => this.pendingCreation = false)
-    })
+        .catch(() => this.pendingCreation = false)
+    }).catch(() => this.pendingCreation = false)
   }
 
   getRef() {
