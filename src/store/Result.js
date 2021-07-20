@@ -28,26 +28,41 @@ export default {
         snapshot.forEach(doc => data.push(doc.data()));
 
         // TODO REMOVE ONCE FIXED
-        function lastUpdated(item) {
-          return item.lastUpdated.seconds + item.lastUpdated.nanoseconds;
-        }
-        const data2 = data.reduce((accum, val) => {
-          console.log(accum, val);
-          const found = accum.find(v => v.username === val.username);
-          if (!found) {
-            const found = data.filter(v => v.username === val.username);
-            const highest = found.sort((v1, v2) => {
-              if (lastUpdated(v1) >= lastUpdated(v2)) {
-                return -1
-              }
-              return 1;
-            })
-            return [...accum, highest[0]]
-          }
-          return accum;
-        }, []);
+        // function lastUpdated(item) {
+        //   const x = item.lastUpdated.seconds;
+        //   return x
+        // }
+        // const data2 = data.reduce((accum, doc) => {
+        //   const found = accum.find(v => v.username === doc.data().username);
+        //   if (!found) {
+        //     const found = data.filter(v => v.data().username === doc.data().username);
+        //     found.sort((v1, v2) => {
+        //       if (lastUpdated(v1.data()) >= lastUpdated(v2.data())) {
+        //         return -1
+        //       }
+        //       return 1;
+        //     })
 
-        commit('SET_RESULTS', data2);
+        //     // const test = found.map(d => d.data())
+        //     // console.log(test);
+        //     for (let i = 1; i < found.length; i++) {
+        //       const item = found[i]
+        //       console.log(item.data())
+        //       // console.log(item.data().username);
+        //       item.ref.delete();
+        //       // loggersRef.doc(item.ref()).delete().then(() => {
+        //       //   console.log("Document successfully deleted!");
+        //       // }).catch((error) => {
+        //       //   console.error("Error removing document: ", error);
+        //       // });
+        //     }
+
+        //     return [...accum, found[0].data()]
+        //   }
+        //   return accum;
+        // }, []);
+
+        commit('SET_RESULTS', data);
         commit("SET_LOADED", true);
       });
     },
