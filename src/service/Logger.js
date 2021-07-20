@@ -47,7 +47,7 @@ export default class LoggerService {
   save({ state, rootState }) {
     if (this.doc) {
       this.update(state);
-    } else {
+    } else if (!this.pendingCreation) {
       this.create(state, rootState);
     }
   }
@@ -60,6 +60,7 @@ export default class LoggerService {
   }
 
   create(state, rootState) {
+    this.pendingCreation = true;
     getUsername(rootState.User.userid).then((username) => {
       this.getRef().add({
         username,
@@ -68,7 +69,8 @@ export default class LoggerService {
         created: getTimestamp(),
         lastUpdated: getTimestamp(),
       })
-        .then(doc => this._setDoc(doc));
+        .then(doc => this._setDoc(doc))
+        .then(() => this.pendingCreation = false)
     })
   }
 
