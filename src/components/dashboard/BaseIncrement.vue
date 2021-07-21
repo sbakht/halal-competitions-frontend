@@ -2,6 +2,7 @@
   <div class="px-4 py-5 sm:p-6">
     <dt class="text-sm font-medium text-gray-500 truncate">
       {{ data.title }}
+      <span class="arabic text-lg" v-if="data.arabic">- {{ data.arabic }}</span>
     </dt>
     <dd class="mt-1 text-3xl font-semibold text-gray-900">
       {{ data.count }}

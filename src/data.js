@@ -89,31 +89,38 @@ export const competitionsJSON = [
 export const competitionKeys = {
   dhikr_1: {
     competition: 'dhikr',
-    title: 'SubhanAllah'
+    title: 'SubhanAllah',
+    arabic: 'سُبْحَانَ ٱللَّٰهِ'
   },
   dhikr_2: {
     competition: 'dhikr',
-    title: 'Alhamdulillah'
+    title: 'Alhamdulillah',
+    arabic: 'ٱلْحَمْدُ لِلَّٰهِ'
   },
   dhikr_3: {
     competition: 'dhikr',
-    title: 'Allahu Akbar'
+    title: 'Allahu Akbar',
+    arabic: 'ٱللَّٰهُ أَكْبَرُ'
   },
   dhikr_4: {
     competition: 'dhikr',
-    title: 'Laa ilaaha il-Allah'
+    title: 'Laa ilaaha il-Allah',
+    arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ'
   },
   dhikr_5: {
     competition: 'dhikr',
-    title: 'Astaghfirullah'
+    title: 'Astaghfirullah',
+    arabic: 'أَسْتَغْفِرُ ٱللَّٰهَ',
   },
   dhikr_6: {
     competition: 'dhikr',
-    title: 'SubhanAllahi wa bihamdihi'
+    title: 'SubhanAllahi wa bihamdihi',
+    arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ'
   },
   dhikr_7: {
     competition: 'dhikr',
-    title: 'Salat `ala an-Nabi'
+    title: 'Salat `ala an-Nabi',
+    arabic: ''
   },
   mindful_1: {
     competition: 'mindful',

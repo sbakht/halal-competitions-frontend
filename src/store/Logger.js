@@ -93,6 +93,7 @@ export default {
         return {
           id,
           title: competitionKeys[id].title,
+          arabic: competitionKeys[id].arabic,
           count,
           target: getNextHighestScore(count, scores[id])
         };
