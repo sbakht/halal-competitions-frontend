@@ -47,7 +47,7 @@ export default {
       keys.forEach((key) => {
         this.loggers.map((data) => {
           const currentVal = result[key] || 0;
-          result[key] = data[key] + currentVal;
+          result[key] = (data[key] || 0) + currentVal;
         });
       });
       return result;

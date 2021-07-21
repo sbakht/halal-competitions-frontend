@@ -25,6 +25,9 @@ export const competitionsJSON = [
       dhikr_7: {
         title: 'Salat `ala an-Nabi'
       },
+      dhikr_8: {
+        title: 'La hawla wala quwata illah bilah'
+      },
     }
   },
   {
@@ -121,6 +124,11 @@ export const competitionKeys = {
     competition: 'dhikr',
     title: 'Salat `ala an-Nabi',
     arabic: ''
+  },
+  dhikr_8: {
+    competition: 'dhikr',
+    title: 'La hawla wala quwata illah bilah',
+    arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ‎'
   },
   mindful_1: {
     competition: 'mindful',
