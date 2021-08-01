@@ -59,7 +59,7 @@
               rounded-lg
               px-4
               pt-5
-              pb-4
+              pb-5
               text-left
               overflow-hidden
               shadow-xl
