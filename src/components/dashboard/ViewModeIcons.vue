@@ -3,7 +3,7 @@
     <button
       @click="$emit('update:modelValue', true)"
       class="rounded-lg p-1"
-      :class="{ 'bg-gray-200': value === true }"
+      :class="{ 'bg-gray-200': modelValue === true }"
     >
       <svg
         class="w-6 h-6"
@@ -23,7 +23,7 @@
     <button
       @click="$emit('update:modelValue', false)"
       class="rounded-lg p-1"
-      :class="{ 'bg-gray-200': value === false }"
+      :class="{ 'bg-gray-200': modelValue === false }"
     >
       <svg
         class="w-6 h-6"
