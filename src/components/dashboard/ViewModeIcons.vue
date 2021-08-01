@@ -1,5 +1,5 @@
 <template>
-  <div class="flex space-x-4">
+  <div class="flex space-x-3">
     <button
       @click="$emit('update:modelValue', true)"
       class="rounded-lg p-1"

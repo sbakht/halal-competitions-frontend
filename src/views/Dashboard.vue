@@ -1,8 +1,13 @@
 <template>
   <div>
+    <SettingsModal v-model="settingsModalOpen" />
     <page-heading title="Dashboard">
-      <IncrementCount :count="incrementCount" @change="updateIncrementCount" />
+      <div class="flex space-x-6">
       <ViewModeIcons v-model="isCarouselMode" />
+      <button class="rounded-lg p-1" @click="settingsModalOpen = true">
+        <CogIcon class="cursor-pointer h-6 w-6" aria-hidden="true" />
+      </button>
+      </div>
     </page-heading>
     <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -24,10 +29,11 @@ import PageHeading from "@/components/helpers/page.heading.vue";
 import CompetitionsTabs from "@/components/tabs/tabs.vue";
 import DashboardCompetition from "@/components/dashboard/competition.vue";
 import Loader from "@/components/helpers/loader.vue";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import ViewModeIcons from "@/components/dashboard/ViewModeIcons.vue";
-import IncrementCount from "@/components/dashboard/IncrementCount.vue";
 import TheAlerts from "@/components/alerts/TheAlerts.vue";
+import { CogIcon } from "@heroicons/vue/outline";
+import SettingsModal from "@/components/SettingsModal.vue";
 
 export default {
   components: {
@@ -36,12 +42,14 @@ export default {
     DashboardCompetition,
     Loader,
     ViewModeIcons,
-    IncrementCount,
     TheAlerts,
+    CogIcon,
+    SettingsModal,
   },
   data() {
     return {
       isCarouselMode: false,
+      settingsModalOpen: false,
     };
   },
   mounted() {
@@ -52,15 +60,7 @@ export default {
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
     }),
-    ...mapState("Logger", {
-      incrementCount: state => state.incrementCount
-    })
   },
-  methods: {
-    updateIncrementCount(val) {
-      this.$store.commit('Logger/SET_INCREMENT_COUNT', val)
-    }
-  }
 };
 </script>
 
