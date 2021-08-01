@@ -1,6 +1,7 @@
 <template>
   <div>
     <page-heading title="Dashboard">
+      <IncrementCount :count="incrementCount" @change="updateIncrementCount" />
       <ViewModeIcons v-model="isCarouselMode" />
     </page-heading>
     <main>
@@ -23,8 +24,9 @@ import PageHeading from "@/components/helpers/page.heading.vue";
 import CompetitionsTabs from "@/components/tabs/tabs.vue";
 import DashboardCompetition from "@/components/dashboard/competition.vue";
 import Loader from "@/components/helpers/loader.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import ViewModeIcons from "@/components/dashboard/ViewModeIcons.vue";
+import IncrementCount from "@/components/dashboard/IncrementCount.vue";
 import TheAlerts from "@/components/alerts/TheAlerts.vue";
 
 export default {
@@ -34,6 +36,7 @@ export default {
     DashboardCompetition,
     Loader,
     ViewModeIcons,
+    IncrementCount,
     TheAlerts,
   },
   data() {
@@ -49,7 +52,15 @@ export default {
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
     }),
+    ...mapState("Logger", {
+      incrementCount: state => state.incrementCount
+    })
   },
+  methods: {
+    updateIncrementCount(val) {
+      this.$store.commit('Logger/SET_INCREMENT_COUNT', val)
+    }
+  }
 };
 </script>
 

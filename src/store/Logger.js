@@ -27,11 +27,12 @@ export default {
       allLoggers: [],
       loadedDashboard: false,
       loadedStats: false,
+      incrementCount: 1,
     }
   },
   mutations: {
     INCREMENT(state, data) {
-      state.loggers[data.id] = state.loggers[data.id] + 1;
+      state.loggers[data.id] = state.loggers[data.id] + state.incrementCount;
     },
     SET_LOGGERS(state, data) {
       state.loggers = data;
@@ -44,6 +45,9 @@ export default {
     },
     SET_STATS_LOADED(state, data) {
       state.loadedStats = data;
+    },
+    SET_INCREMENT_COUNT(state, data) {
+      state.incrementCount = data
     }
   },
   actions: {
