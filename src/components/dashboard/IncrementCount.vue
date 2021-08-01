@@ -1,30 +1,16 @@
 <template>
-  <!-- <div class="flex space-x-4">
-    <button
-      @click="$emit('change', 1)"
-      class="rounded-lg py-1 px-2"
-      :class="{ 'bg-gray-200': count === 1 }"
-    >
-      +1 
-    </button>
-    <button
-      @click="$emit('change', 5)"
-      class="rounded-lg py-1 px-2"
-      :class="{ 'bg-gray-200': count === 5 }"
-    >
-      +5 
-    </button>
-  </div> -->
   <fieldset>
     <div>
-      <legend class="text-base font-medium text-gray-900">Increment</legend>
+      <legend class="text-base font-medium text-gray-900">
+        {{ staticData.title }}
+      </legend>
       <p class="text-sm text-gray-500">
-        Number of points for each button press
+        {{ staticData.subtitle }}
       </p>
     </div>
     <div class="mt-4 space-y-4">
       <div
-        v-for="choice in options.choices"
+        v-for="choice in staticData.choices"
         :key="choice.value"
         class="flex items-center"
       >
@@ -32,7 +18,7 @@
           v-model="count"
           :value="choice.value"
           :id="choice.value"
-          name="increment-count"
+          :name="staticData.title"
           type="radio"
           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
         />
@@ -48,20 +34,19 @@
 </template>
 
 <script>
+import StaticData from "../../static/Settings";
+
 export default {
   props: {
     modelValue: {
       type: Number,
       required: true,
     },
-    options: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
       count: this.modelValue,
+      staticData: StaticData.incrementCount,
     };
   },
   watch: {

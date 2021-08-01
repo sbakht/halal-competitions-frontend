@@ -101,7 +101,6 @@
             <div class="mt-5 sm:mt-6">
               <IncrementCount
                 v-model="incrementCount"
-                :options="incrementOptions"
               />
             </div>
           </div>
@@ -131,22 +130,6 @@ export default {
     TransitionRoot,
     IncrementCount,
     XIcon,
-  },
-  data() {
-    return {
-      incrementOptions: {
-        choices: [
-          {
-            name: "+ 1",
-            value: 1,
-          },
-          {
-            name: "+ 5",
-            value: 5,
-          },
-        ],
-      },
-    };
   },
   props: {
     modelValue: {
