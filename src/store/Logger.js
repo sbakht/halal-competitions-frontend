@@ -27,7 +27,7 @@ export default {
       allLoggers: [],
       loadedDashboard: false,
       loadedStats: false,
-      incrementCount: 1,
+      incrementCount: Number.parseInt(window.localStorage.getItem('incrementCount')) || 1,
     }
   },
   mutations: {
@@ -47,6 +47,7 @@ export default {
       state.loadedStats = data;
     },
     SET_INCREMENT_COUNT(state, data) {
+      window.localStorage.setItem('incrementCount', data);  
       state.incrementCount = data
     }
   },
