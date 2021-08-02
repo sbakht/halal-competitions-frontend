@@ -1,5 +1,6 @@
 import { competitionsJSON, competitionKeys } from "../data";
 import LoggerService from '../service/Logger.js';
+import LocalStorage from '../utils/LocalStorage';
 
 const loggerService = new LoggerService();
 
@@ -27,7 +28,7 @@ export default {
       allLoggers: [],
       loadedDashboard: false,
       loadedStats: false,
-      incrementCount: Number.parseInt(window.localStorage.getItem('incrementCount')) || 1,
+      incrementCount: LocalStorage.get('incrementCount'),
     }
   },
   mutations: {
@@ -47,7 +48,7 @@ export default {
       state.loadedStats = data;
     },
     SET_INCREMENT_COUNT(state, data) {
-      window.localStorage.setItem('incrementCount', data);  
+      LocalStorage.set('incrementCount', data);
       state.incrementCount = data
     }
   },
