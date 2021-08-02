@@ -3,10 +3,10 @@
     <SettingsModal v-model="settingsModalOpen" />
     <page-heading title="Dashboard">
       <div class="flex space-x-6">
-      <ViewModeIcons v-model="isCarouselMode" />
-      <button class="rounded-lg p-1" @click="settingsModalOpen = true">
-        <CogIcon class="cursor-pointer h-6 w-6" aria-hidden="true" />
-      </button>
+        <ViewModeIcons />
+        <button class="rounded-lg p-1" @click="settingsModalOpen = true">
+          <CogIcon class="cursor-pointer h-6 w-6" aria-hidden="true" />
+        </button>
       </div>
     </page-heading>
     <main>
@@ -16,7 +16,7 @@
         <dashboard-competition
           v-if="loaded"
           :loggers="loggers"
-          :carousel="isCarouselMode"
+          :carousel="carouselMode"
         ></dashboard-competition>
         <loader v-else></loader>
       </div>
@@ -48,7 +48,6 @@ export default {
   },
   data() {
     return {
-      isCarouselMode: false,
       settingsModalOpen: false,
     };
   },
@@ -60,6 +59,9 @@ export default {
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
     }),
+    carouselMode() {
+      return this.$store.state.Logger.carouselMode;
+    },
   },
 };
 </script>

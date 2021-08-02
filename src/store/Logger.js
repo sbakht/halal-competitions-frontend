@@ -29,6 +29,7 @@ export default {
       loadedDashboard: false,
       loadedStats: false,
       incrementCount: LocalStorage.incrementCount.get(),
+      carouselMode: LocalStorage.carouselMode.get(),
     }
   },
   mutations: {
@@ -50,6 +51,10 @@ export default {
     SET_INCREMENT_COUNT(state, data) {
       state.incrementCount = data
       LocalStorage.incrementCount.set(data);
+    },
+    SET_CAROUSEL_MODE(state, data) {
+      state.carouselMode = data
+      LocalStorage.carouselMode.set(data);
     }
   },
   actions: {

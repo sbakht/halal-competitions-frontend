@@ -99,9 +99,7 @@
             </div>
 
             <div class="mt-5 sm:mt-6">
-              <IncrementCount
-                v-model="incrementCount"
-              />
+              <IncrementCount v-model="incrementCount" />
             </div>
           </div>
         </TransitionChild>

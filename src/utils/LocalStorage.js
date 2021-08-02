@@ -9,6 +9,11 @@ const obj = {
 		defaultVal: 'dhikr',
 		type: String,
 	},
+	carouselMode:  {
+		name: 'carousel-mode',
+		defaultVal: false,
+		type: Boolean,
+	},
 }
 
 obj.setItem = function setItem(str, val) {
@@ -21,6 +26,7 @@ obj.getItem = function setItem(str) {
 
 function get() {
 	const val = window.localStorage.getItem(this.name) || this.defaultVal;
+	console.log(val)
 
 	if (this.type === Number) {
 		return Number.parseInt(val);
@@ -28,6 +34,10 @@ function get() {
 
 	if (this.type === Object) {
 		return JSON.parse(val);
+	}
+
+	if(this.type === Boolean) {
+		return val === 'true';
 	}
 
 	return val;
