@@ -3,7 +3,20 @@ const obj = {
 		name: 'increment-count',
 		defaultVal: 1,
 		type: Number,
-	}
+	},
+	activeTabId:  {
+		name: 'activeTabId',
+		defaultVal: 'dhikr',
+		type: String,
+	},
+}
+
+obj.setItem = function setItem(str, val) {
+  window.localStorage.setItem(str, val);
+}
+
+obj.getItem = function setItem(str) {
+  return window.localStorage.getItem(str);
 }
 
 function get() {

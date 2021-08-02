@@ -1,14 +1,16 @@
+import LocalStorage from '../utils/LocalStorage'
+
 export default {
   namespaced: true,
   state: () => {
     return {
-      activeTabId: window.localStorage.getItem('activeTabId') || 'dhikr',
+      activeTabId: LocalStorage.activeTabId.get(),
     }
   },
   mutations: {
     SET_ACTIVE_ID(state, data) {
       state.activeTabId = data;
-      window.localStorage.setItem('activeTabId', data);
+      LocalStorage.activeTabId.set(data);
     },
   },
   actions: {
