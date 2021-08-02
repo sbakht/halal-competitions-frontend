@@ -1,28 +1,31 @@
 const obj = {
-	incrementCount: {
+	incrementCount:  {
+		name: 'increment-count',
 		defaultVal: 1,
 		type: Number,
 	}
 }
 
-export default {
-	set(str, val) {
-		if (!obj[str]) {
-			throw new Error(str + ' is not set for default value in local storage')
-		}
-		window.localStorage.setItem(str, val);
-	},
-	get(str) {
-		const val = window.localStorage.getItem(str) || obj[str].defaultVal;
+function get() {
+	const val = window.localStorage.getItem(this.name) || this.defaultVal;
 
-		if (obj[str].type === Number) {
-			return Number.parseInt(val);
-		}
-
-		if (obj[str].type === Object) {
-			return JSON.parse(val);
-		}
-
-		return val;
+	if (this.type === Number) {
+		return Number.parseInt(val);
 	}
+
+	if (this.type === Object) {
+		return JSON.parse(val);
+	}
+
+	return val;
 }
+
+function set(val) {
+	window.localStorage.setItem(this.name, val);
+}
+
+Object.keys(obj).map(key => {
+	obj[key] = Object.assign(obj[key], {get, set})
+})
+
+export default obj;

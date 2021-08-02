@@ -28,7 +28,7 @@ export default {
       allLoggers: [],
       loadedDashboard: false,
       loadedStats: false,
-      incrementCount: LocalStorage.get('incrementCount'),
+      incrementCount: LocalStorage.incrementCount.get(),
     }
   },
   mutations: {
@@ -48,8 +48,8 @@ export default {
       state.loadedStats = data;
     },
     SET_INCREMENT_COUNT(state, data) {
-      LocalStorage.set('incrementCount', data);
       state.incrementCount = data
+      LocalStorage.incrementCount.set(data);
     }
   },
   actions: {
