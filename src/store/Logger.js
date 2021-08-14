@@ -30,6 +30,7 @@ export default {
       loadedStats: false,
       incrementCount: LocalStorage.incrementCount.get(),
       carouselMode: LocalStorage.carouselMode.get(),
+      language: LocalStorage.language.get(),
     }
   },
   mutations: {
@@ -51,6 +52,10 @@ export default {
     SET_INCREMENT_COUNT(state, data) {
       state.incrementCount = data
       LocalStorage.incrementCount.set(data);
+    },
+    SET_LANGUAGE(state, data) {
+      state.language = data;
+      LocalStorage.language.set(data);
     },
     SET_CAROUSEL_MODE(state, data) {
       state.carouselMode = data

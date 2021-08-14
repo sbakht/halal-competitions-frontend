@@ -1,15 +1,20 @@
 const obj = {
-	incrementCount:  {
+	incrementCount: {
 		name: 'increment-count',
 		defaultVal: 1,
 		type: Number,
 	},
-	activeTabId:  {
+	language: {
+		name: 'language',
+		defaultVal: ['english', 'arabic'],
+		type: Array,
+	},
+	activeTabId: {
 		name: 'activeTabId',
 		defaultVal: 'dhikr',
 		type: String,
 	},
-	carouselMode:  {
+	carouselMode: {
 		name: 'carousel-mode',
 		defaultVal: false,
 		type: Boolean,
@@ -17,16 +22,18 @@ const obj = {
 }
 
 obj.setItem = function setItem(str, val) {
-  window.localStorage.setItem(str, val);
+	window.localStorage.setItem(str, val);
 }
 
 obj.getItem = function setItem(str) {
-  return window.localStorage.getItem(str);
+	return window.localStorage.getItem(str);
 }
 
 function get() {
 	const val = window.localStorage.getItem(this.name) || this.defaultVal;
-	console.log(val)
+	if (val === this.defaultVal) {
+		return val;
+	}
 
 	if (this.type === Number) {
 		return Number.parseInt(val);
@@ -36,7 +43,12 @@ function get() {
 		return JSON.parse(val);
 	}
 
-	if(this.type === Boolean) {
+	if (this.type === Array) {
+		console.log(val)
+		return val.split(',')
+	}
+
+	if (this.type === Boolean) {
 		return val === 'true';
 	}
 
@@ -44,11 +56,12 @@ function get() {
 }
 
 function set(val) {
+	console.log(`Setting ${this.name} as ${val} in localstorage`)
 	window.localStorage.setItem(this.name, val);
 }
 
 Object.keys(obj).map(key => {
-	obj[key] = Object.assign(obj[key], {get, set})
+	obj[key] = Object.assign(obj[key], { get, set })
 })
 
 export default obj;

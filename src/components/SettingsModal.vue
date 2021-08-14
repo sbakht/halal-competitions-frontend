@@ -98,8 +98,9 @@
               </DialogTitle>
             </div>
 
-            <div class="mt-5 sm:mt-6">
+            <div class="mt-5 sm:mt-6 space-y-5">
               <IncrementCount v-model="incrementCount" />
+              <LanguageSetting v-model="language" />
             </div>
           </div>
         </TransitionChild>
@@ -117,6 +118,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import IncrementCount from "@/components/dashboard/IncrementCount.vue";
+import LanguageSetting from "@/components/dashboard/LanguageSetting.vue";
 import { XIcon } from "@heroicons/vue/outline";
 
 export default {
@@ -127,6 +129,7 @@ export default {
     TransitionChild,
     TransitionRoot,
     IncrementCount,
+    LanguageSetting,
     XIcon,
   },
   props: {
@@ -142,6 +145,14 @@ export default {
       },
       set(val) {
         this.$store.commit("Logger/SET_INCREMENT_COUNT", val);
+      },
+    },
+    language: {
+      get() {
+        return this.$store.state.Logger.language;
+      },
+      set(val) {
+        this.$store.commit("Logger/SET_LANGUAGE", val);
       },
     },
   },
