@@ -1,7 +1,13 @@
 <template>
   <div>
+    <SettingsModal v-model="settingsModalOpen" />
     <page-heading title="Dashboard">
-      <ViewModeIcons v-model="isCarouselMode" />
+      <div class="flex space-x-6">
+        <ViewModeIcons />
+        <button class="rounded-lg p-1" @click="settingsModalOpen = true">
+          <CogIcon class="cursor-pointer h-6 w-6" aria-hidden="true" />
+        </button>
+      </div>
     </page-heading>
     <main>
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -10,7 +16,7 @@
         <dashboard-competition
           v-if="loaded"
           :loggers="loggers"
-          :carousel="isCarouselMode"
+          :carousel="carouselMode"
         ></dashboard-competition>
         <loader v-else></loader>
       </div>
@@ -26,6 +32,8 @@ import Loader from "@/components/helpers/loader.vue";
 import { mapGetters } from "vuex";
 import ViewModeIcons from "@/components/dashboard/ViewModeIcons.vue";
 import TheAlerts from "@/components/alerts/TheAlerts.vue";
+import { CogIcon } from "@heroicons/vue/outline";
+import SettingsModal from "@/components/SettingsModal.vue";
 
 export default {
   components: {
@@ -35,10 +43,12 @@ export default {
     Loader,
     ViewModeIcons,
     TheAlerts,
+    CogIcon,
+    SettingsModal,
   },
   data() {
     return {
-      isCarouselMode: false,
+      settingsModalOpen: false,
     };
   },
   mounted() {
@@ -49,6 +59,9 @@ export default {
       loggers: "activeLoggers",
       loaded: "isDashboardLoaded",
     }),
+    carouselMode() {
+      return this.$store.state.Logger.carouselMode;
+    },
   },
 };
 </script>

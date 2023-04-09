@@ -1,9 +1,9 @@
 <template>
-  <div class="flex space-x-4">
+  <div class="flex space-x-3">
     <button
-      @click="$emit('update:modelValue', true)"
+      @click="carouselMode = true"
       class="rounded-lg p-1"
-      :class="{ 'bg-gray-200': value === true }"
+      :class="{ 'bg-gray-200': carouselMode === true }"
     >
       <svg
         class="w-6 h-6"
@@ -21,9 +21,9 @@
       </svg>
     </button>
     <button
-      @click="$emit('update:modelValue', false)"
+      @click="carouselMode = false"
       class="rounded-lg p-1"
-      :class="{ 'bg-gray-200': value === false }"
+      :class="{ 'bg-gray-200': carouselMode === false }"
     >
       <svg
         class="w-6 h-6"
@@ -45,10 +45,14 @@
 
 <script>
 export default {
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true,
+  computed: {
+    carouselMode: {
+      get() {
+        return this.$store.state.Logger.carouselMode;
+      },
+      set(val) {
+        this.$store.commit("Logger/SET_CAROUSEL_MODE", val);
+      },
     },
   },
 };

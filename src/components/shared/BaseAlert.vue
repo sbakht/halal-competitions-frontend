@@ -11,6 +11,7 @@
 <script>
 import BaseAlertInfo from "@/components/shared/BaseAlertInfo.vue";
 import BaseAlertWarning from "@/components/shared/BaseAlertWarning.vue";
+import LocalStorage from '../../utils/LocalStorage'
 
 export default {
   components: {
@@ -20,12 +21,12 @@ export default {
   props: ["storageId", "type"],
   data() {
     return {
-      show: !window.localStorage.getItem(this.storageId),
+      show: !LocalStorage.getItem(this.storageId),
     };
   },
   methods: {
     dismiss() {
-      window.localStorage.setItem(this.storageId, true);
+      LocalStorage.setItem(this.storageId, true);
       this.show = false;
     },
   },

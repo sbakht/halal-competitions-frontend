@@ -1,8 +1,10 @@
 <template>
   <div class="px-4 py-5 sm:p-6">
     <dt class="text-sm font-medium text-gray-500 truncate">
-      {{ data.title }}
-      <span class="arabic text-lg" v-if="data.arabic">- {{ data.arabic }}</span>
+      <div v-if="showEnglish">{{ data.title }}</div>
+      <div class="arabic text-lg mt-1" v-if="showArabic">
+        {{ data.arabic }}
+      </div>
     </dt>
     <dd class="mt-1 text-3xl font-semibold text-gray-900">
       {{ data.count }}
@@ -17,6 +19,17 @@
 export default {
   props: {
     data: Object,
+  },
+  computed: {
+    language() {
+      return this.$store.state.Logger.language;
+    },
+    showEnglish() {
+      return this.language.includes("english") || !this.data.arabic;
+    },
+    showArabic() {
+      return this.language.includes("arabic") || !this.data.title;
+    },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-center items-center opacity-50">
-    <img src="@/assets/loader.gif" />
+  <div class="flex justify-center items-center h-40">
+    <img class="w-15 h-15" src="@/assets/loader.gif" />
   </div>
 </template>
 
