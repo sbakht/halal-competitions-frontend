@@ -56,7 +56,7 @@
         >Your Statistics</router-link
       >
 
-      <router-link
+      <!-- <router-link
         to="/challenges"
         class="
           block
@@ -70,7 +70,7 @@
           hover:text-white
         "
         >Challenges</router-link
-      >
+      > -->
       <router-link
         to="/results"
         class="
