@@ -1,37 +1,20 @@
+import About from '../components/About.vue';
+
 <template>
   <div>
     <div class="text-black bg-img bg-cover">
       <div class="bg-black bg-opacity-70 flex justify-center">
         <div class="max-w-7xl mx-auto text-white py-24">
           <div class="my-6">
-            <div class="arabic text-8xl text-center">
-              فَٱسۡتَبِقُواْ ٱلۡخَيۡرَٰتِۚ
-            </div>
-            <p
-              class="text-gray-400 font-semibold mt-4 ml- text-center text-2xl"
-            >
+            <div class="arabic text-8xl text-center">فَٱسۡتَبِقُواْ ٱلۡخَيۡرَٰتِۚ</div>
+            <p class="text-gray-400 font-semibold mt-4 ml- text-center text-2xl">
               (So race to all that is good)
             </p>
             <form class="mt-16 flex justify-center">
               <router-link to="/register" tag="button">
                 <button
                   type="button"
-                  class="
-                    inline-flex
-                    items-center
-                    px-6
-                    py-3
-                    border border-transparent
-                    text-base
-                    font-medium
-                    rounded-full
-                    shadow-lg
-                    text-white
-                    bg-green-600
-                    hover:bg-green-700
-                    focus:outline-none
-                    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-                  "
+                  class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Start Competing
                 </button>
@@ -45,40 +28,14 @@
     <div class="bg-gray-50">
       <div class="max-w-7xl mx-auto px-6 py-12">
         <div
-          class="
-            rounded-lg
-            bg-gray-200
-            overflow-hidden
-            shadow
-            divide-y divide-gray-200
-            sm:divide-y-0
-            sm:grid sm:grid-cols-2
-            sm:gap-px
-          "
+          class="rounded-lg bg-gray-200 overflow-hidden shadow divide-y divide-gray-200 sm:divide-y-0 sm:grid sm:grid-cols-2 sm:gap-px"
         >
           <div
-            class="
-              rounded-tl-lg rounded-tr-lg
-              sm:rounded-tr-none
-              relative
-              group
-              bg-white
-              p-6
-              focus-within:ring-2
-              focus-within:ring-inset
-              focus-within:ring-indigo-500
-            "
+            class="rounded-tl-lg rounded-tr-lg sm:rounded-tr-none relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
           >
             <div>
               <span
-                class="
-                  rounded-lg
-                  inline-flex
-                  p-3
-                  bg-teal-50
-                  text-teal-700
-                  ring-4 ring-white
-                "
+                class="rounded-lg inline-flex p-3 bg-teal-50 text-teal-700 ring-4 ring-white"
               >
                 <!-- Heroicon name: outline/clock -->
                 <svg
@@ -106,35 +63,18 @@
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500">
-                We have included 'Subhan Allahi wa bihamdihi' weekly because of
-                the sheer power of that Zikr! (please refer to Sahih al-Bukhari
-                6405)
+                We have included 'Subhan Allahi wa bihamdihi' weekly because of the sheer
+                power of that Zikr! (please refer to Sahih al-Bukhari 6405)
               </p>
             </div>
           </div>
 
           <div
-            class="
-              sm:rounded-tr-lg
-              relative
-              group
-              bg-white
-              p-6
-              focus-within:ring-2
-              focus-within:ring-inset
-              focus-within:ring-indigo-500
-            "
+            class="sm:rounded-tr-lg relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
           >
             <div>
               <span
-                class="
-                  rounded-lg
-                  inline-flex
-                  p-3
-                  bg-purple-50
-                  text-purple-700
-                  ring-4 ring-white
-                "
+                class="rounded-lg inline-flex p-3 bg-purple-50 text-purple-700 ring-4 ring-white"
               >
                 <!-- Heroicon name: outline/badge-check -->
                 <svg
@@ -162,33 +102,17 @@
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500">
-                Compete in reading Quran, listening to Quran, and watching
-                lectures.
+                Compete in reading Quran, listening to Quran, and watching lectures.
               </p>
             </div>
           </div>
 
           <div
-            class="
-              relative
-              group
-              bg-white
-              p-6
-              focus-within:ring-2
-              focus-within:ring-inset
-              focus-within:ring-indigo-500
-            "
+            class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
           >
             <div>
               <span
-                class="
-                  rounded-lg
-                  inline-flex
-                  p-3
-                  bg-light-blue-50
-                  text-light-blue-700
-                  ring-4 ring-white
-                "
+                class="rounded-lg inline-flex p-3 bg-light-blue-50 text-light-blue-700 ring-4 ring-white"
               >
                 <!-- Heroicon name: outline/users -->
                 <svg
@@ -216,33 +140,16 @@
                   Sadaqah (Charity) Competition
                 </a>
               </h3>
-              <p class="mt-2 text-sm text-gray-500">
-                Compete in helping out others
-              </p>
+              <p class="mt-2 text-sm text-gray-500">Compete in helping out others</p>
             </div>
           </div>
 
           <div
-            class="
-              relative
-              group
-              bg-white
-              p-6
-              focus-within:ring-2
-              focus-within:ring-inset
-              focus-within:ring-indigo-500
-            "
+            class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
           >
             <div>
               <span
-                class="
-                  rounded-lg
-                  inline-flex
-                  p-3
-                  bg-yellow-50
-                  text-yellow-700
-                  ring-4 ring-white
-                "
+                class="rounded-lg inline-flex p-3 bg-yellow-50 text-yellow-700 ring-4 ring-white"
               >
                 <!-- Heroicon name: outline/cash -->
                 <svg
@@ -270,22 +177,26 @@
                 </a>
               </h3>
               <p class="mt-2 text-sm text-gray-500">
-                A strong believer is better and is more lovable to Allah than a
-                weak believer, and there is good in everyone,--- [Sahih Muslim
-                2664]
+                A strong believer is better and is more lovable to Allah than a weak
+                believer, and there is good in everyone,--- [Sahih Muslim 2664]
               </p>
             </div>
           </div>
         </div>
+        <div class="mt-12">
+          <About />
+        </div>
         <div class="mt-12 text-blue-600 font-bold text-2xl flex justify-center">
-          <a href="https://www.reddit.com/r/halal_competitions"
-            >Visit Our Subreddit</a
-          >
+          <a href="https://www.reddit.com/r/halal_competitions">Visit Our Subreddit</a>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import About from "../components/About.vue";
+</script>
 
 <style>
 .bg-img {
