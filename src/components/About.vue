@@ -1,4 +1,5 @@
 <template>
+  <div class="max-w-7xl mx-auto px-6 py-12">
   <article class="prose max-w-none">
   <h2>About</h2>
   <p>
@@ -9,7 +10,7 @@ The winners will be announced on the Results page every week insha ALLAH.
 <h3>Competition motivation!</h3>
 
 
-<h3>Quran [ 2 : 148 ] : So compete with one another in doing good</h3>
+<h3>Quran [ 2 : 148 ] : --- So compete with one another in doing good ---</h3>
 
 <p><b>FAQ</b> - How much time will it take? Signing up is super easy and quick! Once that is done, you can literally compete even for a total of a minute or two every week!</p>
 
@@ -55,6 +56,7 @@ This strength includes both physical strength and strength of faith.
 <p>The figure in brackets next to your count is the next highest score for that category. Once you overtake that, the next highest score will be shown. This will continue till you are the leader 😊</p>
  
   </article>
+  </div>
 </template>
 
 <style>

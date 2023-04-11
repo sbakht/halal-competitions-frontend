@@ -7,6 +7,7 @@ import Register from '../views/Register.vue';
 import store from '../store'
 import Results from '../views/Results.vue';
 import Challenges from '../views/Challenges.vue';
+import About from '../views/About.vue';
 import firebase from "firebase/app";
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/challenges',
     name: 'challenges',
     component: Challenges,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
   },
   {
     path: '/stats',

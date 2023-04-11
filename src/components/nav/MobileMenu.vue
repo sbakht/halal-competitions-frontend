@@ -56,6 +56,21 @@
         >Your Statistics</router-link
       >
 
+      <router-link
+        to="/about"
+        class="
+          block
+          px-3
+          py-2
+          text-base
+          font-medium
+          text-gray-300
+          rounded-md
+          hover:bg-gray-700
+          hover:text-white
+        "
+        >About</router-link
+      >
       <!-- <router-link
         to="/challenges"
         class="

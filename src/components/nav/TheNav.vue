@@ -27,6 +27,7 @@
                 name="Your Statistics"
               ></NavLink>
               <!-- <NavLink to="/challenges" name="Challenges"></NavLink> -->
+              <NavLink to="/about" name="About"></NavLink>
               <NavLink to="/results" name="Results"></NavLink>
             </div>
           </div>
