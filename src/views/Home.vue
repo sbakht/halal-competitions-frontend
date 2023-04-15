@@ -186,9 +186,6 @@ import About from '../components/About.vue';
         <div class="mt-12">
           <About />
         </div>
-        <div class="mt-12 text-blue-600 font-bold text-2xl flex justify-center">
-          <a href="https://www.reddit.com/r/halal_competitions">Visit Our Subreddit</a>
-        </div>
       </div>
     </div>
   </div>
