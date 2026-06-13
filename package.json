@@ -8,7 +8,7 @@
     "build": "nuxt generate",
     "preview": "nuxt preview",
     "test:unit": "vitest run",
-    "lint": "eslint pages components stores composables plugins middleware layouts app.vue tests --ext .vue,.js,.ts"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@headlessui/vue": "^1.2.0",
@@ -23,84 +23,16 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
+    "@nuxt/eslint": "^1.16.0",
     "@tailwindcss/typography": "^0.5.16",
     "@vue/test-utils": "^2.0.0-0",
     "autoprefixer": "^10.4.21",
-    "eslint": "^8.57.1",
-    "eslint-plugin-vue": "^9.33.0",
+    "eslint": "^9.39.4",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "vitest": "^3.2.4",
-    "vue-eslint-parser": "^9.4.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true,
-      "es2022": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
-    },
-    "rules": {
-      "vue/multi-word-component-names": "off",
-      "vue/no-reserved-component-names": "off",
-      "vue/no-deprecated-router-link-tag-prop": "off"
-    },
-    "overrides": [
-      {
-        "files": [
-          "pages/**/*.{vue,js,ts}",
-          "components/**/*.{vue,js,ts}",
-          "layouts/**/*.{vue,js,ts}",
-          "plugins/**/*.{vue,js,ts}",
-          "middleware/**/*.{vue,js,ts}",
-          "app.vue",
-          "nuxt.config.ts"
-        ],
-        "globals": {
-          "defineNuxtConfig": "readonly",
-          "defineNuxtPlugin": "readonly",
-          "defineNuxtRouteMiddleware": "readonly",
-          "definePageMeta": "readonly",
-          "defineProps": "readonly",
-          "defineEmits": "readonly",
-          "navigateTo": "readonly",
-          "useRouter": "readonly",
-          "useRoute": "readonly",
-          "useRuntimeConfig": "readonly",
-          "computed": "readonly",
-          "ref": "readonly",
-          "onMounted": "readonly",
-          "isIncrement": "readonly",
-          "useUserStore": "readonly",
-          "useLoggerStore": "readonly",
-          "useNavStore": "readonly",
-          "useResultStore": "readonly",
-          "useTabStore": "readonly",
-          "useRaceStore": "readonly"
-        }
-      },
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "globals": {
-          "describe": "readonly",
-          "it": "readonly",
-          "expect": "readonly",
-          "beforeEach": "readonly",
-          "afterEach": "readonly"
-        }
-      }
-    ]
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
   },
   "browserslist": [
     "> 1%",

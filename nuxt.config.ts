@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxtjs/tailwindcss'],
   css: ['~/assets/index.css'],
   app: {
     head: {

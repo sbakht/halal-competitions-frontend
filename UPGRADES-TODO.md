@@ -20,7 +20,7 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 - [x] Update `AGENTS.md` and `.cursor/rules/` — replace `src/` paths, Vue Router guards, `main.js`, and Vite commands with Nuxt layout (`pages/`, `plugins/`, `middleware/`, `nuxt dev` / `nuxt generate`)
 - [x] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*` in `.env` + `runtimeConfig` in `nuxt.config.ts`) — replace hardcoded keys in `plugins/firebase.client.js`
-- [ ] Replace hand-rolled ESLint Nuxt globals in `package.json` with `@nuxt/eslint` (or `@nuxt/eslint-module`)
+- [x] Replace hand-rolled ESLint Nuxt globals in `package.json` with `@nuxt/eslint` (or `@nuxt/eslint-module`)
 
 ### Nuxt conventions
 
