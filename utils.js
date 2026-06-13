@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import { Timestamp } from 'firebase/firestore'
 
 
 export const groupBy = function groupBy(arr, key) {
@@ -38,14 +38,14 @@ Date.prototype.format = function() {
 };
 
 export function dateRange() {
-  const currentDate =  firebase.firestore.Timestamp.now().toDate();
+  const currentDate =  Timestamp.now().toDate();
   const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
 
   return {start: monday, end: monday.addDays(7)}
 }
 
 export function dateRangeLastWeek() {
-  const currentDate =  firebase.firestore.Timestamp.now().toDate();
+  const currentDate =  Timestamp.now().toDate();
   const monday = new Date((new Date(currentDate.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7))).setHours(0,0,0,0));
 
   return {start: monday.addDays(-7), end: monday}

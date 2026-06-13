@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/utils/firebase'
 import { useUserStore } from '@/stores/user'
 import { useLoggerStore } from '@/stores/logger'
 
@@ -17,7 +17,7 @@ export default defineNuxtPlugin({
   setup() {
     const router = useRouter()
 
-    firebase.auth().onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       const userStore = useUserStore()
       const loggerStore = useLoggerStore()
       const route = router.currentRoute.value

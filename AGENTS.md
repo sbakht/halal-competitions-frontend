@@ -13,7 +13,7 @@ A Vue 3 web app for tracking Islamic competition metrics (dhikr, mindful minutes
 | Framework | Vue 3 (Vite) |
 | State | Pinia |
 | Routing | Vue Router 4 |
-| Backend | Firebase 8 (Auth + Firestore + Analytics) |
+| Backend | Firebase 11 (modular Auth + Firestore + Analytics) |
 | Styling | Tailwind CSS 3 |
 | UI | Headless UI, Heroicons |
 | Deploy | Netlify (SPA redirect in `netlify.toml`) |

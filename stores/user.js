@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import firebase from 'firebase/app'
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth'
+import { collection, addDoc } from 'firebase/firestore'
+import { auth, db } from '@/utils/firebase'
 
 export const useUserStore = defineStore('user', () => {
   const pendingAuth = ref(true)
@@ -24,17 +30,19 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function login({ email, password }) {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+    return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user)
       })
   }
 
   function register({ username, email, password }) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const usersRef = firebase.firestore().collection('users')
-        return usersRef.add({ userid: userCredential.user.uid, username }).then(() => {
+        return addDoc(collection(db, 'users'), {
+          userid: userCredential.user.uid,
+          username,
+        }).then(() => {
           // TODO dont allow duplicate username
           return login({ email, password })
         })
@@ -42,7 +50,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function logout() {
-    return firebase.auth().signOut().then(() => {
+    return signOut(auth).then(() => {
       setUser()
     })
   }

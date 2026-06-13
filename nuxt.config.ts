@@ -11,5 +11,15 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static',
   },
+  vite: {
+    optimizeDeps: {
+      exclude: [
+        'firebase/app',
+        'firebase/auth',
+        'firebase/firestore',
+        'firebase/analytics',
+      ],
+    },
+  },
   compatibilityDate: '2024-11-01',
 })

@@ -6,7 +6,7 @@ Tracked work for later — **do not start these unless explicitly requested.**
 
 - [x] **Vue CLI 4 → Vite** — migrated to `vite.config.js`, root `index.html`, `import.meta.env`
 - [x] **Vue 3 + Vite → Nuxt 4 (SPA)** — `ssr: false`, file-based routing in `pages/`, Pinia via `@pinia/nuxt`, Tailwind via `@nuxtjs/tailwindcss`, static deploy to `.output/public`
-- [ ] **Firebase 8 → modular v9+** — replace `import firebase from "firebase/app"` with tree-shakeable imports; update Auth/Firestore calls in `plugins/`, `stores/user.js`, `stores/result.js`, `service/Logger.js`, `utils.js`
+- [x] **Firebase 8 → modular v9+** — migrated to Firebase 11 modular API; tree-shakeable imports in `utils/firebase.js`, `plugins/`, `stores/user.js`, `stores/result.js`, `service/Logger.js`, `utils.js`
 - [x] **Tailwind PostCSS 7 compat → Tailwind 3+** — done as part of Vite migration; now wired via `@nuxtjs/tailwindcss`
 - [x] **Vuex 4 → Pinia** — migrated to `stores/` with `defineStore` (Pinia 3 via `@pinia/nuxt`)
 - [x] **axios 0.21 → current** — audited; zero usage; removed from dependencies
@@ -25,14 +25,14 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 ### Nuxt conventions
 
 - [ ] Lean on auto-imports — remove redundant manual imports of `components/`, `composables/`, and `stores/` where Nuxt already provides them
-- [ ] Migrate `pages/` from Options API (+ dual `<script setup>` blocks) to `<script setup>` (Dashboard, Stats, Login, Register, etc.)
+- [x] Migrate `pages/` from Options API (+ dual `<script setup>` blocks) to `<script setup>` (Dashboard, Stats, Login, Register, etc.)
 - [ ] Extract auth logic into composables — e.g. `useAuth()` wrapping `pendingAuth`, login/logout, and route guards; reduce duplication between `plugins/auth.client.js` and `middleware/auth.js`
 - [ ] Replace `mounted()` data fetching in pages with composables or, when SSR is enabled later, `useAsyncData` / `await useAsyncData`
 - [ ] Rename middleware to `.global.ts` / client-only patterns consistently; document that Firebase middleware must skip on server (`import.meta.server`)
 
 ### Firebase & bundle
 
-- [ ] Centralize Firebase init — single `utils/firebase.js` (or composable) imported by plugins/stores instead of scattered `import firebase from 'firebase/app'`
+- [x] Centralize Firebase init — single `utils/firebase.js` imported by plugins/stores instead of scattered `import firebase from 'firebase/app'`
 - [ ] Code-split Firebase — dynamic-import auth/firestore in plugins to address the ~770 kB client chunk from the static build
 - [ ] Re-enable or document Firebase emulator workflow (`plugins/firebase.client.js` — emulator hooks were in old `main.js`)
 

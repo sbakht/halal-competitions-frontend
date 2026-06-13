@@ -1,5 +1,4 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { auth } from '@/utils/firebase'
 import { useUserStore } from '@/stores/user'
 
 export default defineNuxtRouteMiddleware(() => {
@@ -9,7 +8,7 @@ export default defineNuxtRouteMiddleware(() => {
 
   const userStore = useUserStore()
 
-  if (userStore.pendingAuth || firebase.auth().currentUser) {
+  if (userStore.pendingAuth || auth.currentUser) {
     return
   }
 

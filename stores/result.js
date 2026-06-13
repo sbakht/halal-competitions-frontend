@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import { dateRangeLastWeek, dateRange } from '../utils.js'
 import { competitionsJSON, competitionKeys } from '../data'
-import firebase from 'firebase/app'
+import { db } from '@/utils/firebase'
 import { useTabStore } from './tab'
 
 function getCountBy(user, competitionKey) {
@@ -71,9 +72,13 @@ export const useResultStore = defineStore('result', () => {
   })
 
   function loadResults() {
-    const loggersRef = firebase.firestore().collection('loggers')
     const { start, end } = dateRangeLastWeek()
-    loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
+    const q = query(
+      collection(db, 'loggers'),
+      where('lastUpdated', '>=', start),
+      where('lastUpdated', '<', end),
+    )
+    getDocs(q).then((snapshot) => {
       console.assert(snapshot.size > 0, { snapshot, start, end })
       const data = []
       snapshot.forEach(doc => data.push(doc.data()))
@@ -83,9 +88,13 @@ export const useResultStore = defineStore('result', () => {
   }
 
   function loadChallenges() {
-    const loggersRef = firebase.firestore().collection('loggers')
     const { start, end } = dateRange()
-    loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
+    const q = query(
+      collection(db, 'loggers'),
+      where('lastUpdated', '>=', start),
+      where('lastUpdated', '<', end),
+    )
+    getDocs(q).then((snapshot) => {
       console.assert(snapshot.size > 0, { snapshot, start, end })
       const data = []
       snapshot.forEach(doc => data.push(doc.data()))
