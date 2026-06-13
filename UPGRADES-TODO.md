@@ -9,7 +9,7 @@ Tracked work for later — **do not start these unless explicitly requested.**
 - [ ] **Firebase 8 → modular v9+** — replace `import firebase from "firebase/app"` with tree-shakeable imports; update Auth/Firestore calls in `plugins/`, `stores/user.js`, `stores/result.js`, `service/Logger.js`, `utils.js`
 - [x] **Tailwind PostCSS 7 compat → Tailwind 3+** — done as part of Vite migration; now wired via `@nuxtjs/tailwindcss`
 - [x] **Vuex 4 → Pinia** — migrated to `stores/` with `defineStore` (Pinia 3 via `@pinia/nuxt`)
-- [ ] **axios 0.21 → current** — if still needed after Firebase migration (audit usage first)
+- [x] **axios 0.21 → current** — audited; zero usage; removed from dependencies
 - [x] **core-js 2 → 3** — removed; modern browser targets
 
 ## Post-Nuxt migration (do next)
