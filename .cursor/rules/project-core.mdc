@@ -15,10 +15,12 @@ Read `AGENTS.md` for architecture, data model, and commands.
 
 ## Patterns to follow
 
-- Pinia: stores in `src/stores/`; use `useXStore()` or `mapStores(useXStore)` in components
-- Paths: use `@/` alias for imports from `src/`
+- Nuxt 4 SPA (`ssr: false`) — routes in `pages/`, layout in `layouts/`, client plugins in `plugins/*.client.js`
+- Pinia: stores in `stores/`; use `useXStore()` (auto-imported) or `mapStores(useXStore)` in Options API components
+- Paths: use `@/` alias for imports from the project root (no `src/`)
+- Auth: `definePageMeta({ middleware: 'auth' | 'anon' })` on pages; guards in `middleware/auth.js` and `middleware/anon.js`
 - Styling: Tailwind utility classes; match existing spacing/shadow patterns
-- Data: competition definitions in `src/data.js` — don't duplicate counter ids elsewhere
+- Data: competition definitions in `data.js` — don't duplicate counter ids elsewhere
 - Week logic: Monday–Sunday via `dateRange()` / `dateRangeLastWeek()` in `utils.js`
 
 ## After changes
@@ -30,4 +32,4 @@ npm run test:unit   # when touching tested areas
 
 ## Reuse first
 
-Check `src/composables/`, `components/shared/Base*`, and existing store actions before adding new abstractions.
+Check `composables/`, `components/shared/Base*`, and existing store actions before adding new abstractions.

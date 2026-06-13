@@ -8,13 +8,13 @@ alwaysApply: false
 
 Use Composition API for **new components** and when **significantly editing** existing ones.
 
-## New components
+## New components & pages
+
+Nuxt auto-imports Vue APIs, composables, components, and Pinia stores. Prefer `<script setup>`:
 
 ```vue
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useLoggerStore } from '@/stores/logger'
-import isIncrement from '@/composables/isIncrement'
+definePageMeta({ middleware: 'auth' })
 
 const loggerStore = useLoggerStore()
 const settingsOpen = ref(false)
@@ -27,13 +27,11 @@ onMounted(() => {
 
 ## Extract shared logic to composables
 
-Place in `src/composables/`. Follow `isIncrement.js`: use Pinia stores, return reactive API.
+Place in `composables/`. Follow `isIncrement.js`: use Pinia stores, return reactive API.
 
 ```js
 // composables/useLogger.js
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useLoggerStore } from '@/stores/logger'
 
 export function useLogger() {
   const loggerStore = useLoggerStore()
