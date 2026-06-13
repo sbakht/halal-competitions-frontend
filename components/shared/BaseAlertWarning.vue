@@ -35,20 +35,14 @@
   </div>
 </template>
 
-<script>
-import { ExclamationIcon, XIcon } from "@heroicons/vue/solid";
+<script setup>
+import { ExclamationIcon, XIcon } from '@heroicons/vue/solid'
 
-export default {
-  components: {
-    ExclamationIcon,
-    XIcon,
-  },
-  methods: {
-    dismiss() {
-      this.$emit("dismiss");
-    },
-  },
-};
+const emit = defineEmits(['dismiss'])
+
+function dismiss() {
+  emit('dismiss')
+}
 </script>
 
 <style>

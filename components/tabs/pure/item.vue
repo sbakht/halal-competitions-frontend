@@ -8,13 +8,11 @@
   </button>
 </template>
 
-<script>
-export default {
-  props: ["id", "name", "isActive"],
-  methods: {
-    onClick() {
-      this.$emit("change", this.id);
-    },
-  },
-};
+<script setup>
+const props = defineProps(['id', 'name', 'isActive'])
+const emit = defineEmits(['change'])
+
+function onClick() {
+  emit('change', props.id)
+}
 </script>

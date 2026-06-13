@@ -49,14 +49,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["data"],
-  methods: {
-    top(arr) {
-      return arr;
-      // return arr.slice(0, 5);
-    },
-  },
-};
+<script setup>
+defineProps(['data'])
+
+function top(arr) {
+  return arr
+  // return arr.slice(0, 5);
+}
 </script>

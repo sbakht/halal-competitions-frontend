@@ -33,34 +33,28 @@
   </fieldset>
 </template>
 
-<script>
-import StaticData from "../../static/Settings";
+<script setup>
+import StaticData from '../../static/Settings'
 
-export default {
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  modelValue: {
+    type: Array,
+    required: true,
   },
-  data() {
-    return {
-      arr: this.modelValue,
-      staticData: StaticData.language,
-    };
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const staticData = StaticData.language
+
+const arr = computed({
+  get: () => props.modelValue,
+  set: (val) => {
+    if (val.length === 0) {
+      emit('update:modelValue', ['english', 'arabic'])
+    } else {
+      emit('update:modelValue', val)
+    }
   },
-  watch: {
-    arr(val) {
-      console.log(val, "----");
-      if (val.length === 0) {
-        this.$emit("update:modelValue", ["english", "arabic"]);
-      } else {
-        this.$emit("update:modelValue", val);
-      }
-    },
-  },
-};
+})
 </script>
-
-<style>
-</style>

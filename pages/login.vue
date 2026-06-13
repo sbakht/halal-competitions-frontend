@@ -215,48 +215,33 @@
 
 <script setup>
 definePageMeta({ middleware: 'anon' })
-</script>
 
-<script>
-import { useUserStore } from "@/stores/user";
+const userStore = useUserStore()
 
-export default {
-  data() {
-    return {
-      username: "",
-      password: "",
-      error: "",
-    };
-  },
-  methods: {
-    validate() {
-      return true;
-    },
-    onSubmit(e) {
-      e.preventDefault();
-      this.error = "";
-      if (this.validate()) {
-        useUserStore()
-          .login({
-            email: this.username,
-            password: this.password,
-          })
-          .then(() => {
-            navigateTo('/dashboard')
-          })
-          .catch((error) => {
-            if (
-              error.code === "auth/wrong-password" ||
-              error.code === "auth/user-not-found"
-            ) {
-              this.error = "Invalid username/password combination.";
-            } else {
-              this.error =
-                "There was an error logging in. Please try again later.";
-            }
-          });
+const username = ref('')
+const password = ref('')
+const error = ref('')
+
+function onSubmit(e) {
+  e.preventDefault()
+  error.value = ''
+  userStore
+    .login({
+      email: username.value,
+      password: password.value,
+    })
+    .then(() => {
+      navigateTo('/dashboard')
+    })
+    .catch((err) => {
+      if (
+        err.code === 'auth/wrong-password' ||
+        err.code === 'auth/user-not-found'
+      ) {
+        error.value = 'Invalid username/password combination.'
+      } else {
+        error.value = 'There was an error logging in. Please try again later.'
       }
-    },
-  },
-};
+    })
+}
 </script>

@@ -157,10 +157,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["isOpen", "isLoggedIn"],
-};
+<script setup>
+defineProps(['isOpen', 'isLoggedIn'])
 </script>
 
 <style scoped>

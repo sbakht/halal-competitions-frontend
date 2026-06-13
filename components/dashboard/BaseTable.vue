@@ -103,34 +103,11 @@
   </div>
 </template>
 
-<script>
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "jane.cooper@example.com",
+<script setup>
+defineProps({
+  data: {
+    type: Array,
+    required: true,
   },
-  {
-    name: "Cody Fisher",
-    title: "Product Directives Officer",
-    role: "Owner",
-    email: "cody.fisher@example.com",
-  },
-  // More people...
-];
-
-export default {
-  props: {
-    data: {
-      type: Array,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      people,
-    };
-  },
-};
+})
 </script>

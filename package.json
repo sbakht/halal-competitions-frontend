@@ -58,6 +58,7 @@
       {
         "files": [
           "pages/**/*.{vue,js,ts}",
+          "components/**/*.{vue,js,ts}",
           "layouts/**/*.{vue,js,ts}",
           "plugins/**/*.{vue,js,ts}",
           "middleware/**/*.{vue,js,ts}",
@@ -69,9 +70,15 @@
           "defineNuxtPlugin": "readonly",
           "defineNuxtRouteMiddleware": "readonly",
           "definePageMeta": "readonly",
+          "defineProps": "readonly",
+          "defineEmits": "readonly",
           "navigateTo": "readonly",
           "useRouter": "readonly",
           "useRoute": "readonly",
+          "computed": "readonly",
+          "ref": "readonly",
+          "onMounted": "readonly",
+          "isIncrement": "readonly",
           "useUserStore": "readonly",
           "useLoggerStore": "readonly",
           "useNavStore": "readonly",

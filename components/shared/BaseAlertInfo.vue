@@ -38,18 +38,12 @@
   </div>
 </template>
 
-<script>
-import { InformationCircleIcon, XIcon } from "@heroicons/vue/solid";
+<script setup>
+import { InformationCircleIcon, XIcon } from '@heroicons/vue/solid'
 
-export default {
-  components: {
-    InformationCircleIcon,
-    XIcon,
-  },
-  methods: {
-    dismiss() {
-      this.$emit("dismiss");
-    },
-  },
-};
+const emit = defineEmits(['dismiss'])
+
+function dismiss() {
+  emit('dismiss')
+}
 </script>

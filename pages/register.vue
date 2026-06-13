@@ -193,90 +193,85 @@
 
 <script setup>
 definePageMeta({ middleware: 'anon' })
-</script>
 
-<script>
-import { useUserStore } from "@/stores/user";
+const userStore = useUserStore()
 
-export default {
-  data() {
-    return {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      usernameError: "",
-      passwordError: "",
-      emailError: "",
-    };
-  },
-  methods: {
-    validate() {
-      let valid = true;
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const usernameError = ref('')
+const passwordError = ref('')
+const emailError = ref('')
 
-      if (this.username.length < 3) {
-        this.usernameError = "Username must be at least 3 characters long.";
-        valid = false;
-      }
+function validate() {
+  let valid = true
 
-      if (this.username.length > 20) {
-        this.usernameError = "Username must be at most 20 characters long.";
-        valid = false;
-      }
+  if (username.value.length < 3) {
+    usernameError.value = 'Username must be at least 3 characters long.'
+    valid = false
+  }
 
-      if (this.email.length < 4) {
-        this.emailError = "Please enter a valid email";
-        valid = false;
-      }
+  if (username.value.length > 20) {
+    usernameError.value = 'Username must be at most 20 characters long.'
+    valid = false
+  }
 
-      if (this.password !== this.confirmPassword) {
-        this.passwordError = "Passwords must match.";
-        return false;
-      }
+  if (email.value.length < 4) {
+    emailError.value = 'Please enter a valid email'
+    valid = false
+  }
 
-      if (this.password.length < 6) {
-        this.passwordError = "Password must be atleast 6 characters long";
-        valid = false;
-      }
+  if (password.value !== confirmPassword.value) {
+    passwordError.value = 'Passwords must match.'
+    return false
+  }
 
-      if (this.password.length > 30) {
-        this.passwordError = "Password must be at most 30 characters long";
-        valid = false;
-      }
+  if (password.value.length < 6) {
+    passwordError.value = 'Password must be atleast 6 characters long'
+    valid = false
+  }
 
-      return valid;
-    },
-    onSubmit(e) {
-      e.preventDefault();
-      if (this.validate()) {
-        useUserStore()
-          .register({
-            email: this.email,
-            username: this.username,
-            password: this.password,
-          })
-          .then(() => {
-            navigateTo('/login')
-          })
-          .catch((error) => {
-            if (error.code === "auth/email-already-in-use") {
-              this.usernameError = "Username is already taken.";
-            } else {
-              this.passwordError =
-                "There was an error creating your account. Please try again later.";
-            }
-          });
-      }
-    },
-    changePass() {
-      this.passwordError = "";
-    },
-    changeUsername() {
-      this.usernameError = "";
-    },
-    changeEmail() {
-      this.emailError = "";
-    },
-  },
-};
+  if (password.value.length > 30) {
+    passwordError.value = 'Password must be at most 30 characters long'
+    valid = false
+  }
+
+  return valid
+}
+
+function onSubmit(e) {
+  e.preventDefault()
+  if (validate()) {
+    userStore
+      .register({
+        email: email.value,
+        username: username.value,
+        password: password.value,
+      })
+      .then(() => {
+        navigateTo('/login')
+      })
+      .catch((err) => {
+        if (err.code === 'auth/email-already-in-use') {
+          usernameError.value = 'Username is already taken.'
+        } else {
+          passwordError.value =
+            'There was an error creating your account. Please try again later.'
+        }
+      })
+  }
+}
+
+function changePass() {
+  passwordError.value = ''
+}
+
+function changeUsername() {
+  usernameError.value = ''
+}
+
+function changeEmail() {
+  emailError.value = ''
+}
 </script>

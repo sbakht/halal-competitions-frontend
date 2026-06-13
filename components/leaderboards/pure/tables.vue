@@ -6,13 +6,8 @@
   </div>
 </template>
 
-<script>
-import LeaderboardTable from "./table.vue";
+<script setup>
+import LeaderboardTable from './table.vue'
 
-export default {
-  components: {
-    LeaderboardTable,
-  },
-  props: ["data"],
-};
+defineProps(['data'])
 </script>

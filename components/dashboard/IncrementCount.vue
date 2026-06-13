@@ -33,29 +33,22 @@
   </fieldset>
 </template>
 
-<script>
-import StaticData from "../../static/Settings";
+<script setup>
+import StaticData from '../../static/Settings'
 
-export default {
-  props: {
-    modelValue: {
-      type: Number,
-      required: true,
-    },
+const props = defineProps({
+  modelValue: {
+    type: Number,
+    required: true,
   },
-  data() {
-    return {
-      count: this.modelValue,
-      staticData: StaticData.incrementCount,
-    };
-  },
-  watch: {
-    count(val) {
-      this.$emit("update:modelValue", val);
-    },
-  },
-};
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const staticData = StaticData.incrementCount
+
+const count = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val),
+})
 </script>
-
-<style>
-</style>

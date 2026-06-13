@@ -9,22 +9,16 @@
   </div>
 </template>
 
-<script>
-import IncrementSlide from "./IncrementSlide.vue";
+<script setup>
+import IncrementSlide from './IncrementSlide.vue'
 
-export default {
-  name: "MyComponent",
-  components: { IncrementSlide },
-  props: ["data"],
-  data() {
-    return {
-      height: 0,
-    };
-  },
-  mounted() {
-    this.height = window.innerHeight - 64 - 32 - 24 - 120 + "px";
-  },
-};
+defineProps(['data'])
+
+const height = ref('0')
+
+onMounted(() => {
+  height.value = `${window.innerHeight - 64 - 32 - 24 - 120}px`
+})
 </script>
 
 <style scoped>

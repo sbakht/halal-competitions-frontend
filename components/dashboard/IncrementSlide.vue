@@ -13,20 +13,14 @@
   </button>
 </template>
 
-<script>
-import BaseIncrement from "./BaseIncrement.vue";
-import isIncrement from "@/composables/isIncrement";
+<script setup>
+import BaseIncrement from './BaseIncrement.vue'
 
-export default {
-  components: { BaseIncrement },
-  props: {
-    logger: Object,
-  },
-  setup() {
-    const { increment } = isIncrement();
-    return { increment };
-  },
-};
+defineProps({
+  logger: Object,
+})
+
+const { increment } = isIncrement()
 </script>
 
 <style scoped>

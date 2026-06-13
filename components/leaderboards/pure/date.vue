@@ -11,8 +11,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["start", "end"],
-};
+<script setup>
+defineProps(['start', 'end'])
 </script>

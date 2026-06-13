@@ -35,38 +35,28 @@
   </div>
 </template>
 
-<script>
-const colors = ["blue", "red", "green", "indigo", "purple", "yellow", "pink"];
+<script setup>
+const colors = ['blue', 'red', 'green', 'indigo', 'purple', 'yellow', 'pink']
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max)
 }
 
-export default {
-  props: {
-    current: {
-      type: Number,
-      default: 0,
-    },
-    total: {
-      type: Number,
-      default: 0,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
+const props = defineProps({
+  current: {
+    type: Number,
+    default: 0,
   },
-  computed: {
-    width() {
-      return (this.current / this.total) * 100 + "%";
-    },
-    color() {
-      return colors[getRandomInt(colors.length)];
-    },
+  total: {
+    type: Number,
+    default: 0,
   },
-};
-</script>
+  label: {
+    type: String,
+    required: true,
+  },
+})
 
-<style>
-</style>
+const width = computed(() => `${(props.current / props.total) * 100}%`)
+const color = computed(() => colors[getRandomInt(colors.length)])
+</script>
