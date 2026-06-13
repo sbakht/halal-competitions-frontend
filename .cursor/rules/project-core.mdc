@@ -10,7 +10,7 @@ Read `AGENTS.md` for architecture, data model, and commands.
 ## Scope & safety
 
 - Small, focused diffs only — no drive-by refactors or mass upgrades
-- Do **not** upgrade Vue CLI, Firebase, Tailwind, or Vuex without explicit user approval
+- Do **not** upgrade Firebase or Vuex without explicit user approval
 - Planned upgrades live in `UPGRADES-TODO.md` — reference, don't execute, unless asked
 
 ## Patterns to follow

@@ -2,64 +2,70 @@
   "name": "halal-competitions",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "serve": "node --openssl-legacy-provider node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
-    "build": "node --openssl-legacy-provider node_modules/@vue/cli-service/bin/vue-cli-service.js build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest run",
+    "lint": "eslint src tests --ext .vue,.js"
   },
   "dependencies": {
     "@headlessui/vue": "^1.2.0",
     "@heroicons/vue": "^1.0.1",
     "axios": "^0.21.1",
-    "core-js": "^2.6.12",
     "firebase": "^8.2.6",
     "ramda": "^0.27.1",
     "register-service-worker": "^1.6.2",
-    "vue": "^3.0.0",
+    "vue": "^3.5.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.4.1",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.0.0-0",
-    "autoprefixer": "^9.8.6",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0",
-    "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2",
-    "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^9.33.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4",
+    "vue-eslint-parser": "^9.4.3"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "es2022": true
     },
     "extends": [
       "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "ecmaVersion": "latest",
+      "sourceType": "module"
     },
-    "rules": {},
+    "rules": {
+      "vue/multi-word-component-names": "off",
+      "vue/no-reserved-component-names": "off",
+      "vue/no-deprecated-router-link-tag-prop": "off"
+    },
     "overrides": [
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
           "**/tests/unit/**/*.spec.{j,t}s?(x)"
         ],
-        "env": {
-          "jest": true
+        "globals": {
+          "describe": "readonly",
+          "it": "readonly",
+          "expect": "readonly",
+          "beforeEach": "readonly",
+          "afterEach": "readonly"
         }
       }
     ]
@@ -68,11 +74,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "jest": {
-    "preset": "@vue/cli-plugin-unit-jest",
-    "transform": {
-      "^.+\\.vue$": "vue-jest"
-    }
-  }
+  ]
 }

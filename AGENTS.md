@@ -10,11 +10,11 @@ A Vue 3 web app for tracking Islamic competition metrics (dhikr, mindful minutes
 
 | Layer | Choice |
 |-------|--------|
-| Framework | Vue 3 (Vue CLI 4) |
+| Framework | Vue 3 (Vite) |
 | State | Vuex 4 (modular) |
 | Routing | Vue Router 4 |
 | Backend | Firebase 8 (Auth + Firestore + Analytics) |
-| Styling | Tailwind CSS (PostCSS 7 compat) |
+| Styling | Tailwind CSS 3 |
 | UI | Headless UI, Heroicons |
 | Deploy | Netlify (SPA redirect in `netlify.toml`) |
 | PWA | Service worker via `registerServiceWorker.js` |
@@ -25,10 +25,11 @@ A Vue 3 web app for tracking Islamic competition metrics (dhikr, mindful minutes
 
 ```bash
 npm install          # install deps
-npm run serve        # dev server (hot reload)
+npm run dev          # dev server (hot reload)
 npm run build        # production build
+npm run preview      # preview production build locally
 npm run lint         # ESLint
-npm run test:unit    # Jest unit tests
+npm run test:unit    # Vitest unit tests
 ```
 
 Always run `npm run lint` after substantive changes. Run relevant tests when touching tested code.

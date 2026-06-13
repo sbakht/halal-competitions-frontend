@@ -1,12 +1,8 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapObj } from '@/utils.js'
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
+describe('utils.js', () => {
+  it('mapObj maps object keys through callback', () => {
+    const result = mapObj({ a: 1, b: 2 }, (key, val) => `${key}:${val}`)
+    expect(result).toEqual(['a:1', 'b:2'])
   })
 })
