@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 import { competitionsJSON, competitionKeys } from '../data'
 import LoggerService from '../service/Logger.js'
 import LocalStorage from '../utils/LocalStorage'
@@ -25,87 +26,109 @@ function getLoggers(docs) {
   return (docs.length && docs[0].data().loggers) || {}
 }
 
-export const useLoggerStore = defineStore('logger', {
-  state: () => ({
-    loggers: [],
-    allLoggers: [],
-    loadedDashboard: false,
-    loadedStats: false,
-    incrementCount: LocalStorage.incrementCount.get(),
-    carouselMode: LocalStorage.carouselMode.get(),
-    language: LocalStorage.language.get(),
-  }),
-  getters: {
-    activeLoggers(state) {
-      const scores = useRaceStore().scores
-      const activeTabId = useTabStore().activeTabId
+export const useLoggerStore = defineStore('logger', () => {
+  const loggers = ref([])
+  const allLoggers = ref([])
+  const loadedDashboard = ref(false)
+  const loadedStats = ref(false)
+  const incrementCount = ref(LocalStorage.incrementCount.get())
+  const carouselMode = ref(LocalStorage.carouselMode.get())
+  const language = ref(LocalStorage.language.get())
 
-      const newIds = Object.keys(state.loggers).filter(
-        id => competitionKeys[id].competition === activeTabId
-      )
-      return newIds.map(id => {
-        const count = state.loggers[id]
-        return {
-          id,
-          title: competitionKeys[id].title,
-          arabic: competitionKeys[id].arabic,
-          count,
-          target: getNextHighestScore(count, scores[id]),
-        }
-      })
-    },
-    isDashboardLoaded: (state) => state.loadedDashboard,
-  },
-  actions: {
-    increment(logger) {
-      // TODO: reset listener to auto reset on new week
-      this.loggers[logger.id] = this.loggers[logger.id] + this.incrementCount
-    },
-    setIncrementCount(val) {
-      this.incrementCount = val
-      LocalStorage.incrementCount.set(val)
-    },
-    setLanguage(val) {
-      this.language = val
-      LocalStorage.language.set(val)
-    },
-    setCarouselMode(val) {
-      this.carouselMode = val
-      LocalStorage.carouselMode.set(val)
-    },
-    loadDashboard() {
-      useNavStore().closeMobileMenu()
+  const activeLoggers = computed(() => {
+    const scores = useRaceStore().scores
+    const activeTabId = useTabStore().activeTabId
 
-      const userid = useUserStore().userid
-
-      if (userid) {
-        loggerService.fetchById(userid).then(({ docs }) => {
-          const loggers = getLoggers(docs)
-          addUntrackedLoggers(loggers)
-          this.loggers = loggers
-          this.loadedDashboard = true
-          useRaceStore().loadRacers()
-        })
+    const newIds = Object.keys(loggers.value).filter(
+      id => competitionKeys[id].competition === activeTabId
+    )
+    return newIds.map(id => {
+      const count = loggers.value[id]
+      return {
+        id,
+        title: competitionKeys[id].title,
+        arabic: competitionKeys[id].arabic,
+        count,
+        target: getNextHighestScore(count, scores[id]),
       }
-    },
-    loadStats() {
-      useNavStore().closeMobileMenu()
+    })
+  })
 
-      const userid = useUserStore().userid
+  const isDashboardLoaded = computed(() => loadedDashboard.value)
 
-      if (userid) {
-        loggerService.fetchAllById(userid).then(({ docs }) => {
-          this.allLoggers = docs.map(doc => doc.data().loggers)
-          this.loadedStats = true
-        })
-      }
-    },
-    save() {
-      const userStore = useUserStore()
-      loggerService.save({
-        state: this.$state,
-        rootState: { User: { userid: userStore.userid } },
+  function increment(logger) {
+    // TODO: reset listener to auto reset on new week
+    loggers.value[logger.id] = loggers.value[logger.id] + incrementCount.value
+  }
+
+  function setIncrementCount(val) {
+    incrementCount.value = val
+    LocalStorage.incrementCount.set(val)
+  }
+
+  function setLanguage(val) {
+    language.value = val
+    LocalStorage.language.set(val)
+  }
+
+  function setCarouselMode(val) {
+    carouselMode.value = val
+    LocalStorage.carouselMode.set(val)
+  }
+
+  function loadDashboard() {
+    useNavStore().closeMobileMenu()
+
+    const userid = useUserStore().userid
+
+    if (userid) {
+      loggerService.fetchById(userid).then(({ docs }) => {
+        const nextLoggers = getLoggers(docs)
+        addUntrackedLoggers(nextLoggers)
+        loggers.value = nextLoggers
+        loadedDashboard.value = true
+        useRaceStore().loadRacers()
       })
-    },
-  },
+    }
+  }
+
+  function loadStats() {
+    useNavStore().closeMobileMenu()
+
+    const userid = useUserStore().userid
+
+    if (userid) {
+      loggerService.fetchAllById(userid).then(({ docs }) => {
+        allLoggers.value = docs.map(doc => doc.data().loggers)
+        loadedStats.value = true
+      })
+    }
+  }
+
+  function save() {
+    const userStore = useUserStore()
+    loggerService.save({
+      state: { loggers: loggers.value },
+      rootState: { User: { userid: userStore.userid } },
+    })
+  }
+
+  return {
+    loggers,
+    allLoggers,
+    loadedDashboard,
+    loadedStats,
+    incrementCount,
+    carouselMode,
+    language,
+    activeLoggers,
+    isDashboardLoaded,
+    increment,
+    setIncrementCount,
+    setLanguage,
+    setCarouselMode,
+    loadDashboard,
+    loadStats,
+    save,
+  }
 })

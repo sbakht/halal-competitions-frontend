@@ -1,15 +1,16 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-export const useNavStore = defineStore('nav', {
-  state: () => ({
-    isMobileMenuOpen: false,
-  }),
-  actions: {
-    openMobileMenu() {
-      this.isMobileMenuOpen = true
-    },
-    closeMobileMenu() {
-      this.isMobileMenuOpen = false
-    },
-  },
+export const useNavStore = defineStore('nav', () => {
+  const isMobileMenuOpen = ref(false)
+
+  function openMobileMenu() {
+    isMobileMenuOpen.value = true
+  }
+
+  function closeMobileMenu() {
+    isMobileMenuOpen.value = false
+  }
+
+  return { isMobileMenuOpen, openMobileMenu, closeMobileMenu }
 })

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 import { competitionKeys } from '../data'
 import LoggerService from '../service/Logger'
 
@@ -23,20 +24,16 @@ function getAllScores(racers) {
   return result
 }
 
-export const useRaceStore = defineStore('race', {
-  state: () => ({
-    racers: [],
-  }),
-  getters: {
-    scores(state) {
-      return getAllScores(state.racers)
-    },
-  },
-  actions: {
-    loadRacers() {
-      return loggerService.fetchAll().then((snapshot) => {
-        this.racers = getUsersLoggers(snapshot)
-      })
-    },
-  },
+export const useRaceStore = defineStore('race', () => {
+  const racers = ref([])
+
+  const scores = computed(() => getAllScores(racers.value))
+
+  function loadRacers() {
+    return loggerService.fetchAll().then((snapshot) => {
+      racers.value = getUsersLoggers(snapshot)
+    })
+  }
+
+  return { racers, scores, loadRacers }
 })

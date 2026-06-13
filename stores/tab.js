@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import LocalStorage from '../utils/LocalStorage'
 
-export const useTabStore = defineStore('tab', {
-  state: () => ({
-    activeTabId: LocalStorage.activeTabId.get(),
-  }),
-  actions: {
-    setActiveTab(id) {
-      this.activeTabId = id
-      LocalStorage.activeTabId.set(id)
-    },
-  },
+export const useTabStore = defineStore('tab', () => {
+  const activeTabId = ref(LocalStorage.activeTabId.get())
+
+  function setActiveTab(id) {
+    activeTabId.value = id
+    LocalStorage.activeTabId.set(id)
+  }
+
+  return { activeTabId, setActiveTab }
 })

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 import { dateRangeLastWeek, dateRange } from '../utils.js'
 import { competitionsJSON, competitionKeys } from '../data'
 import firebase from 'firebase/app'
@@ -37,61 +38,68 @@ function filterToActive(loggers, activeTabId) {
   return result
 }
 
-export const useResultStore = defineStore('result', {
-  state: () => ({
-    results: [],
-    loadedResults: false,
-  }),
-  getters: {
-    orderedByScore(state) {
-      const keys = Object.keys(competitionKeys)
-      const orderedLoggersByScore = {}
-      keys.forEach(competitionKey => {
-        const data = orderedLoggerByScore(competitionKey, state.results)
-        if (data.length) {
-          orderedLoggersByScore[competitionKey] = data
-        }
-      })
-      const { start, end } = dateRangeLastWeek()
-      return {
-        start,
-        end,
-        data: filterToActive(orderedLoggersByScore, useTabStore().activeTabId),
+export const useResultStore = defineStore('result', () => {
+  const results = ref([])
+  const loadedResults = ref(false)
+
+  const orderedByScore = computed(() => {
+    const keys = Object.keys(competitionKeys)
+    const orderedLoggersByScore = {}
+    keys.forEach(competitionKey => {
+      const data = orderedLoggerByScore(competitionKey, results.value)
+      if (data.length) {
+        orderedLoggersByScore[competitionKey] = data
       }
-    },
-    totalCum(state) {
-      const keys = Object.keys(competitionKeys)
-      const totals = {}
-      keys.forEach(competitionKey => {
-        totals[competitionKey] = orderedLoggerByScore(competitionKey, state.results)
-          .reduce((accum, user) => accum + (user.count || 0), 0)
-      })
-      const { start, end } = dateRange()
-      return { start, end, data: totals }
-    },
-  },
-  actions: {
-    loadResults() {
-      const loggersRef = firebase.firestore().collection('loggers')
-      const { start, end } = dateRangeLastWeek()
-      loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
-        console.assert(snapshot.size > 0, { snapshot, start, end })
-        const data = []
-        snapshot.forEach(doc => data.push(doc.data()))
-        this.results = data
-        this.loadedResults = true
-      })
-    },
-    loadChallenges() {
-      const loggersRef = firebase.firestore().collection('loggers')
-      const { start, end } = dateRange()
-      loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
-        console.assert(snapshot.size > 0, { snapshot, start, end })
-        const data = []
-        snapshot.forEach(doc => data.push(doc.data()))
-        this.results = data
-        this.loadedResults = true
-      })
-    },
-  },
+    })
+    const { start, end } = dateRangeLastWeek()
+    return {
+      start,
+      end,
+      data: filterToActive(orderedLoggersByScore, useTabStore().activeTabId),
+    }
+  })
+
+  const totalCum = computed(() => {
+    const keys = Object.keys(competitionKeys)
+    const totals = {}
+    keys.forEach(competitionKey => {
+      totals[competitionKey] = orderedLoggerByScore(competitionKey, results.value)
+        .reduce((accum, user) => accum + (user.count || 0), 0)
+    })
+    const { start, end } = dateRange()
+    return { start, end, data: totals }
+  })
+
+  function loadResults() {
+    const loggersRef = firebase.firestore().collection('loggers')
+    const { start, end } = dateRangeLastWeek()
+    loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
+      console.assert(snapshot.size > 0, { snapshot, start, end })
+      const data = []
+      snapshot.forEach(doc => data.push(doc.data()))
+      results.value = data
+      loadedResults.value = true
+    })
+  }
+
+  function loadChallenges() {
+    const loggersRef = firebase.firestore().collection('loggers')
+    const { start, end } = dateRange()
+    loggersRef.where('lastUpdated', '>=', start).where('lastUpdated', '<', end).get().then((snapshot) => {
+      console.assert(snapshot.size > 0, { snapshot, start, end })
+      const data = []
+      snapshot.forEach(doc => data.push(doc.data()))
+      results.value = data
+      loadedResults.value = true
+    })
+  }
+
+  return {
+    results,
+    loadedResults,
+    orderedByScore,
+    totalCum,
+    loadResults,
+    loadChallenges,
+  }
 })
