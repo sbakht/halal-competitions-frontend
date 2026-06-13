@@ -1,0 +1,40 @@
+---
+description: Firebase 8 Auth and Firestore patterns used in this project
+globs: "{src/main.js,src/store/**/*.js,src/service/**/*.js}"
+alwaysApply: false
+---
+
+# Firebase patterns (v8 compat API)
+
+This project uses **Firebase 8** namespace imports. Do not migrate to modular v9 unless explicitly requested (see `UPGRADES-TODO.md`).
+
+## Imports
+
+```js
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+```
+
+## Collections
+
+| Collection | Usage |
+|------------|-------|
+| `users` | `{ userid, username }` on register |
+| `loggers` | Weekly docs with `loggers` counter map, `created`, `lastUpdated` |
+
+## Service layer
+
+Firestore access for loggers goes through `src/service/Logger.js` (class with `fetchById`, `fetchAll`, `save`, `create`, `update`). Prefer extending this class over raw Firestore calls in components.
+
+Direct Firestore in stores is OK where already established (`User.js` register, `Result.js` queries).
+
+## Auth
+
+- State synced via `firebase.auth().onAuthStateChanged` in `main.js`
+- Login/register/logout actions in `User` Vuex module
+- Route guards check `meta.authRequired` in `router/index.js`
+
+## Timestamps
+
+Use `firebase.firestore.Timestamp.now()` for `created` / `lastUpdated`. Week filters use JS `Date` ranges from `utils.js`.

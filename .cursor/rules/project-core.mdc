@@ -1,0 +1,33 @@
+---
+description: Core project conventions for halal-competitions
+alwaysApply: true
+---
+
+# halal-competitions — core rules
+
+Read `AGENTS.md` for architecture, data model, and commands.
+
+## Scope & safety
+
+- Small, focused diffs only — no drive-by refactors or mass upgrades
+- Do **not** upgrade Vue CLI, Firebase, Tailwind, or Vuex without explicit user approval
+- Planned upgrades live in `UPGRADES-TODO.md` — reference, don't execute, unless asked
+
+## Patterns to follow
+
+- Vuex: modular stores in `src/store/`; namespaced modules use `Module/action` dispatch syntax
+- Paths: use `@/` alias for imports from `src/`
+- Styling: Tailwind utility classes; match existing spacing/shadow patterns
+- Data: competition definitions in `src/data.js` — don't duplicate counter ids elsewhere
+- Week logic: Monday–Sunday via `dateRange()` / `dateRangeLastWeek()` in `utils.js`
+
+## After changes
+
+```bash
+npm run lint
+npm run test:unit   # when touching tested areas
+```
+
+## Reuse first
+
+Check `src/composables/`, `components/shared/Base*`, and existing store actions before adding new abstractions.

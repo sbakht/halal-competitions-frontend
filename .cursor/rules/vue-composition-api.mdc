@@ -1,0 +1,53 @@
+---
+description: Vue 3 Composition API conventions — preferred for new and edited components
+globs: "**/*.vue"
+alwaysApply: false
+---
+
+# Vue Composition API (preferred)
+
+Use Composition API for **new components** and when **significantly editing** existing ones.
+
+## New components
+
+```vue
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import isIncrement from '@/composables/isIncrement'
+
+const store = useStore()
+const settingsOpen = ref(false)
+
+onMounted(() => {
+  store.dispatch('Logger/loadDashboard')
+})
+</script>
+```
+
+## Extract shared logic to composables
+
+Place in `src/composables/`. Follow `isIncrement.js`: use `useStore()`, return reactive API.
+
+```js
+// composables/useLogger.js
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+export function useLogger() {
+  const store = useStore()
+  const loggers = computed(() => store.getters['Logger/activeLoggers'])
+  return { loggers }
+}
+```
+
+## Migrating Options API files
+
+- Replace `mapGetters`/`mapActions` with `useStore()` + `computed()`/`store.dispatch`
+- Replace `data()` with `ref()` / `reactive()`
+- Keep existing component names and prop interfaces stable
+
+## Don't
+
+- Convert entire codebase in one pass
+- Mix Options and Composition in the same `<script>` block (use `<script setup>` or pure Options, not both)
