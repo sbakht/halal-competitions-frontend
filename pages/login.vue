@@ -213,6 +213,10 @@
   </div>
 </template>
 
+<script setup>
+definePageMeta({ middleware: 'anon' })
+</script>
+
 <script>
 import { useUserStore } from "@/stores/user";
 
@@ -238,7 +242,7 @@ export default {
             password: this.password,
           })
           .then(() => {
-            this.$router.push("dashboard");
+            navigateTo('/dashboard')
           })
           .catch((error) => {
             if (

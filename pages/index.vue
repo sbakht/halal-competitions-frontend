@@ -1,5 +1,3 @@
-import About from '../components/About.vue';
-
 <template>
   <div>
     <div class="text-black bg-img bg-cover">
@@ -11,14 +9,14 @@ import About from '../components/About.vue';
               (So race to all that is good)
             </p>
             <form class="mt-16 flex justify-center">
-              <router-link to="/register" tag="button">
+              <NuxtLink to="/register">
                 <button
                   type="button"
                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Start Competing
                 </button>
-              </router-link>
+              </NuxtLink>
             </form>
           </div>
         </div>
@@ -192,7 +190,7 @@ import About from '../components/About.vue';
 </template>
 
 <script setup>
-import About from "../components/About.vue";
+import About from "@/components/About.vue";
 </script>
 
 <style>
@@ -202,8 +200,8 @@ import About from "../components/About.vue";
 
 @font-face {
   font-family: "uthmani-hafs";
-  src: url("../assets/Uthmani-Hafs.woff2") format("woff2"),
-    url("../assets/Uthmani-Hafs.woff") format("woff");
+  src: url("~/assets/Uthmani-Hafs.woff2") format("woff2"),
+    url("~/assets/Uthmani-Hafs.woff") format("woff");
 }
 
 .arabic {

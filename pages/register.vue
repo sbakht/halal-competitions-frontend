@@ -191,6 +191,10 @@
   </div>
 </template>
 
+<script setup>
+definePageMeta({ middleware: 'anon' })
+</script>
+
 <script>
 import { useUserStore } from "@/stores/user";
 
@@ -252,7 +256,7 @@ export default {
             password: this.password,
           })
           .then(() => {
-            this.$router.push("login");
+            navigateTo('/login')
           })
           .catch((error) => {
             if (error.code === "auth/email-already-in-use") {

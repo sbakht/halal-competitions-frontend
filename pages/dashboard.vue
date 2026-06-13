@@ -24,6 +24,10 @@
   </div>
 </template>
 
+<script setup>
+definePageMeta({ middleware: 'auth' })
+</script>
+
 <script>
 import PageHeading from "@/components/helpers/page.heading.vue";
 import CompetitionsTabs from "@/components/tabs/tabs.vue";

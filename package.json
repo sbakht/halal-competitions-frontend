@@ -4,26 +4,27 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "nuxt dev",
+    "build": "nuxt generate",
+    "preview": "nuxt preview",
     "test:unit": "vitest run",
-    "lint": "eslint src tests --ext .vue,.js"
+    "lint": "eslint pages components stores composables plugins middleware layouts app.vue tests --ext .vue,.js,.ts"
   },
   "dependencies": {
     "@headlessui/vue": "^1.2.0",
     "@heroicons/vue": "^1.0.1",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@pinia/nuxt": "^0.11.3",
     "axios": "^0.21.1",
     "firebase": "^8.2.6",
+    "nuxt": "^4.4.8",
+    "pinia": "^3.0.4",
     "ramda": "^0.27.1",
-    "pinia": "^2.3.1",
     "register-service-worker": "^1.6.2",
-    "vue": "^3.5.0",
-    "vue-router": "^4.0.0-0"
+    "vue": "^3.5.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
-    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.0.0-0",
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
@@ -31,7 +32,6 @@
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "vite": "^6.3.5",
     "vitest": "^3.2.4",
     "vue-eslint-parser": "^9.4.3"
   },
@@ -55,6 +55,31 @@
       "vue/no-deprecated-router-link-tag-prop": "off"
     },
     "overrides": [
+      {
+        "files": [
+          "pages/**/*.{vue,js,ts}",
+          "layouts/**/*.{vue,js,ts}",
+          "plugins/**/*.{vue,js,ts}",
+          "middleware/**/*.{vue,js,ts}",
+          "app.vue",
+          "nuxt.config.ts"
+        ],
+        "globals": {
+          "defineNuxtConfig": "readonly",
+          "defineNuxtPlugin": "readonly",
+          "defineNuxtRouteMiddleware": "readonly",
+          "definePageMeta": "readonly",
+          "navigateTo": "readonly",
+          "useRouter": "readonly",
+          "useRoute": "readonly",
+          "useUserStore": "readonly",
+          "useLoggerStore": "readonly",
+          "useNavStore": "readonly",
+          "useResultStore": "readonly",
+          "useTabStore": "readonly",
+          "useRaceStore": "readonly"
+        }
+      },
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",

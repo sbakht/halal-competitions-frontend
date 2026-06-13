@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import PageHeading from "../components/helpers/page.heading.vue";
-import CompetitionsTabs from "../components/tabs/tabs.vue";
-import LeaderboardTables from "../components/leaderboards/pure/tables";
-import Loader from "../components/helpers/loader.vue";
+import PageHeading from "@/components/helpers/page.heading.vue";
+import CompetitionsTabs from "@/components/tabs/tabs.vue";
+import LeaderboardTables from "@/components/leaderboards/pure/tables";
+import Loader from "@/components/helpers/loader.vue";
 import { mapStores } from "pinia";
 import { useResultStore } from "@/stores/result";
-import LeaderboardDate from "../components/leaderboards/pure/date";
+import LeaderboardDate from "@/components/leaderboards/pure/date";
 
 export default {
   components: {

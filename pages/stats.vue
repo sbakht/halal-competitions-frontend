@@ -12,13 +12,17 @@
   </div>
 </template>
 
+<script setup>
+definePageMeta({ middleware: 'auth' })
+</script>
+
 <script>
 import PageHeading from "@/components/helpers/page.heading.vue";
 import Loader from "@/components/helpers/loader.vue";
 import { mapStores } from "pinia";
 import { useLoggerStore } from "@/stores/logger";
 import BaseTable from "@/components/dashboard/BaseTable.vue";
-import { competitionKeys } from "../data";
+import { competitionKeys } from "@/data";
 
 function sort(scores) {
   scores.sort((s1, s2) => {

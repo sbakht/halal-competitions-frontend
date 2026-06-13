@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import PageHeading from "../components/helpers/page.heading.vue";
-import Loader from "../components/helpers/loader.vue";
+import PageHeading from "@/components/helpers/page.heading.vue";
+import Loader from "@/components/helpers/loader.vue";
 import { mapStores } from "pinia";
 import { useResultStore } from "@/stores/result";
 import ProgressBar from "@/components/ProgressBar";
-import { competitionKeys } from "../data";
+import { competitionKeys } from "@/data";
 
 export default {
   components: {

@@ -7,7 +7,7 @@
   <div class="md:hidden" :class="{ hidden: !isOpen }">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <router-link
+      <NuxtLink
         to="/"
         class="
           block
@@ -21,9 +21,9 @@
           hover:text-white
         "
         :class="{ hidden: isLoggedIn }"
-        >Home</router-link
+        >Home</NuxtLink
       >
-      <router-link
+      <NuxtLink
         to="/dashboard"
         class="
           block
@@ -37,9 +37,9 @@
           hover:text-white
         "
         :class="{ hidden: !isLoggedIn }"
-        >Dashboard</router-link
+        >Dashboard</NuxtLink
       >
-      <router-link
+      <NuxtLink
         to="/stats"
         class="
           block
@@ -53,10 +53,10 @@
           hover:text-white
         "
         :class="{ hidden: !isLoggedIn }"
-        >Your Statistics</router-link
+        >Your Statistics</NuxtLink
       >
 
-      <router-link
+      <NuxtLink
         to="/about"
         class="
           block
@@ -69,7 +69,7 @@
           hover:bg-gray-700
           hover:text-white
         "
-        >About</router-link
+        >About</NuxtLink
       >
       <!-- <router-link
         to="/challenges"
@@ -86,7 +86,7 @@
         "
         >Challenges</router-link
       > -->
-      <router-link
+      <NuxtLink
         to="/results"
         class="
           block
@@ -99,12 +99,12 @@
           hover:bg-gray-700
           hover:text-white
         "
-        >Results</router-link
+        >Results</NuxtLink
       >
     </div>
     <div class="pb-3 border-t border-gray-700">
       <div class="px-2 mt-3 space-y-1 mb-1">
-        <router-link
+        <NuxtLink
           to="/login"
           class="
             block
@@ -118,9 +118,9 @@
             hover:text-white
           "
           :class="{ hidden: isLoggedIn }"
-          >Login</router-link
+          >Login</NuxtLink
         >
-        <router-link
+        <NuxtLink
           to="/register"
           class="
             block
@@ -134,9 +134,9 @@
             hover:text-white
           "
           :class="{ hidden: isLoggedIn }"
-          >Register</router-link
+          >Register</NuxtLink
         >
-        <router-link
+        <NuxtLink
           to="/logout"
           class="
             block
@@ -150,7 +150,7 @@
             hover:text-white
           "
           :class="{ hidden: !isLoggedIn }"
-          >Log out</router-link
+          >Log out</NuxtLink
         >
       </div>
     </div>
@@ -164,7 +164,8 @@ export default {
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.router-link-exact-active,
+.router-link-active {
   @apply bg-gray-900 text-white;
 }
 </style>

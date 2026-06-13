@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <NuxtLink
     :to="to"
     class="
       px-3
@@ -11,8 +11,8 @@
       hover:bg-gray-700
       hover:text-white
     "
-    >{{ name }}
-  </router-link>
+  >{{ name }}
+  </NuxtLink>
 </template>
 
 <script>
@@ -31,7 +31,8 @@ export default {
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.router-link-exact-active,
+.router-link-active {
   @apply bg-gray-900 text-white;
 }
 </style>
