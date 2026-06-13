@@ -74,6 +74,7 @@
           "navigateTo": "readonly",
           "useRouter": "readonly",
           "useRoute": "readonly",
+          "useRuntimeConfig": "readonly",
           "computed": "readonly",
           "ref": "readonly",
           "onMounted": "readonly",

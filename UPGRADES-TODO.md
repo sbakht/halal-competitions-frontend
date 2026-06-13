@@ -19,7 +19,7 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 ### Docs & config
 
 - [x] Update `AGENTS.md` and `.cursor/rules/` — replace `src/` paths, Vue Router guards, `main.js`, and Vite commands with Nuxt layout (`pages/`, `plugins/`, `middleware/`, `nuxt dev` / `nuxt generate`)
-- [ ] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*` in `.env` + `runtimeConfig` in `nuxt.config.ts`) — replace hardcoded keys in `plugins/firebase.client.js`
+- [x] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*` in `.env` + `runtimeConfig` in `nuxt.config.ts`) — replace hardcoded keys in `plugins/firebase.client.js`
 - [ ] Replace hand-rolled ESLint Nuxt globals in `package.json` with `@nuxt/eslint` (or `@nuxt/eslint-module`)
 
 ### Nuxt conventions
@@ -61,7 +61,7 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 ## Firebase & data
 
-- [ ] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*`) — still client-side but easier per-environment
+- [x] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*`) — still client-side but easier per-environment
 - [ ] Prevent duplicate usernames on register (`stores/user.js` TODO)
 - [ ] Auto-reset / new-week listener for loggers (`stores/logger.js` TODO)
 - [ ] Clean up commented debug code in `stores/result.js`

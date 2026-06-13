@@ -22,4 +22,18 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2024-11-01',
+  runtimeConfig: {
+    public: {
+      firebase: {
+        apiKey: '',
+        authDomain: '',
+        databaseURL: '',
+        projectId: '',
+        storageBucket: '',
+        messagingSenderId: '',
+        appId: '',
+        measurementId: '',
+      },
+    },
+  },
 })
