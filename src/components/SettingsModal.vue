@@ -120,6 +120,8 @@ import {
 import IncrementCount from "@/components/dashboard/IncrementCount.vue";
 import LanguageSetting from "@/components/dashboard/LanguageSetting.vue";
 import { XIcon } from "@heroicons/vue/outline";
+import { mapStores } from "pinia";
+import { useLoggerStore } from "@/stores/logger";
 
 export default {
   components: {
@@ -139,20 +141,21 @@ export default {
     },
   },
   computed: {
+    ...mapStores(useLoggerStore),
     incrementCount: {
       get() {
-        return this.$store.state.Logger.incrementCount;
+        return this.loggerStore.incrementCount;
       },
       set(val) {
-        this.$store.commit("Logger/SET_INCREMENT_COUNT", val);
+        this.loggerStore.setIncrementCount(val);
       },
     },
     language: {
       get() {
-        return this.$store.state.Logger.language;
+        return this.loggerStore.language;
       },
       set(val) {
-        this.$store.commit("Logger/SET_LANGUAGE", val);
+        this.loggerStore.setLanguage(val);
       },
     },
   },

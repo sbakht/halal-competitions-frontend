@@ -44,14 +44,18 @@
 </template>
 
 <script>
+import { mapStores } from "pinia";
+import { useLoggerStore } from "@/stores/logger";
+
 export default {
   computed: {
+    ...mapStores(useLoggerStore),
     carouselMode: {
       get() {
-        return this.$store.state.Logger.carouselMode;
+        return this.loggerStore.carouselMode;
       },
       set(val) {
-        this.$store.commit("Logger/SET_CAROUSEL_MODE", val);
+        this.loggerStore.setCarouselMode(val);
       },
     },
   },

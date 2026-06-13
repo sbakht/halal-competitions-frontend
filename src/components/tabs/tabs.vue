@@ -37,14 +37,19 @@
 
 <script>
 import TabItem from "./pure/item.vue";
-import { mapGetters } from "vuex";
+import { competitionsJSON } from "@/data";
+import { mapStores } from "pinia";
+import { useTabStore } from "@/stores/tab";
 export default {
   components: { TabItem },
   computed: {
-    ...mapGetters({
-      competitions: "competitions",
-      activeTabId: "Tab/activeTabId",
-    }),
+    ...mapStores(useTabStore),
+    competitions() {
+      return competitionsJSON;
+    },
+    activeTabId() {
+      return this.tabStore.activeTabId;
+    },
   },
   methods: {
     onChange(e) {
@@ -54,7 +59,7 @@ export default {
       } else {
         id = e;
       }
-      this.$store.dispatch("Tab/setActiveTab", id);
+      this.tabStore.setActiveTab(id);
     },
   },
 };

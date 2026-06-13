@@ -1,16 +1,13 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
-import store from './store'
 import './assets/index.css'
+import { useUserStore } from './stores/user'
+import { useLoggerStore } from './stores/logger'
 
-
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
 import firebase from "firebase/app";
-
-// Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/analytics";
@@ -25,19 +22,19 @@ var firebaseConfig = {
   appId: "1:859253549365:web:d71b27dba4162c4b22c47c",
   measurementId: "G-1HC6BLY19C"
 };
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-
-
 firebase.firestore();
 
-// db.useEmulator("localhost", 8083);
-// firebase.auth().useEmulator('http://localhost:8081/');
-
-createApp(App).use(store).use(router).mount('#app')
+const pinia = createPinia()
+const app = createApp(App)
+app.use(pinia)
+app.use(router)
+app.mount('#app')
 
 firebase.auth().onAuthStateChanged(function (user) {
+  const userStore = useUserStore()
+  const loggerStore = useLoggerStore()
   let authRequired;
   if (user) {
     let match;
@@ -46,19 +43,19 @@ firebase.auth().onAuthStateChanged(function (user) {
       authRequired = record.meta.authRequired
     })
 
-    store.dispatch('setUser', user);
+    userStore.setUser(user);
     if (match === '/dashboard') {
-      store.dispatch('Logger/loadDashboard')
+      loggerStore.loadDashboard()
     } else if (match === "/stats") {
-      store.dispatch('Logger/loadStats')
+      loggerStore.loadStats()
     } else if (match === "/") {
       router.push('/dashboard')
     }
   } else {
-    store.dispatch('setUser');
+    userStore.setUser();
     if (authRequired) {
       router.push('/login');
     }
   }
-  store.dispatch('completeAuth')
+  userStore.completeAuth()
 });

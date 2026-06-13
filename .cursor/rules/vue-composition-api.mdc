@@ -12,38 +12,39 @@ Use Composition API for **new components** and when **significantly editing** ex
 
 ```vue
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { ref, onMounted } from 'vue'
+import { useLoggerStore } from '@/stores/logger'
 import isIncrement from '@/composables/isIncrement'
 
-const store = useStore()
+const loggerStore = useLoggerStore()
 const settingsOpen = ref(false)
 
 onMounted(() => {
-  store.dispatch('Logger/loadDashboard')
+  loggerStore.loadDashboard()
 })
 </script>
 ```
 
 ## Extract shared logic to composables
 
-Place in `src/composables/`. Follow `isIncrement.js`: use `useStore()`, return reactive API.
+Place in `src/composables/`. Follow `isIncrement.js`: use Pinia stores, return reactive API.
 
 ```js
 // composables/useLogger.js
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useLoggerStore } from '@/stores/logger'
 
 export function useLogger() {
-  const store = useStore()
-  const loggers = computed(() => store.getters['Logger/activeLoggers'])
-  return { loggers }
+  const loggerStore = useLoggerStore()
+  const { activeLoggers } = storeToRefs(loggerStore)
+  return { activeLoggers }
 }
 ```
 
 ## Migrating Options API files
 
-- Replace `mapGetters`/`mapActions` with `useStore()` + `computed()`/`store.dispatch`
+- Replace `mapGetters`/`mapActions` with `mapStores(useXStore)` or `useXStore()` + `computed()`
 - Replace `data()` with `ref()` / `reactive()`
 - Keep existing component names and prop interfaces stable
 

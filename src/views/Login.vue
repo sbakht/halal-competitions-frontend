@@ -214,6 +214,8 @@
 </template>
 
 <script>
+import { useUserStore } from "@/stores/user";
+
 export default {
   data() {
     return {
@@ -230,8 +232,8 @@ export default {
       e.preventDefault();
       this.error = "";
       if (this.validate()) {
-        this.$store
-          .dispatch("login", {
+        useUserStore()
+          .login({
             email: this.username,
             password: this.password,
           })

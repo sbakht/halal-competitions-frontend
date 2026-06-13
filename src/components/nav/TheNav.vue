@@ -91,7 +91,9 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapStores } from "pinia";
+import { useUserStore } from "@/stores/user";
+import { useNavStore } from "@/stores/nav";
 import NavLink from "./BaseNavLink.vue";
 import NavMobileMenu from "./MobileMenu.vue";
 import { MenuIcon, XIcon } from "@heroicons/vue/outline";
@@ -99,17 +101,20 @@ import { MenuIcon, XIcon } from "@heroicons/vue/outline";
 export default {
   components: { NavLink, NavMobileMenu, MenuIcon, XIcon },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
-    ...mapState("Nav", {
-      isMobileMenuOpen: (state) => state.isMobileMenuOpen,
-    }),
+    ...mapStores(useUserStore, useNavStore),
+    isLoggedIn() {
+      return this.userStore.isLoggedIn;
+    },
+    isMobileMenuOpen() {
+      return this.navStore.isMobileMenuOpen;
+    },
   },
   methods: {
     toggleMobile() {
       if (this.isMobileMenuOpen) {
-        this.$store.dispatch("Nav/closeMobileMenu");
+        this.navStore.closeMobileMenu();
       } else {
-        this.$store.dispatch("Nav/openMobileMenu");
+        this.navStore.openMobileMenu();
       }
     },
   },

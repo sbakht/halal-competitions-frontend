@@ -15,7 +15,8 @@
 <script>
 import PageHeading from "@/components/helpers/page.heading.vue";
 import Loader from "@/components/helpers/loader.vue";
-import { mapState } from "vuex";
+import { mapStores } from "pinia";
+import { useLoggerStore } from "@/stores/logger";
 import BaseTable from "@/components/dashboard/BaseTable.vue";
 import { competitionKeys } from "../data";
 
@@ -34,13 +35,16 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.dispatch("Logger/loadStats");
+    this.loggerStore.loadStats();
   },
   computed: {
-    ...mapState("Logger", {
-      loggers: (state) => state.allLoggers,
-      loaded: (state) => state.loadedStats,
-    }),
+    ...mapStores(useLoggerStore),
+    loggers() {
+      return this.loggerStore.allLoggers;
+    },
+    loaded() {
+      return this.loggerStore.loadedStats;
+    },
     totals() {
       const keys = Object.keys(competitionKeys);
       const result = {};

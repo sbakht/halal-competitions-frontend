@@ -26,6 +26,8 @@
 <script>
 import PageHeading from "../components/helpers/page.heading.vue";
 import Loader from "../components/helpers/loader.vue";
+import { mapStores } from "pinia";
+import { useResultStore } from "@/stores/result";
 import ProgressBar from "@/components/ProgressBar";
 import { competitionKeys } from "../data";
 
@@ -46,27 +48,28 @@ export default {
     };
   },
   computed: {
+    ...mapStores(useResultStore),
     competitionKeys() {
       return competitionKeys;
     },
     startDate() {
-      return this.$store.getters.orderedByScore.start;
+      return this.resultStore.orderedByScore.start;
     },
     orderedByScore() {
-      return this.$store.getters.orderedByScore.data;
+      return this.resultStore.orderedByScore.data;
     },
     totalCum() {
-      return this.$store.getters.totalCum.data;
+      return this.resultStore.totalCum.data;
     },
     showResults() {
       return this.orderedByScore.length > 0;
     },
     loaded() {
-      return this.$store.state.Result.loadedResults;
+      return this.resultStore.loadedResults;
     },
   },
   mounted() {
-    this.$store.dispatch("loadChallenges");
+    this.resultStore.loadChallenges();
   },
 };
 </script>

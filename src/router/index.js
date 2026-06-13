@@ -4,11 +4,12 @@ import Dashboard from '../views/Dashboard.vue'
 import Stats from '../views/Stats.vue'
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
-import store from '../store'
 import Results from '../views/Results.vue';
 import Challenges from '../views/Challenges.vue';
 import About from '../views/About.vue';
 import firebase from "firebase/app";
+import { useUserStore } from '@/stores/user'
+import { useNavStore } from '@/stores/nav'
 
 const routes = [
   {
@@ -54,7 +55,7 @@ const routes = [
     path: '/logout',
     name: 'logout',
     beforeEnter(from, to, next) {
-      store.dispatch('logout');
+      useUserStore().logout();
       next('/')
     }
   },
@@ -72,9 +73,9 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  store.dispatch('Nav/closeMobileMenu');
+  useNavStore().closeMobileMenu();
   if (to.matched.some(record => record.meta.authRequired)) {
-    if (store.state.User.pendingAuth || firebase.auth().currentUser) {
+    if (useUserStore().pendingAuth || firebase.auth().currentUser) {
       next();
     } else {
       next('/login');

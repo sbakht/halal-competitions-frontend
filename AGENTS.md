@@ -11,7 +11,7 @@ A Vue 3 web app for tracking Islamic competition metrics (dhikr, mindful minutes
 | Layer | Choice |
 |-------|--------|
 | Framework | Vue 3 (Vite) |
-| State | Vuex 4 (modular) |
+| State | Pinia |
 | Routing | Vue Router 4 |
 | Backend | Firebase 8 (Auth + Firestore + Analytics) |
 | Styling | Tailwind CSS 3 |
@@ -47,7 +47,7 @@ src/
     shared/        # BaseAlert*, shared primitives
     helpers/       # loader, page heading
     tabs/          # Competition tab switcher
-  store/           # Vuex modules (User, Logger, Race, Result, Tab, Nav)
+  stores/          # Pinia stores (user, logger, race, result, tab, nav)
   composables/     # Composition API helpers (prefer for new logic)
   service/         # Firestore service classes (Logger.js)
   utils/           # LocalStorage wrapper, date helpers
@@ -60,7 +60,7 @@ src/
 
 **Prefer Composition API** for new components and when significantly editing existing ones. Use `<script setup>` where practical.
 
-Existing code is mostly Options API (`data`, `computed`, `mapGetters`). When touching a file:
+Existing code is mostly Options API (`data`, `computed`, `mapStores`). When touching a file:
 
 - New components → Composition API + composables
 - Small edits to Options API files → OK to leave as-is unless refactoring that area
@@ -68,20 +68,20 @@ Existing code is mostly Options API (`data`, `computed`, `mapGetters`). When tou
 
 Existing Composition API examples: `IncrementButton.vue`, `IncrementSlide.vue`, `composables/isIncrement.js`.
 
-## Vuex modules
+## Pinia stores
 
-| Module | Namespaced | Role |
-|--------|------------|------|
-| `User` | no | Firebase auth, login/register/logout |
-| `Logger` | yes | User's weekly counters, increment/save, UI prefs |
-| `Race` | no | All racers' scores for current week (leaderboard targets) |
-| `Result` | no | Last week's results, challenge totals |
-| `Tab` | yes | Active competition tab (`dhikr`, `mindful`, etc.) |
-| `Nav` | yes | Mobile menu state |
+| Store | File | Role |
+|-------|------|------|
+| `User` | `stores/user.js` | Firebase auth, login/register/logout |
+| `Logger` | `stores/logger.js` | User's weekly counters, increment/save, UI prefs |
+| `Race` | `stores/race.js` | All racers' scores for current week (leaderboard targets) |
+| `Result` | `stores/result.js` | Last week's results, challenge totals |
+| `Tab` | `stores/tab.js` | Active competition tab (`dhikr`, `mindful`, etc.) |
+| `Nav` | `stores/nav.js` | Mobile menu state |
 
-Dispatch pattern: `this.$store.dispatch('Logger/loadDashboard')` or `store.dispatch(...)` in composables.
+Usage: `useLoggerStore().loadDashboard()` in composables, or `mapStores(useLoggerStore)` in Options API components.
 
-Root getter: `competitions` → `competitionsJSON` from `data.js`.
+Competition list: import `competitionsJSON` from `data.js` (not a store).
 
 ## Data model
 
@@ -108,16 +108,16 @@ Week boundaries use Monday–Sunday (`utils.js` → `dateRange()`, `dateRangeLas
 ## Auth flow
 
 1. Firebase initialized in `main.js` with client config (public keys — normal for Firebase web apps)
-2. `onAuthStateChanged` syncs user to Vuex, loads dashboard/stats data, redirects `/` → `/dashboard`
+2. `onAuthStateChanged` syncs user to Pinia, loads dashboard/stats data, redirects `/` → `/dashboard`
 3. Router `beforeEach` checks `meta.authRequired` and `meta.anonOnly`
 4. Protected routes: `/dashboard`, `/stats`
 
 ## Key user flows
 
-- **Dashboard** — `Logger/loadDashboard` → fetch/create weekly doc → increment counters (debounced save via `isIncrement` composable)
-- **Stats** — `Logger/loadStats` → all historical weekly docs for user
-- **Results** — `Result/loadResults` → last week's leaderboard
-- **Challenges** — `Result/loadChallenges` → current week totals
+- **Dashboard** — `loggerStore.loadDashboard()` → fetch/create weekly doc → increment counters (debounced save via `isIncrement` composable)
+- **Stats** — `loggerStore.loadStats()` → all historical weekly docs for user
+- **Results** — `resultStore.loadResults()` → last week's leaderboard
+- **Challenges** — `resultStore.loadChallenges()` → current week totals
 
 ## Component naming
 
@@ -128,7 +128,7 @@ Week boundaries use Monday–Sunday (`utils.js` → `dateRange()`, `dateRangeLas
 ## Coding principles for agents
 
 1. **Minimize scope** — small, focused diffs; no drive-by refactors
-2. **Match existing patterns** — Vuex module shape, Tailwind utility classes, `@/` path alias
+2. **Match existing patterns** — Pinia store shape, Tailwind utility classes, `@/` path alias
 3. **Reuse before creating** — check `components/shared/`, `composables/`, existing store actions
 4. **Don't break the weekly cycle** — date range logic in `utils.js` affects queries across Logger, Race, Result
 5. **Known TODOs in code** — duplicate username on register, auto-reset listener on new week (see inline comments)

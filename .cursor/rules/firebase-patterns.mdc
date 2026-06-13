@@ -1,6 +1,6 @@
 ---
 description: Firebase 8 Auth and Firestore patterns used in this project
-globs: "{src/main.js,src/store/**/*.js,src/service/**/*.js}"
+globs: "{src/main.js,src/stores/**/*.js,src/service/**/*.js}"
 alwaysApply: false
 ---
 
@@ -27,12 +27,12 @@ import 'firebase/firestore'
 
 Firestore access for loggers goes through `src/service/Logger.js` (class with `fetchById`, `fetchAll`, `save`, `create`, `update`). Prefer extending this class over raw Firestore calls in components.
 
-Direct Firestore in stores is OK where already established (`User.js` register, `Result.js` queries).
+Direct Firestore in stores is OK where already established (`stores/user.js` register, `stores/result.js` queries).
 
 ## Auth
 
 - State synced via `firebase.auth().onAuthStateChanged` in `main.js`
-- Login/register/logout actions in `User` Vuex module
+- Login/register/logout actions in `stores/user.js`
 - Route guards check `meta.authRequired` in `router/index.js`
 
 ## Timestamps

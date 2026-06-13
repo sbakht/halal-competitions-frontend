@@ -16,13 +16,17 @@
 </template>
 
 <script>
+import { mapStores } from "pinia";
+import { useLoggerStore } from "@/stores/logger";
+
 export default {
   props: {
     data: Object,
   },
   computed: {
+    ...mapStores(useLoggerStore),
     language() {
-      return this.$store.state.Logger.language;
+      return this.loggerStore.language;
     },
     showEnglish() {
       return this.language.includes("english") || !this.data.arabic;

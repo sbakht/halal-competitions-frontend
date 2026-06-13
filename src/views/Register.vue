@@ -192,6 +192,8 @@
 </template>
 
 <script>
+import { useUserStore } from "@/stores/user";
+
 export default {
   data() {
     return {
@@ -243,8 +245,8 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       if (this.validate()) {
-        this.$store
-          .dispatch("register", {
+        useUserStore()
+          .register({
             email: this.email,
             username: this.username,
             password: this.password,

@@ -29,6 +29,8 @@ import PageHeading from "../components/helpers/page.heading.vue";
 import CompetitionsTabs from "../components/tabs/tabs.vue";
 import LeaderboardTables from "../components/leaderboards/pure/tables";
 import Loader from "../components/helpers/loader.vue";
+import { mapStores } from "pinia";
+import { useResultStore } from "@/stores/result";
 import LeaderboardDate from "../components/leaderboards/pure/date";
 
 export default {
@@ -40,21 +42,22 @@ export default {
     LeaderboardDate,
   },
   computed: {
+    ...mapStores(useResultStore),
     startDate() {
-      return this.$store.getters.orderedByScore.start;
+      return this.resultStore.orderedByScore.start;
     },
     orderedByScore() {
-      return this.$store.getters.orderedByScore.data;
+      return this.resultStore.orderedByScore.data;
     },
     showResults() {
       return this.orderedByScore.length > 0;
     },
     loaded() {
-      return this.$store.state.Result.loadedResults;
+      return this.resultStore.loadedResults;
     },
   },
   mounted() {
-    this.$store.dispatch("loadResults");
+    this.resultStore.loadResults();
   },
 };
 </script>

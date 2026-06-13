@@ -1,18 +1,17 @@
-import { useStore } from 'vuex'
-
+import { useLoggerStore } from '@/stores/logger'
 
 const DEBOUNCE_RATE = 2000;
 
 export default function isIncrement() {
   let timeout = null;
 
-  const store = useStore()
+  const loggerStore = useLoggerStore()
 
   function increment(data) {
     clearTimeout(timeout);
-    store.dispatch("Logger/increment", data);
+    loggerStore.increment(data);
     timeout = setTimeout(() => {
-      store.dispatch("Logger/save");
+      loggerStore.save();
     }, DEBOUNCE_RATE);
   }
 
