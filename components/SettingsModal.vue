@@ -109,55 +109,36 @@
   </TransitionRoot>
 </template>
 
-<script>
+<script setup>
 import {
   Dialog,
   DialogOverlay,
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
-import IncrementCount from "@/components/dashboard/IncrementCount.vue";
-import LanguageSetting from "@/components/dashboard/LanguageSetting.vue";
-import { XIcon } from "@heroicons/vue/outline";
-import { mapStores } from "pinia";
-import { useLoggerStore } from "@/stores/logger";
+} from '@headlessui/vue'
+import IncrementCount from '@/components/dashboard/IncrementCount.vue'
+import LanguageSetting from '@/components/dashboard/LanguageSetting.vue'
+import { XIcon } from '@heroicons/vue/outline'
 
-export default {
-  components: {
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-    IncrementCount,
-    LanguageSetting,
-    XIcon,
+defineProps({
+  modelValue: {
+    type: Boolean,
+    required: true,
   },
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapStores(useLoggerStore),
-    incrementCount: {
-      get() {
-        return this.loggerStore.incrementCount;
-      },
-      set(val) {
-        this.loggerStore.setIncrementCount(val);
-      },
-    },
-    language: {
-      get() {
-        return this.loggerStore.language;
-      },
-      set(val) {
-        this.loggerStore.setLanguage(val);
-      },
-    },
-  },
-};
+})
+
+defineEmits(['update:modelValue'])
+
+const loggerStore = useLoggerStore()
+
+const incrementCount = computed({
+  get: () => loggerStore.incrementCount,
+  set: (val) => loggerStore.setIncrementCount(val),
+})
+
+const language = computed({
+  get: () => loggerStore.language,
+  set: (val) => loggerStore.setLanguage(val),
+})
 </script>

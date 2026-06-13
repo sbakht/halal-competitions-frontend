@@ -15,27 +15,20 @@
   </div>
 </template>
 
-<script>
-import { mapStores } from "pinia";
-import { useLoggerStore } from "@/stores/logger";
+<script setup>
+const props = defineProps({
+  data: Object,
+})
 
-export default {
-  props: {
-    data: Object,
-  },
-  computed: {
-    ...mapStores(useLoggerStore),
-    language() {
-      return this.loggerStore.language;
-    },
-    showEnglish() {
-      return this.language.includes("english") || !this.data.arabic;
-    },
-    showArabic() {
-      return this.language.includes("arabic") || !this.data.title;
-    },
-  },
-};
+const loggerStore = useLoggerStore()
+
+const language = computed(() => loggerStore.language)
+const showEnglish = computed(
+  () => language.value.includes('english') || !props.data?.arabic
+)
+const showArabic = computed(
+  () => language.value.includes('arabic') || !props.data?.title
+)
 </script>
 
 <style scoped>

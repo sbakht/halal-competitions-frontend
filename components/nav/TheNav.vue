@@ -90,33 +90,22 @@
   </nav>
 </template>
 
-<script>
-import { mapStores } from "pinia";
-import { useUserStore } from "@/stores/user";
-import { useNavStore } from "@/stores/nav";
-import NavLink from "./BaseNavLink.vue";
-import NavMobileMenu from "./MobileMenu.vue";
-import { MenuIcon, XIcon } from "@heroicons/vue/outline";
+<script setup>
+import NavLink from './BaseNavLink.vue'
+import NavMobileMenu from './MobileMenu.vue'
+import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 
-export default {
-  components: { NavLink, NavMobileMenu, MenuIcon, XIcon },
-  computed: {
-    ...mapStores(useUserStore, useNavStore),
-    isLoggedIn() {
-      return this.userStore.isLoggedIn;
-    },
-    isMobileMenuOpen() {
-      return this.navStore.isMobileMenuOpen;
-    },
-  },
-  methods: {
-    toggleMobile() {
-      if (this.isMobileMenuOpen) {
-        this.navStore.closeMobileMenu();
-      } else {
-        this.navStore.openMobileMenu();
-      }
-    },
-  },
-};
+const userStore = useUserStore()
+const navStore = useNavStore()
+
+const isLoggedIn = computed(() => userStore.isLoggedIn)
+const isMobileMenuOpen = computed(() => navStore.isMobileMenuOpen)
+
+function toggleMobile() {
+  if (isMobileMenuOpen.value) {
+    navStore.closeMobileMenu()
+  } else {
+    navStore.openMobileMenu()
+  }
+}
 </script>

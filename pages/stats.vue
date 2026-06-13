@@ -13,67 +13,52 @@
 </template>
 
 <script setup>
-definePageMeta({ middleware: 'auth' })
-</script>
+import PageHeading from '@/components/helpers/page.heading.vue'
+import Loader from '@/components/helpers/loader.vue'
+import BaseTable from '@/components/dashboard/BaseTable.vue'
+import { competitionKeys } from '@/data'
 
-<script>
-import PageHeading from "@/components/helpers/page.heading.vue";
-import Loader from "@/components/helpers/loader.vue";
-import { mapStores } from "pinia";
-import { useLoggerStore } from "@/stores/logger";
-import BaseTable from "@/components/dashboard/BaseTable.vue";
-import { competitionKeys } from "@/data";
+definePageMeta({ middleware: 'auth' })
 
 function sort(scores) {
   scores.sort((s1, s2) => {
-    return s1.count >= s2.count ? -1 : 1;
-  });
+    return s1.count >= s2.count ? -1 : 1
+  })
 }
-export default {
-  components: {
-    PageHeading,
-    Loader,
-    BaseTable,
-  },
-  data() {
-    return {};
-  },
-  mounted() {
-    this.loggerStore.loadStats();
-  },
-  computed: {
-    ...mapStores(useLoggerStore),
-    loggers() {
-      return this.loggerStore.allLoggers;
-    },
-    loaded() {
-      return this.loggerStore.loadedStats;
-    },
-    totals() {
-      const keys = Object.keys(competitionKeys);
-      const result = {};
-      keys.forEach((key) => {
-        this.loggers.map((data) => {
-          const currentVal = result[key] || 0;
-          result[key] = (data[key] || 0) + currentVal;
-        });
-      });
-      return result;
-    },
-    totalsArray() {
-      const totals = Object.keys(this.totals).map((key) => {
-        return {
-          name: competitionKeys[key].title,
-          count: this.totals[key],
-          avg: Math.trunc(this.totals[key] / this.loggers.length),
-          avgPerDay: Math.trunc(this.totals[key] / (this.loggers.length * 7)),
-        };
-      });
-      sort(totals);
-      return totals;
-    },
-  },
-};
+
+const loggerStore = useLoggerStore()
+
+const loggers = computed(() => loggerStore.allLoggers)
+const loaded = computed(() => loggerStore.loadedStats)
+
+const totals = computed(() => {
+  const keys = Object.keys(competitionKeys)
+  const result = {}
+  keys.forEach((key) => {
+    loggers.value.map((data) => {
+      const currentVal = result[key] || 0
+      result[key] = (data[key] || 0) + currentVal
+    })
+  })
+  return result
+})
+
+const totalsArray = computed(() => {
+  const rows = Object.keys(totals.value).map((key) => {
+    return {
+      name: competitionKeys[key].title,
+      count: totals.value[key],
+      avg: Math.trunc(totals.value[key] / loggers.value.length),
+      avgPerDay: Math.trunc(totals.value[key] / (loggers.value.length * 7)),
+    }
+  })
+  sort(rows)
+  return rows
+})
+
+onMounted(() => {
+  loggerStore.loadStats()
+})
 </script>
 
 <style scoped>

@@ -23,53 +23,25 @@
   </div>
 </template>
 
-<script>
-import PageHeading from "@/components/helpers/page.heading.vue";
-import Loader from "@/components/helpers/loader.vue";
-import { mapStores } from "pinia";
-import { useResultStore } from "@/stores/result";
-import ProgressBar from "@/components/ProgressBar";
-import { competitionKeys } from "@/data";
+<script setup>
+import PageHeading from '@/components/helpers/page.heading.vue'
+import Loader from '@/components/helpers/loader.vue'
+import ProgressBar from '@/components/ProgressBar'
+import { competitionKeys } from '@/data'
 
-export default {
-  components: {
-    PageHeading,
-    Loader,
-    ProgressBar,
-  },
-  data() {
-    return {
-      challenges: [
-        { id: "dhikr_4", goal: 10000 },
-        { id: "dhikr_5", goal: 10000 },
-        { id: "fitness_1", goal: 500 },
-        { id: "mindful_2", goal: 120 },
-      ],
-    };
-  },
-  computed: {
-    ...mapStores(useResultStore),
-    competitionKeys() {
-      return competitionKeys;
-    },
-    startDate() {
-      return this.resultStore.orderedByScore.start;
-    },
-    orderedByScore() {
-      return this.resultStore.orderedByScore.data;
-    },
-    totalCum() {
-      return this.resultStore.totalCum.data;
-    },
-    showResults() {
-      return this.orderedByScore.length > 0;
-    },
-    loaded() {
-      return this.resultStore.loadedResults;
-    },
-  },
-  mounted() {
-    this.resultStore.loadChallenges();
-  },
-};
+const challenges = [
+  { id: 'dhikr_4', goal: 10000 },
+  { id: 'dhikr_5', goal: 10000 },
+  { id: 'fitness_1', goal: 500 },
+  { id: 'mindful_2', goal: 120 },
+]
+
+const resultStore = useResultStore()
+
+const totalCum = computed(() => resultStore.totalCum.data)
+const loaded = computed(() => resultStore.loadedResults)
+
+onMounted(() => {
+  resultStore.loadChallenges()
+})
 </script>

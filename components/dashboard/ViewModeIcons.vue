@@ -43,24 +43,11 @@
   </div>
 </template>
 
-<script>
-import { mapStores } from "pinia";
-import { useLoggerStore } from "@/stores/logger";
+<script setup>
+const loggerStore = useLoggerStore()
 
-export default {
-  computed: {
-    ...mapStores(useLoggerStore),
-    carouselMode: {
-      get() {
-        return this.loggerStore.carouselMode;
-      },
-      set(val) {
-        this.loggerStore.setCarouselMode(val);
-      },
-    },
-  },
-};
+const carouselMode = computed({
+  get: () => loggerStore.carouselMode,
+  set: (val) => loggerStore.setCarouselMode(val),
+})
 </script>
-
-<style>
-</style>

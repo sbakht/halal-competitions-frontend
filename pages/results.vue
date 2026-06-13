@@ -24,40 +24,21 @@
   </div>
 </template>
 
-<script>
-import PageHeading from "@/components/helpers/page.heading.vue";
-import CompetitionsTabs from "@/components/tabs/tabs.vue";
-import LeaderboardTables from "@/components/leaderboards/pure/tables";
-import Loader from "@/components/helpers/loader.vue";
-import { mapStores } from "pinia";
-import { useResultStore } from "@/stores/result";
-import LeaderboardDate from "@/components/leaderboards/pure/date";
+<script setup>
+import PageHeading from '@/components/helpers/page.heading.vue'
+import CompetitionsTabs from '@/components/tabs/tabs.vue'
+import LeaderboardTables from '@/components/leaderboards/pure/tables'
+import Loader from '@/components/helpers/loader.vue'
+import LeaderboardDate from '@/components/leaderboards/pure/date'
 
-export default {
-  components: {
-    PageHeading,
-    CompetitionsTabs,
-    LeaderboardTables,
-    Loader,
-    LeaderboardDate,
-  },
-  computed: {
-    ...mapStores(useResultStore),
-    startDate() {
-      return this.resultStore.orderedByScore.start;
-    },
-    orderedByScore() {
-      return this.resultStore.orderedByScore.data;
-    },
-    showResults() {
-      return this.orderedByScore.length > 0;
-    },
-    loaded() {
-      return this.resultStore.loadedResults;
-    },
-  },
-  mounted() {
-    this.resultStore.loadResults();
-  },
-};
+const resultStore = useResultStore()
+
+const startDate = computed(() => resultStore.orderedByScore.start)
+const orderedByScore = computed(() => resultStore.orderedByScore.data)
+const showResults = computed(() => orderedByScore.value.length > 0)
+const loaded = computed(() => resultStore.loadedResults)
+
+onMounted(() => {
+  resultStore.loadResults()
+})
 </script>

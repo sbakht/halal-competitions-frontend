@@ -35,32 +35,22 @@
   </div>
 </template>
 
-<script>
-import TabItem from "./pure/item.vue";
-import { competitionsJSON } from "@/data";
-import { mapStores } from "pinia";
-import { useTabStore } from "@/stores/tab";
-export default {
-  components: { TabItem },
-  computed: {
-    ...mapStores(useTabStore),
-    competitions() {
-      return competitionsJSON;
-    },
-    activeTabId() {
-      return this.tabStore.activeTabId;
-    },
-  },
-  methods: {
-    onChange(e) {
-      let id;
-      if (e.currentTarget) {
-        id = e.currentTarget.value;
-      } else {
-        id = e;
-      }
-      this.tabStore.setActiveTab(id);
-    },
-  },
-};
+<script setup>
+import TabItem from './pure/item.vue'
+import { competitionsJSON } from '@/data'
+
+const tabStore = useTabStore()
+
+const competitions = competitionsJSON
+const activeTabId = computed(() => tabStore.activeTabId)
+
+function onChange(e) {
+  let id
+  if (e.currentTarget) {
+    id = e.currentTarget.value
+  } else {
+    id = e
+  }
+  tabStore.setActiveTab(id)
+}
 </script>
