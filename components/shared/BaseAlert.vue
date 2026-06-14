@@ -8,17 +8,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseAlertInfo from '@/components/shared/BaseAlertInfo.vue'
 import BaseAlertWarning from '@/components/shared/BaseAlertWarning.vue'
 import LocalStorage from '@/utils/LocalStorage'
 
-const props = defineProps(['storageId', 'type'])
+const props = defineProps<{
+  storageId: string
+  type: 'info' | 'warning'
+}>()
 
 const show = ref(!LocalStorage.getItem(props.storageId))
 
 function dismiss() {
-  LocalStorage.setItem(props.storageId, true)
+  LocalStorage.setItem(props.storageId, 'true')
   show.value = false
 }
 </script>

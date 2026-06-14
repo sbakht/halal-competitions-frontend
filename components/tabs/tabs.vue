@@ -35,21 +35,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TabItem from './pure/item.vue'
 import { competitionsJSON } from '@/data'
+import type { CompetitionId } from '@/types/competition'
 
 const tabStore = useTabStore()
 
 const competitions = competitionsJSON
 const activeTabId = computed(() => tabStore.activeTabId)
 
-function onChange(e) {
-  let id
-  if (e.currentTarget) {
-    id = e.currentTarget.value
-  } else {
+function onChange(e: Event | CompetitionId) {
+  let id: CompetitionId
+  if (typeof e === 'string') {
     id = e
+  } else {
+    id = (e.currentTarget as HTMLSelectElement).value as CompetitionId
   }
   tabStore.setActiveTab(id)
 }

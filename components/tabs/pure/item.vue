@@ -8,9 +8,18 @@
   </button>
 </template>
 
-<script setup>
-const props = defineProps(['id', 'name', 'isActive'])
-const emit = defineEmits(['change'])
+<script setup lang="ts">
+import type { CompetitionId } from '@/types/competition'
+
+const props = defineProps<{
+  id: CompetitionId
+  name: string
+  isActive: boolean
+}>()
+
+const emit = defineEmits<{
+  change: [id: CompetitionId]
+}>()
 
 function onClick() {
   emit('change', props.id)

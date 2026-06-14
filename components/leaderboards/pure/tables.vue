@@ -6,8 +6,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LeaderboardTable from './table.vue'
 
-defineProps(['data'])
+interface LeaderboardRow {
+  title: string
+  users: { username: string, count: number }[]
+}
+
+defineProps<{
+  data: LeaderboardRow[]
+}>()
 </script>

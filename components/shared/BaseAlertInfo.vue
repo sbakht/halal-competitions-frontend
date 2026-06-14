@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { InformationCircleIcon, XIcon } from '@heroicons/vue/solid'
 
 const emit = defineEmits(['dismiss'])

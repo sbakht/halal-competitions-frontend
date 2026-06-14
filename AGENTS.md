@@ -17,7 +17,8 @@ A Nuxt 4 SPA for tracking Islamic competition metrics (dhikr, mindful minutes, c
 | Styling | Tailwind CSS 3 via `@nuxtjs/tailwindcss` |
 | UI | Headless UI, Heroicons |
 | Deploy | Netlify static (`.output/public`, SPA redirect in `netlify.toml`) |
-| PWA | `register-service-worker` via `plugins/pwa.client.js` (SW generation pending — see `UPGRADES-TODO.md`) |
+| PWA | `register-service-worker` via `plugins/pwa.client.ts` (SW generation pending — see `UPGRADES-TODO.md`) |
+| Language | TypeScript (strict) — shared types in `types/`, Vue SFCs use `<script setup lang="ts">` |
 
 **Do not upgrade major dependencies without explicit approval.** See `UPGRADES-TODO.md` for planned migrations.
 
@@ -29,6 +30,7 @@ npm run dev          # nuxt dev — dev server (hot reload)
 npm run build        # nuxt generate — static output to .output/public
 npm run preview      # nuxt preview — preview production build locally
 npm run lint         # ESLint
+npm run typecheck    # vue-tsc via nuxt typecheck
 npm run test:unit    # Vitest unit tests
 ```
 
@@ -51,9 +53,10 @@ stores/            # Pinia stores (user, logger, race, result, tab, nav)
 composables/       # Composition API helpers (prefer for new logic)
 plugins/           # Client plugins (firebase, auth, pwa)
 middleware/        # Route middleware (auth, anon, close-menu.global)
-service/           # Firestore service classes (Logger.js)
-utils/             # firebase.js, LocalStorage wrapper, date helpers
-data.js            # Static competition/counter definitions
+service/           # Firestore service classes (Logger.ts)
+types/             # Shared domain types (competition, firestore, localStorage)
+utils/             # firebase.ts, LocalStorage wrapper, date helpers in utils.ts
+data.ts            # Static competition/counter definitions
 nuxt.config.ts     # Nuxt config (modules, css, nitro preset)
 app.vue            # Root: <NuxtLayout><NuxtPage /></NuxtLayout>
 ```
@@ -62,36 +65,32 @@ There is no `src/` directory. The `@/` alias resolves to the project root.
 
 ## Vue conventions
 
-**Prefer Composition API** with `<script setup>` for new components and when significantly editing existing ones.
+**Prefer Composition API** with `<script setup lang="ts">` for new components and when significantly editing existing ones.
 
-Pages are already on `<script setup>`. Some components still use Options API (`data`, `computed`, `mapStores`). When touching a file:
-
-- New components → Composition API + composables
-- Small edits to Options API files → OK to leave as-is unless refactoring that area
-- Shared logic → extract to `composables/`
+Pages and components use `<script setup lang="ts">`. Shared types live in `types/` (regular `.ts` files — no `.d.ts`).
 
 Nuxt auto-imports Vue APIs (`ref`, `computed`, `onMounted`), composables, components, and Pinia stores (`useLoggerStore`, etc.). Manual imports are fine where clarity helps; remove redundant ones when editing nearby code.
 
-Existing Composition API examples: `IncrementButton.vue`, `IncrementSlide.vue`, `composables/isIncrement.js`.
+Existing Composition API examples: `IncrementButton.vue`, `IncrementSlide.vue`, `composables/isIncrement.ts`.
 
 ## Pinia stores
 
 | Store | File | Role |
 |-------|------|------|
-| `User` | `stores/user.js` | Firebase auth, login/register/logout |
-| `Logger` | `stores/logger.js` | User's weekly counters, increment/save, UI prefs |
-| `Race` | `stores/race.js` | All racers' scores for current week (leaderboard targets) |
-| `Result` | `stores/result.js` | Last week's results, challenge totals |
-| `Tab` | `stores/tab.js` | Active competition tab (`dhikr`, `mindful`, etc.) |
-| `Nav` | `stores/nav.js` | Mobile menu state |
+| `User` | `stores/user.ts` | Firebase auth, login/register/logout |
+| `Logger` | `stores/logger.ts` | User's weekly counters, increment/save, UI prefs |
+| `Race` | `stores/race.ts` | All racers' scores for current week (leaderboard targets) |
+| `Result` | `stores/result.ts` | Last week's results, challenge totals |
+| `Tab` | `stores/tab.ts` | Active competition tab (`dhikr`, `mindful`, etc.) |
+| `Nav` | `stores/nav.ts` | Mobile menu state |
 
-Usage: `useLoggerStore().loadDashboard()` in composables or `<script setup>` pages. Options API components may still use `mapStores(useLoggerStore)`.
+Usage: `useLoggerStore().loadDashboard()` in composables or `<script setup lang="ts">` pages.
 
-Competition list: import `competitionsJSON` from `data.js` (not a store).
+Competition list: import `competitionsJSON` from `data.ts` (not a store).
 
 ## Data model
 
-### Static config (`data.js`)
+### Static config (`data.ts`)
 
 - `competitionsJSON` — competition groups with counter definitions
 - `competitionKeys` — flat lookup: counter id → `{ competition, title, arabic? }`
@@ -105,18 +104,18 @@ Competition ids: `dhikr`, `mindful`, `charity`, `fitness`.
 | `users` | `{ userid, username }` — created on register |
 | `loggers` | Weekly log docs: `{ userid, username, loggers: { counterId: count }, created, lastUpdated }` |
 
-Week boundaries use Monday–Sunday (`utils.js` → `dateRange()`, `dateRangeLastWeek()`).
+Week boundaries use Monday–Sunday (`utils.ts` → `addDays`, `formatDate`, `dateRange()`, `dateRangeLastWeek()`).
 
-### LocalStorage keys (`utils/LocalStorage.js`)
+### LocalStorage keys (`utils/LocalStorage.ts`)
 
 `increment-count`, `language`, `activeTabId`, `carousel-mode`
 
 ## Auth flow
 
-1. Firebase initialized in `utils/firebase.js` (modular v9+ API); Analytics loaded in `plugins/firebase.client.js`
-2. `plugins/auth.client.js` — `onAuthStateChanged` syncs user to Pinia, loads dashboard/stats on auth, redirects `/` → `/dashboard`
-3. `middleware/auth.js` — protects routes; skips on server (`import.meta.server`); redirects unauthenticated users to `/login`
-4. `middleware/anon.js` — redirects logged-in users away from login/register
+1. Firebase initialized in `utils/firebase.ts` (modular v9+ API); Analytics loaded in `plugins/firebase.client.ts`
+2. `plugins/auth.client.ts` — `onAuthStateChanged` syncs user to Pinia, loads dashboard/stats on auth, redirects `/` → `/dashboard`
+3. `middleware/auth.ts` — protects routes; skips on server (`import.meta.server`); redirects unauthenticated users to `/login`
+4. `middleware/anon.ts` — redirects logged-in users away from login/register
 5. Pages declare middleware via `definePageMeta({ middleware: 'auth' })` or `{ middleware: 'anon' }`
 
 Protected routes: `/dashboard`, `/stats` (via `auth` middleware).
@@ -139,13 +138,13 @@ Protected routes: `/dashboard`, `/stats` (via `auth` middleware).
 1. **Minimize scope** — small, focused diffs; no drive-by refactors
 2. **Match existing patterns** — Pinia store shape, Tailwind utility classes, `@/` path alias
 3. **Reuse before creating** — check `components/shared/`, `composables/`, existing store actions
-4. **Don't break the weekly cycle** — date range logic in `utils.js` affects queries across Logger, Race, Result
-5. **Client-only Firebase** — auth middleware and Firebase plugins run client-side; guard with `import.meta.server` / `.client.js` suffix where needed
-6. **Known TODOs in code** — duplicate username on register, auto-reset listener on new week (see inline comments)
+4. **Don't break the weekly cycle** — date range logic in `utils.ts` affects queries across Logger, Race, Result
+5. **Client-only Firebase** — auth middleware and Firebase plugins run client-side; guard with `import.meta.server` / `.client.ts` suffix where needed
+6. **Known TODOs in code** — duplicate username on register, auto-reset listener on new week (see inline comments in `stores/user.ts`, `stores/logger.ts`)
 
 ## Firebase emulator (optional dev)
 
-Not wired up yet. Emulator hooks lived in the old `main.js`; see `UPGRADES-TODO.md` to re-enable in `plugins/firebase.client.js`.
+Not wired up yet. Emulator hooks lived in the old `main.js`; see `UPGRADES-TODO.md` to re-enable in `plugins/firebase.client.ts`.
 
 ## Future work
 

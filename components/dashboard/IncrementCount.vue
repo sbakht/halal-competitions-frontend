@@ -17,7 +17,7 @@
         <input
           v-model="count"
           :value="choice.value"
-          :id="choice.value"
+          :id="String(choice.value)"
           :name="staticData.title"
           type="radio"
           class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
@@ -33,22 +33,21 @@
   </fieldset>
 </template>
 
-<script setup>
-import StaticData from '../../static/Settings'
+<script setup lang="ts">
+import StaticData from '@/static/Settings'
 
-const props = defineProps({
-  modelValue: {
-    type: Number,
-    required: true,
-  },
-})
+const props = defineProps<{
+  modelValue: number
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  'update:modelValue': [value: number]
+}>()
 
 const staticData = StaticData.incrementCount
 
 const count = computed({
   get: () => props.modelValue,
-  set: (val) => emit('update:modelValue', val),
+  set: val => emit('update:modelValue', val),
 })
 </script>

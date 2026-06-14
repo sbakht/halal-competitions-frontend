@@ -10,9 +10,13 @@
   <IncrementCarousel class="mt-5" v-else :data="loggers" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import IncrementButton from './IncrementButton.vue'
 import IncrementCarousel from './IncrementCarousel.vue'
+import type { ActiveLogger } from '@/types/competition'
 
-defineProps(['loggers', 'carousel'])
+defineProps<{
+  loggers: ActiveLogger[]
+  carousel: boolean
+}>()
 </script>

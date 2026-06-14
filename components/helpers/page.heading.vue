@@ -9,6 +9,8 @@
   </header>
 </template>
 
-<script setup>
-defineProps(['title'])
+<script setup lang="ts">
+defineProps<{
+  title: string
+}>()
 </script>

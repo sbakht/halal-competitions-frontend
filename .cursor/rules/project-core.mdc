@@ -15,18 +15,20 @@ Read `AGENTS.md` for architecture, data model, and commands.
 
 ## Patterns to follow
 
-- Nuxt 4 SPA (`ssr: false`) — routes in `pages/`, layout in `layouts/`, client plugins in `plugins/*.client.js`
-- Pinia: stores in `stores/`; use `useXStore()` (auto-imported) or `mapStores(useXStore)` in Options API components
+- Nuxt 4 SPA (`ssr: false`) — routes in `pages/`, layout in `layouts/`, client plugins in `plugins/*.client.ts`
+- Pinia: stores in `stores/`; use `useXStore()` (auto-imported) in `<script setup lang="ts">` components
 - Paths: use `@/` alias for imports from the project root (no `src/`)
-- Auth: `definePageMeta({ middleware: 'auth' | 'anon' })` on pages; guards in `middleware/auth.js` and `middleware/anon.js`
+- Auth: `definePageMeta({ middleware: 'auth' | 'anon' })` on pages; guards in `middleware/auth.ts` and `middleware/anon.ts`
 - Styling: Tailwind utility classes; match existing spacing/shadow patterns
-- Data: competition definitions in `data.js` — don't duplicate counter ids elsewhere
-- Week logic: Monday–Sunday via `dateRange()` / `dateRangeLastWeek()` in `utils.js`
+- Data: competition definitions in `data.ts` — don't duplicate counter ids elsewhere
+- Week logic: Monday–Sunday via `dateRange()` / `dateRangeLastWeek()` in `utils.ts` (pure `addDays` / `formatDate` — no `Date.prototype` patching)
+- Types: shared domain types in `types/*.ts` (regular `.ts` exports — no `.d.ts`)
 
 ## After changes
 
 ```bash
 npm run lint
+npm run typecheck
 npm run test:unit   # when touching tested areas
 ```
 

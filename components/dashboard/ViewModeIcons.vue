@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const loggerStore = useLoggerStore()
 
 const carouselMode = computed({

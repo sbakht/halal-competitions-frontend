@@ -9,10 +9,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import IncrementSlide from './IncrementSlide.vue'
+import type { ActiveLogger } from '@/types/competition'
 
-defineProps(['data'])
+defineProps<{
+  data: ActiveLogger[]
+}>()
 
 const height = ref('0')
 

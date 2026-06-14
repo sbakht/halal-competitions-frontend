@@ -103,11 +103,15 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-})
+<script setup lang="ts">
+interface StatsRow {
+  name: string
+  count: number
+  avg: number
+  avgPerDay: number
+}
+
+defineProps<{
+  data: StatsRow[]
+}>()
 </script>

@@ -24,7 +24,7 @@ export default withNuxt(
     },
   },
   {
-    files: ['utils/firebase.js'],
+    files: ['utils/firebase.ts'],
     rules: {
       'import/no-mutable-exports': 'off',
     },

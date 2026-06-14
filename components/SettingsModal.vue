@@ -109,7 +109,7 @@
   </TransitionRoot>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   Dialog,
   DialogOverlay,
@@ -121,24 +121,23 @@ import IncrementCount from '@/components/dashboard/IncrementCount.vue'
 import LanguageSetting from '@/components/dashboard/LanguageSetting.vue'
 import { XIcon } from '@heroicons/vue/outline'
 
-defineProps({
-  modelValue: {
-    type: Boolean,
-    required: true,
-  },
-})
+defineProps<{
+  modelValue: boolean
+}>()
 
-defineEmits(['update:modelValue'])
+defineEmits<{
+  'update:modelValue': [value: boolean]
+}>()
 
 const loggerStore = useLoggerStore()
 
 const incrementCount = computed({
   get: () => loggerStore.incrementCount,
-  set: (val) => loggerStore.setIncrementCount(val),
+  set: val => loggerStore.setIncrementCount(val),
 })
 
 const language = computed({
   get: () => loggerStore.language,
-  set: (val) => loggerStore.setLanguage(val),
+  set: val => loggerStore.setLanguage(val),
 })
 </script>

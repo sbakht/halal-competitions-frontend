@@ -1,19 +1,21 @@
 import { storeToRefs } from 'pinia'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import type { User } from 'firebase/auth'
 import { auth } from '@/utils/firebase'
 
-function hasMiddleware(route, name) {
+function hasMiddleware(route: RouteLocationNormalizedLoaded, name: string) {
   const middleware = route.meta.middleware
   if (!middleware) return false
   if (middleware === name) return true
-  if (Array.isArray(middleware)) return middleware.includes(name)
+  if (Array.isArray(middleware)) return (middleware as string[]).includes(name)
   return false
 }
 
-export function routeRequiresAuth(route) {
+export function routeRequiresAuth(route: RouteLocationNormalizedLoaded) {
   return hasMiddleware(route, 'auth')
 }
 
-export function routeRequiresAnon(route) {
+export function routeRequiresAnon(route: RouteLocationNormalizedLoaded) {
   return hasMiddleware(route, 'anon')
 }
 
@@ -22,17 +24,17 @@ export function useAuth() {
   const { pendingAuth, isLoggedIn, user, userid } = storeToRefs(userStore)
 
   function allowProtectedRoute() {
-    return pendingAuth.value || !!auth.currentUser
+    return pendingAuth.value || !!auth?.currentUser
   }
 
   function shouldRedirectFromAnon() {
-    if (pendingAuth.value || auth.currentUser) {
+    if (pendingAuth.value || auth?.currentUser) {
       return false
     }
     return isLoggedIn.value
   }
 
-  function handleAuthenticatedNavigation(route) {
+  function handleAuthenticatedNavigation(route: RouteLocationNormalizedLoaded) {
     const loggerStore = useLoggerStore()
 
     if (route.path === '/dashboard') {
@@ -44,7 +46,7 @@ export function useAuth() {
     }
   }
 
-  function syncAuthState(firebaseUser, route) {
+  function syncAuthState(firebaseUser: User | null, route: RouteLocationNormalizedLoaded) {
     if (firebaseUser) {
       userStore.setUser(firebaseUser)
 

@@ -13,7 +13,7 @@
             <ProgressBar
               :class="{ 'mt-12': i > 0 }"
               :label="competitionKeys[challenge.id].title"
-              :current="totalCum[challenge.id]"
+              :current="totalCum[challenge.id] ?? 0"
               :total="challenge.goal"
             />
           </div>
@@ -23,13 +23,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PageHeading from '@/components/helpers/page.heading.vue'
 import Loader from '@/components/helpers/loader.vue'
-import ProgressBar from '@/components/ProgressBar'
-import { competitionKeys } from '@/data'
+import ProgressBar from '@/components/ProgressBar.vue'
+import { competitionKeys, type CounterId } from '@/data'
 
-const challenges = [
+const challenges: { id: CounterId, goal: number }[] = [
   { id: 'dhikr_4', goal: 10000 },
   { id: 'dhikr_5', goal: 10000 },
   { id: 'fitness_1', goal: 500 },

@@ -191,8 +191,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({ middleware: 'anon' })
+
+interface FirebaseAuthError {
+  code?: string
+}
 
 const { register } = useAuth()
 
@@ -240,7 +244,7 @@ function validate() {
   return valid
 }
 
-function onSubmit(e) {
+function onSubmit(e: Event) {
   e.preventDefault()
   if (validate()) {
     register({
@@ -251,12 +255,12 @@ function onSubmit(e) {
       .then(() => {
         navigateTo('/login')
       })
-      .catch((err) => {
+      .catch((err: FirebaseAuthError) => {
         if (err.code === 'auth/email-already-in-use') {
           usernameError.value = 'Username is already taken.'
         } else {
-          passwordError.value =
-            'There was an error creating your account. Please try again later.'
+          passwordError.value
+            = 'There was an error creating your account. Please try again later.'
         }
       })
   }

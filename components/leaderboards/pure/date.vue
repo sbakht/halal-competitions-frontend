@@ -5,12 +5,19 @@
     </div>
     <div class="relative flex justify-center">
       <span class="px-3 bg-white text-lg font-medium text-gray-900"
-        >Week of {{ start.format() }}</span
+        >Week of {{ formatDate(start) }}</span
       >
     </div>
   </div>
 </template>
 
-<script setup>
-defineProps(['start', 'end'])
+<script setup lang="ts">
+import { formatDate } from '@/utils'
+
+interface Props {
+  start: Date
+  end?: Date
+}
+
+defineProps<Props>()
 </script>

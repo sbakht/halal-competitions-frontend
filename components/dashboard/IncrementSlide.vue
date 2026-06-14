@@ -13,12 +13,13 @@
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseIncrement from './BaseIncrement.vue'
+import type { ActiveLogger } from '@/types/competition'
 
-defineProps({
-  logger: Object,
-})
+defineProps<{
+  logger: ActiveLogger
+}>()
 
 const { increment } = isIncrement()
 </script>

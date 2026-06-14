@@ -1,5 +1,4 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { useAuth } from '@/composables/useAuth'
 import { auth } from '@/utils/firebase'
 
 export default defineNuxtPlugin({
@@ -7,6 +6,10 @@ export default defineNuxtPlugin({
   dependsOn: ['firebase'],
   setup() {
     const router = useRouter()
+
+    if (!auth) {
+      return
+    }
 
     onAuthStateChanged(auth, (user) => {
       const { syncAuthState } = useAuth()

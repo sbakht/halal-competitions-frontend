@@ -9,6 +9,7 @@
           <leaderboard-date
             v-if="showResults"
             :start="startDate"
+            :end="endDate"
           ></leaderboard-date>
           <leaderboard-tables
             v-if="showResults"
@@ -24,16 +25,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PageHeading from '@/components/helpers/page.heading.vue'
 import CompetitionsTabs from '@/components/tabs/tabs.vue'
-import LeaderboardTables from '@/components/leaderboards/pure/tables'
+import LeaderboardTables from '@/components/leaderboards/pure/tables.vue'
 import Loader from '@/components/helpers/loader.vue'
-import LeaderboardDate from '@/components/leaderboards/pure/date'
+import LeaderboardDate from '@/components/leaderboards/pure/date.vue'
 
 const resultStore = useResultStore()
 
 const startDate = computed(() => resultStore.orderedByScore.start)
+const endDate = computed(() => resultStore.orderedByScore.end)
 const orderedByScore = computed(() => resultStore.orderedByScore.data)
 const showResults = computed(() => orderedByScore.value.length > 0)
 const loaded = computed(() => resultStore.loadedResults)

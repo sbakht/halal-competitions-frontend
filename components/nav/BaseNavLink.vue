@@ -15,17 +15,11 @@
   </NuxtLink>
 </template>
 
-<script setup>
-defineProps({
-  to: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-})
+<script setup lang="ts">
+defineProps<{
+  to: string
+  name: string
+}>()
 </script>
 
 <style scoped>

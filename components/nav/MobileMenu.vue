@@ -157,8 +157,11 @@
   </div>
 </template>
 
-<script setup>
-defineProps(['isOpen', 'isLoggedIn'])
+<script setup lang="ts">
+defineProps<{
+  isOpen: boolean
+  isLoggedIn: boolean
+}>()
 </script>
 
 <style scoped>

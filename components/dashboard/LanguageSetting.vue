@@ -33,23 +33,22 @@
   </fieldset>
 </template>
 
-<script setup>
-import StaticData from '../../static/Settings'
+<script setup lang="ts">
+import StaticData from '@/static/Settings'
 
-const props = defineProps({
-  modelValue: {
-    type: Array,
-    required: true,
-  },
-})
+const props = defineProps<{
+  modelValue: string[]
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  'update:modelValue': [value: string[]]
+}>()
 
 const staticData = StaticData.language
 
 const arr = computed({
   get: () => props.modelValue,
-  set: (val) => {
+  set: (val: string[]) => {
     if (val.length === 0) {
       emit('update:modelValue', ['english', 'arabic'])
     } else {

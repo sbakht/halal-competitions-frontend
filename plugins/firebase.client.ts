@@ -1,4 +1,4 @@
-import { initFirebase } from '@/utils/firebase.js'
+import { initFirebase } from '@/utils/firebase'
 
 export default defineNuxtPlugin({
   name: 'firebase',

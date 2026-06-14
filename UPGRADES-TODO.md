@@ -11,6 +11,7 @@ Tracked work for later — **do not start these unless explicitly requested.**
 - [x] **Vuex 4 → Pinia** — migrated to `stores/` with `defineStore` (Pinia 3 via `@pinia/nuxt`)
 - [x] **axios 0.21 → current** — audited; zero usage; removed from dependencies
 - [x] **core-js 2 → 3** — removed; modern browser targets
+- [x] **JavaScript → TypeScript** — strict TS across stores, composables, middleware, plugins, utils, and Vue SFCs; shared types in `types/`; pure date helpers (`addDays`, `formatDate`); `npm run typecheck`
 
 ## Post-Nuxt migration (do next)
 
@@ -28,13 +29,13 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 - [x] Migrate `pages/` from Options API (+ dual `<script setup>` blocks) to `<script setup>` (Dashboard, Stats, Login, Register, etc.)
 - [x] Extract auth logic into composables — e.g. `useAuth()` wrapping `pendingAuth`, login/logout, and route guards; reduce duplication between `plugins/auth.client.js` and `middleware/auth.js`
 - [ ] Replace `mounted()` data fetching in pages with composables or, when SSR is enabled later, `useAsyncData` / `await useAsyncData`
-- [ ] Rename middleware to `.global.ts` / client-only patterns consistently; document that Firebase middleware must skip on server (`import.meta.server`)
+- [x] Rename middleware to `.global.ts` / client-only patterns consistently; document that Firebase middleware must skip on server (`import.meta.server`)
 
 ### Firebase & bundle
 
-- [x] Centralize Firebase init — single `utils/firebase.js` imported by plugins/stores instead of scattered `import firebase from 'firebase/app'`
+- [x] Centralize Firebase init — single `utils/firebase.ts` imported by plugins/stores instead of scattered `import firebase from 'firebase/app'`
 - [ ] Code-split Firebase — dynamic-import auth/firestore in plugins to address the ~770 kB client chunk from the static build
-- [ ] Re-enable or document Firebase emulator workflow (`plugins/firebase.client.js` — emulator hooks were in old `main.js`)
+- [ ] Re-enable or document Firebase emulator workflow (`plugins/firebase.client.ts` — emulator hooks were in old `main.js`)
 
 ### Testing
 
@@ -54,17 +55,17 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 ## Composition API migration
 
-- [ ] Migrate `pages/` from Options API to `<script setup>` (Dashboard, Stats, Login, Register, etc.)
-- [ ] Migrate remaining `components/` still on Options API
-- [ ] Extract repeated Pinia usage into composables (e.g. `useLogger`, `useAuth`)
-- [ ] Add composables for date/week logic currently in `utils.js` + store getters
+- [x] Migrate `pages/` from Options API to `<script setup lang="ts">`
+- [x] Migrate remaining `components/` still on Options API
+- [x] Extract repeated Pinia usage into composables (e.g. `useAuth`)
+- [ ] Add composables for date/week logic currently in `utils.ts` + store getters
 
 ## Firebase & data
 
 - [x] Move Firebase config to env vars (`NUXT_PUBLIC_FIREBASE_*`) — still client-side but easier per-environment
-- [ ] Prevent duplicate usernames on register (`stores/user.js` TODO)
-- [ ] Auto-reset / new-week listener for loggers (`stores/logger.js` TODO)
-- [ ] Clean up commented debug code in `stores/result.js`
+- [ ] Prevent duplicate usernames on register (`stores/user.ts` TODO)
+- [ ] Auto-reset / new-week listener for loggers (`stores/logger.ts` TODO)
+- [ ] Clean up commented debug code in `stores/result.ts`
 - [ ] Re-enable or document Firebase emulator workflow for local dev
 
 ## Testing & quality
@@ -75,7 +76,7 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 ## PWA
 
-- [ ] Add `@vite-pwa/nuxt` to generate `service-worker.js` (registration in `plugins/pwa.client.js` but no SW is built today)
+- [ ] Add `@vite-pwa/nuxt` to generate `service-worker.js` (registration in `plugins/pwa.client.ts` but no SW is built today)
 
 ## UX & features (product backlog)
 

@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PageHeading from '@/components/helpers/page.heading.vue'
 import CompetitionsTabs from '@/components/tabs/tabs.vue'
 import DashboardCompetition from '@/components/dashboard/competition.vue'

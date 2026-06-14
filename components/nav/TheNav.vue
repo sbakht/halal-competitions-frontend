@@ -90,7 +90,7 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import NavLink from './BaseNavLink.vue'
 import NavMobileMenu from './MobileMenu.vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'

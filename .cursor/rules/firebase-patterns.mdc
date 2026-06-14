@@ -1,16 +1,16 @@
 ---
 description: Firebase 11 modular Auth and Firestore patterns used in this project
-globs: "{utils/firebase.js,plugins/**/*.js,stores/**/*.js,service/**/*.js}"
+globs: "{utils/firebase.ts,plugins/**/*.ts,stores/**/*.ts,service/**/*.ts}"
 alwaysApply: false
 ---
 
 # Firebase patterns (modular v9+ API)
 
-This project uses **Firebase 11** modular imports. Central init lives in `utils/firebase.js`. Do not upgrade Firebase without explicit approval (see `UPGRADES-TODO.md`).
+This project uses **Firebase 11** modular imports. Central init lives in `utils/firebase.ts`. Do not upgrade Firebase without explicit approval (see `UPGRADES-TODO.md`).
 
 ## Imports
 
-```js
+```ts
 import { auth, db } from '@/utils/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore'
@@ -25,18 +25,18 @@ import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore
 
 ## Service layer
 
-Firestore access for loggers goes through `service/Logger.js` (class with `fetchById`, `fetchAll`, `save`, `create`, `update`). Prefer extending this class over raw Firestore calls in components.
+Firestore access for loggers goes through `service/Logger.ts` (class with `fetchById`, `fetchAll`, `save`, `create`, `update`). Prefer extending this class over raw Firestore calls in components.
 
-Direct Firestore in stores is OK where already established (`stores/user.js` register, `stores/result.js` queries).
+Direct Firestore in stores is OK where already established (`stores/user.ts` register, `stores/result.ts` queries).
 
 ## Auth
 
-- Firebase app/auth/firestore initialized in `utils/firebase.js`
-- Analytics loaded dynamically in `plugins/firebase.client.js`
-- State synced via `onAuthStateChanged` in `plugins/auth.client.js`
-- Login/register/logout actions in `stores/user.js`
-- Route protection via `middleware/auth.js` and `definePageMeta({ middleware: 'auth' })` — middleware must skip on server (`import.meta.server`)
+- Firebase app/auth/firestore initialized in `utils/firebase.ts`
+- Analytics loaded dynamically in `plugins/firebase.client.ts`
+- State synced via `onAuthStateChanged` in `plugins/auth.client.ts`
+- Login/register/logout actions in `stores/user.ts`
+- Route protection via `middleware/auth.ts` and `definePageMeta({ middleware: 'auth' })` — middleware must skip on server (`import.meta.server`)
 
 ## Timestamps
 
-Use `Timestamp.now()` from `firebase/firestore` for `created` / `lastUpdated`. Week filters use JS `Date` ranges from `utils.js`.
+Use `Timestamp.now()` from `firebase/firestore` for `created` / `lastUpdated`. Week filters use JS `Date` ranges from `utils.ts`.

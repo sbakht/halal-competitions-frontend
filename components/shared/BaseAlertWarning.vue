@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ExclamationIcon, XIcon } from '@heroicons/vue/solid'
 
 const emit = defineEmits(['dismiss'])

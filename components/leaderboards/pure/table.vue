@@ -49,11 +49,22 @@
   </div>
 </template>
 
-<script setup>
-defineProps(['data'])
+<script setup lang="ts">
+interface LeaderboardUser {
+  username: string
+  count: number
+}
 
-function top(arr) {
+interface LeaderboardData {
+  title: string
+  users: LeaderboardUser[]
+}
+
+defineProps<{
+  data: LeaderboardData
+}>()
+
+function top(arr: LeaderboardUser[]) {
   return arr
-  // return arr.slice(0, 5);
 }
 </script>

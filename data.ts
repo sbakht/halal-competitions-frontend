@@ -1,3 +1,4 @@
+import type { Competition, CounterMeta } from '@/types/competition'
 
 export const competitionsJSON = [
   {
@@ -5,110 +6,110 @@ export const competitionsJSON = [
     title: 'Tasbih',
     counters: {
       dhikr_1: {
-        title: 'SubhanAllah'
+        title: 'SubhanAllah',
       },
       dhikr_2: {
-        title: 'Alhamdulillah'
+        title: 'Alhamdulillah',
       },
       dhikr_3: {
-        title: 'Allahu Akbar'
+        title: 'Allahu Akbar',
       },
       dhikr_4: {
-        title: 'Laa ilaaha il-Allah'
+        title: 'Laa ilaaha il-Allah',
       },
       dhikr_5: {
-        title: 'Astaghfirullah'
+        title: 'Astaghfirullah',
       },
       dhikr_6: {
-        title: 'SubhanAllahi wa bihamdihi'
+        title: 'SubhanAllahi wa bihamdihi',
       },
       dhikr_7: {
-        title: 'Salat `ala an-Nabi'
+        title: 'Salat `ala an-Nabi',
       },
       dhikr_8: {
-        title: 'La hawla wala quwata illah bilah'
+        title: 'La hawla wala quwata illah bilah',
       },
-    }
+    },
   },
   {
     id: 'mindful',
     title: 'Mindful Minutes',
     counters: {
       mindful_1: {
-        title: 'Recitation (min)'
+        title: 'Recitation (min)',
       },
       mindful_2: {
-        title: 'Audio/translation (min)'
+        title: 'Audio/translation (min)',
       },
       mindful_3: {
-        title: 'Islamic lectures (min)'
-      }
-    }
+        title: 'Islamic lectures (min)',
+      },
+    },
   },
   {
     id: 'charity',
     title: 'Charity',
     counters: {
       charity_1: {
-        title: 'Sadaqah amount (USD)'
-      }
-    }
+        title: 'Sadaqah amount (USD)',
+      },
+    },
   },
   {
     id: 'fitness',
     title: 'Fitness',
     counters: {
       fitness_1: {
-        title: 'Pushups'
+        title: 'Pushups',
       },
       fitness_2: {
-        title: 'Pull ups'
+        title: 'Pull ups',
       },
       fitness_3: {
-        title: 'Sit ups'
+        title: 'Sit ups',
       },
       fitness_4: {
-        title: 'Squats'
+        title: 'Squats',
       },
       fitness_5: {
-        title: 'Jogging (km)'
+        title: 'Jogging (km)',
       },
       fitness_6: {
-        title: 'Walking (km)'
+        title: 'Walking (km)',
       },
       fitness_7: {
-        title: 'Plank (min)'
+        title: 'Plank (min)',
       },
       fitness_8: {
-        title: 'Lunges'
+        title: 'Lunges',
       },
       fitness_9: {
-        title: 'Other (calories burned)'
+        title: 'Other (calories burned)',
       },
-    }
-  }
-]
+    },
+  },
+] as const satisfies readonly Competition[]
 
 export const competitionKeys = {
   dhikr_1: {
     competition: 'dhikr',
     title: 'SubhanAllah',
-    arabic: 'سُبْحَانَ ٱللَّٰهِ'
+    arabic: 'سُبْحَانَ ٱللَّٰهِ',
   },
   dhikr_2: {
     competition: 'dhikr',
     title: 'Alhamdulillah',
-    arabic: 'ٱلْحَمْدُ لِلَّٰهِ'
+    arabic: 'ٱلْحَمْدُ لِلَّٰهِ',
   },
   dhikr_3: {
     competition: 'dhikr',
     title: 'Allahu Akbar',
-    arabic: 'ٱللَّٰهُ أَكْبَرُ'
+    arabic: 'ٱللَّٰهُ أَكْبَرُ',
   },
   dhikr_4: {
     competition: 'dhikr',
     title: 'Laa ilaaha il-Allah',
-    arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ'
+    arabic: 'لَا إِلَٰهَ إِلَّا ٱللَّٰهُ',
   },
   dhikr_5: {
     competition: 'dhikr',
@@ -118,68 +119,70 @@ export const competitionKeys = {
   dhikr_6: {
     competition: 'dhikr',
     title: 'SubhanAllahi wa bihamdihi',
-    arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ'
+    arabic: 'سُبْحَانَ ٱللَّٰهِ وَبِحَمْدِهِ',
   },
   dhikr_7: {
     competition: 'dhikr',
     title: 'Salat `ala an-Nabi',
-    arabic: ''
+    arabic: '',
   },
   dhikr_8: {
     competition: 'dhikr',
     title: 'La hawla wala quwata illah bilah',
-    arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ‎'
+    arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ‎',
   },
   mindful_1: {
     competition: 'mindful',
-    title: 'Recitation (min)'
+    title: 'Recitation (min)',
   },
   mindful_2: {
     competition: 'mindful',
-    title: 'Audio/translation (min)'
+    title: 'Audio/translation (min)',
   },
   mindful_3: {
     competition: 'mindful',
-    title: 'Islamic lectures (min)'
+    title: 'Islamic lectures (min)',
   },
   charity_1: {
     competition: 'charity',
-    title: 'Sadaqah amount (USD)'
+    title: 'Sadaqah amount (USD)',
   },
   fitness_1: {
     competition: 'fitness',
-    title: 'Pushups'
+    title: 'Pushups',
   },
   fitness_2: {
     competition: 'fitness',
-    title: 'Pull ups'
+    title: 'Pull ups',
   },
   fitness_3: {
     competition: 'fitness',
-    title: 'Sit ups'
+    title: 'Sit ups',
   },
   fitness_4: {
     competition: 'fitness',
-    title: 'Squats'
+    title: 'Squats',
   },
   fitness_5: {
     competition: 'fitness',
-    title: 'Jogging (km)'
+    title: 'Jogging (km)',
   },
   fitness_6: {
     competition: 'fitness',
-    title: 'Walking (km)'
+    title: 'Walking (km)',
   },
   fitness_7: {
     competition: 'fitness',
-    title: 'Plank (min)'
+    title: 'Plank (min)',
   },
   fitness_8: {
     competition: 'fitness',
-    title: 'Lunges'
+    title: 'Lunges',
   },
   fitness_9: {
     competition: 'fitness',
-    title: 'Other (calories burned)'
+    title: 'Other (calories burned)',
   },
-}
+} as const satisfies Record<string, CounterMeta>
+
+export type CounterId = keyof typeof competitionKeys

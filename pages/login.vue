@@ -213,8 +213,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({ middleware: 'anon' })
+
+interface FirebaseAuthError {
+  code?: string
+}
 
 const { login } = useAuth()
 
@@ -222,7 +226,7 @@ const username = ref('')
 const password = ref('')
 const error = ref('')
 
-function onSubmit(e) {
+function onSubmit(e: Event) {
   e.preventDefault()
   error.value = ''
   login({
@@ -232,10 +236,10 @@ function onSubmit(e) {
     .then(() => {
       navigateTo('/dashboard')
     })
-    .catch((err) => {
+    .catch((err: FirebaseAuthError) => {
       if (
-        err.code === 'auth/wrong-password' ||
-        err.code === 'auth/user-not-found'
+        err.code === 'auth/wrong-password'
+        || err.code === 'auth/user-not-found'
       ) {
         error.value = 'Invalid username/password combination.'
       } else {
