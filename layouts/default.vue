@@ -1,6 +1,6 @@
 <template>
   <div class="antialiased">
-    <TheNav />
+    <NavTheNav />
     <slot />
   </div>
 </template>
