@@ -39,8 +39,8 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 ### Testing
 
-- [ ] Add `@nuxt/test-utils` and configure Vitest with the Nuxt test environment
-- [ ] Add component tests for increment flow and auth middleware (`auth`, `anon`)
+- [x] Add `@nuxt/test-utils` and configure Vitest with the Nuxt test environment — dual `unit` / `nuxt` Vitest projects
+- [x] Add component tests for increment flow and auth middleware (`auth`, `anon`)
 - [ ] Consider E2E (Playwright) for login → dashboard → increment → save
 
 ### PWA
@@ -70,8 +70,8 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 ## Testing & quality
 
-- [ ] Expand unit test coverage beyond `tests/unit/example.spec.js`
-- [ ] Add component tests for increment flow and auth guards
+- [x] Expand unit test coverage beyond `tests/unit/example.spec.js` — `utils`, `LocalStorage`, `useAuth` route helpers, `data` consistency
+- [x] Add component tests for increment flow and auth guards — `tests/nuxt/incrementButton.spec.ts`, `tests/nuxt/authMiddleware.spec.ts`
 - [ ] Consider E2E (Playwright/Cypress) for login → dashboard → increment → save
 
 ## PWA

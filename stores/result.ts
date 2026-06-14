@@ -2,61 +2,16 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 import { dateRangeLastWeek, dateRange } from '@/utils'
-import { competitionsJSON, competitionKeys, type CounterId } from '@/data'
+import { competitionKeys, type CounterId } from '@/data'
 import { db } from '@/utils/firebase'
 import { useTabStore } from '@/stores/tab'
-import type { CompetitionId } from '@/types/competition'
+import {
+  filterToActiveTab,
+  orderedLoggerByScore,
+  sumScores,
+  type ScoreEntry,
+} from '@/utils/scoring'
 import type { LoggerDoc } from '@/types/firestore'
-
-interface ScoreEntry {
-  username: string
-  count: number
-}
-
-interface LeaderboardRow {
-  title: string
-  users: ScoreEntry[]
-}
-
-function getCountBy(user: LoggerDoc, competitionKey: CounterId) {
-  return { username: user.username, count: user.loggers[competitionKey] ?? 0 }
-}
-
-function sort(scores: ScoreEntry[]) {
-  scores.sort((s1, s2) => (s1.count >= s2.count ? -1 : 1))
-}
-
-function orderedLoggerByScore(competitionKey: CounterId, users: LoggerDoc[]) {
-  const scores = users
-    .map(user => getCountBy(user, competitionKey))
-    .filter(user => user.count > 0)
-  sort(scores)
-  return scores
-}
-
-function getKeysFor(compId: CompetitionId) {
-  const comp = competitionsJSON.find(entry => entry.id === compId)
-  return Object.keys(comp?.counters ?? {})
-}
-
-function getTitleFromKey(id: CounterId) {
-  return competitionKeys[id].title
-}
-
-function filterToActive(
-  loggers: Partial<Record<CounterId, ScoreEntry[]>>,
-  activeTabId: CompetitionId,
-) {
-  const result: LeaderboardRow[] = []
-  const activeKeys = getKeysFor(activeTabId)
-  Object.keys(loggers).forEach((key) => {
-    const counterId = key as CounterId
-    if (activeKeys.indexOf(counterId) > -1 && loggers[counterId]) {
-      result.push({ title: getTitleFromKey(counterId), users: loggers[counterId]! })
-    }
-  })
-  return result
-}
 
 export const useResultStore = defineStore('result', () => {
   const results = ref<LoggerDoc[]>([])
@@ -75,7 +30,7 @@ export const useResultStore = defineStore('result', () => {
     return {
       start,
       end,
-      data: filterToActive(orderedLoggersByScore, useTabStore().activeTabId),
+      data: filterToActiveTab(orderedLoggersByScore, useTabStore().activeTabId),
     }
   })
 
@@ -83,8 +38,9 @@ export const useResultStore = defineStore('result', () => {
     const keys = Object.keys(competitionKeys) as CounterId[]
     const totals: Partial<Record<CounterId, number>> = {}
     keys.forEach((competitionKey) => {
-      totals[competitionKey] = orderedLoggerByScore(competitionKey, results.value)
-        .reduce((accum, user) => accum + (user.count || 0), 0)
+      totals[competitionKey] = sumScores(
+        orderedLoggerByScore(competitionKey, results.value),
+      )
     })
     const { start, end } = dateRange()
     return { start, end, data: totals }

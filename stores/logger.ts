@@ -4,6 +4,7 @@ import type { QueryDocumentSnapshot } from 'firebase/firestore'
 import { competitionsJSON, competitionKeys, type CounterId } from '@/data'
 import LoggerService from '@/service/Logger'
 import LocalStorage from '@/utils/LocalStorage'
+import { getNextHighestScore } from '@/utils/scoring'
 import { useUserStore } from '@/stores/user'
 import { useRaceStore } from '@/stores/race'
 import { useTabStore } from '@/stores/tab'
@@ -22,13 +23,6 @@ function addUntrackedLoggers(loggers: LoggerMap) {
       }
     })
   })
-}
-
-function getNextHighestScore(count: number, scores: number[] | undefined) {
-  if (!scores) {
-    return undefined
-  }
-  return [...scores].sort((a, b) => a - b).find(score => score > count)
 }
 
 function getLoggers(docs: QueryDocumentSnapshot[]) {

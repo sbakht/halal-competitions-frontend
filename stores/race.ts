@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { competitionKeys, type CounterId } from '@/data'
 import LoggerService from '@/service/Logger'
+import { getAllScores } from '@/utils/scoring'
 import type { LoggerMap } from '@/types/firestore'
 
 const loggerService = new LoggerService()
@@ -14,15 +14,6 @@ function getUsersLoggers(snapshot: Awaited<ReturnType<LoggerService['fetchAll']>
     })
   }
   return loggers
-}
-
-function getAllScores(racers: LoggerMap[]) {
-  const loggerKeys = Object.keys(competitionKeys) as CounterId[]
-  const result: Record<CounterId, number[]> = {} as Record<CounterId, number[]>
-  loggerKeys.forEach((key) => {
-    result[key] = racers.map(racer => racer[key] || 0)
-  })
-  return result
 }
 
 export const useRaceStore = defineStore('race', () => {
