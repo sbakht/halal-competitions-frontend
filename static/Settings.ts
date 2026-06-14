@@ -9,8 +9,15 @@ export interface SettingDefinition<T = string | number> {
   choices: SettingChoice<T>[]
 }
 
+export interface RangeSettingDefinition {
+  title: string
+  subtitle: string
+  min: number
+  max: number
+}
+
 export interface SettingsSchema {
-  incrementCount: SettingDefinition<number>
+  incrementCount: RangeSettingDefinition
   language: SettingDefinition<string>
 }
 
@@ -18,16 +25,8 @@ const Settings: SettingsSchema = {
   incrementCount: {
     title: 'Increment',
     subtitle: 'Number of points for each button press',
-    choices: [
-      {
-        name: '+ 1',
-        value: 1,
-      },
-      {
-        name: '+ 5',
-        value: 5,
-      },
-    ],
+    min: 1,
+    max: 100,
   },
   language: {
     title: 'Language',

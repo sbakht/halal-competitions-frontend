@@ -86,10 +86,7 @@ export default class LoggerService {
     }
 
     const q = query(collection(db, 'loggers'), where('userid', '==', userid))
-    return getDocs(q).then((snapshot) => {
-      this._setDoc(snapshot.docs[0])
-      return { docs: snapshot.docs }
-    })
+    return getDocs(q).then(snapshot => ({ docs: snapshot.docs }))
   }
 
   save({ state, rootState }: SavePayload) {

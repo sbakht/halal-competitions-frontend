@@ -87,7 +87,33 @@ describe('LoggerService', () => {
       const result = await service.fetchAllById('user-1')
 
       expect(result.docs).toHaveLength(2)
-      expect(service.doc).toBe(docs[0])
+      expect(service.doc).toBeUndefined()
+    })
+
+    it('does not overwrite the weekly doc pointer used by save', async () => {
+      const weeklyDoc = makeDoc('current-week', { loggers: { dhikr_1: 3 } })
+      const historicalDocs = [
+        makeDoc('old-week', { loggers: { dhikr_1: 1 } }),
+        weeklyDoc,
+      ]
+
+      getDocsMock
+        .mockResolvedValueOnce({ docs: [weeklyDoc] })
+        .mockResolvedValueOnce({ docs: historicalDocs })
+
+      const service = new LoggerService()
+      await service.fetchById('user-1')
+      await service.fetchAllById('user-1')
+
+      expect(service.doc).toBe(weeklyDoc)
+
+      service.save({
+        state: { loggers: { dhikr_1: 10 } },
+        rootState: { User: { userid: 'user-1' } },
+      })
+
+      expect(updateDocMock).toHaveBeenCalledOnce()
+      expect(docMock).toHaveBeenCalledWith({ name: 'test-db' }, 'loggers', 'current-week')
     })
   })
 

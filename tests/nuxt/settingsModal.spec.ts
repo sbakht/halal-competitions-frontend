@@ -44,9 +44,10 @@ describe('SettingsModal', () => {
     })
 
     const incrementInput = document.querySelector(
-      'input[type="radio"][value="5"]',
+      'input[type="range"]',
     ) as HTMLInputElement
-    await fireEvent.click(incrementInput)
+    incrementInput.value = '5'
+    await fireEvent.input(incrementInput)
 
     expect(useLoggerStore().incrementCount).toBe(5)
     expect(window.localStorage.getItem('increment-count')).toBe('5')

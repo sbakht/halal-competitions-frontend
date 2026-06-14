@@ -1,33 +1,43 @@
 <template>
   <fieldset>
-    <div>
-      <legend class="text-base font-medium text-gray-900">
-        {{ staticData.title }}
-      </legend>
-      <p class="text-sm text-gray-500">
-        {{ staticData.subtitle }}
-      </p>
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <legend class="text-base font-medium text-gray-900">
+          {{ staticData.title }}
+        </legend>
+        <p class="text-sm text-gray-500">
+          {{ staticData.subtitle }}
+        </p>
+      </div>
+      <span class="text-base font-semibold text-indigo-600 tabular-nums">
+        + {{ count }}
+      </span>
     </div>
-    <div class="mt-4 space-y-4">
-      <div
-        v-for="choice in staticData.choices"
-        :key="choice.value"
-        class="flex items-center"
+    <div class="mt-4">
+      <input
+        v-model.number="count"
+        :min="staticData.min"
+        :max="staticData.max"
+        :name="staticData.title"
+        type="range"
+        :aria-valuemin="staticData.min"
+        :aria-valuemax="staticData.max"
+        :aria-valuenow="count"
+        class="
+          w-full
+          h-2
+          bg-gray-200
+          rounded-lg
+          appearance-none
+          cursor-pointer
+          accent-indigo-600
+          focus:outline-none
+          focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+        "
       >
-        <input
-          v-model="count"
-          :value="choice.value"
-          :id="String(choice.value)"
-          :name="staticData.title"
-          type="radio"
-          class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-        />
-        <label
-          for="push-everything"
-          class="ml-3 block text-sm font-medium text-gray-700"
-        >
-          {{ choice.name }}
-        </label>
+      <div class="mt-1 flex justify-between text-xs text-gray-500">
+        <span>{{ staticData.min }}</span>
+        <span>{{ staticData.max }}</span>
       </div>
     </div>
   </fieldset>

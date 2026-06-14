@@ -140,7 +140,7 @@ describe('IncrementCount', () => {
       props: { modelValue: 1 },
     })
 
-    await wrapper.get('input[value="5"]').setValue(true)
+    await wrapper.get('input[type="range"]').setValue(5)
 
     expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([5])
   })

@@ -7,6 +7,8 @@ interface StorageConfig<T> {
   name: string
   defaultVal: T
   type: NumberConstructor | StringConstructor | BooleanConstructor | ArrayConstructor
+  min?: number
+  max?: number
 }
 
 const configs: Record<StorageKey, StorageConfig<unknown>> = {
@@ -14,6 +16,8 @@ const configs: Record<StorageKey, StorageConfig<unknown>> = {
     name: 'increment-count',
     defaultVal: 1,
     type: Number,
+    min: 1,
+    max: 100,
   },
   language: {
     name: 'language',
@@ -41,7 +45,14 @@ function getValue<T>(config: StorageConfig<T>): T {
   }
 
   if (config.type === Number) {
-    return Number.parseInt(stored) as T
+    const parsed = Number.parseInt(stored)
+    if (Number.isNaN(parsed)) {
+      return config.defaultVal
+    }
+    if (config.min !== undefined && config.max !== undefined) {
+      return Math.min(config.max, Math.max(config.min, parsed)) as T
+    }
+    return parsed as T
   }
 
   if (config.type === Array) {
