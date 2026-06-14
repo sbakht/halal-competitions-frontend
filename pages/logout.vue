@@ -1,6 +1,6 @@
 <script setup>
-const userStore = useUserStore()
+const { logout } = useAuth()
 
-await userStore.logout()
+await logout()
 await navigateTo('/')
 </script>

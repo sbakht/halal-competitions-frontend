@@ -1,14 +1,13 @@
-import { auth } from '@/utils/firebase'
-import { useUserStore } from '@/stores/user'
+import { useAuth } from '@/composables/useAuth'
 
 export default defineNuxtRouteMiddleware(() => {
   if (import.meta.server) {
     return
   }
 
-  const userStore = useUserStore()
+  const { allowProtectedRoute } = useAuth()
 
-  if (userStore.pendingAuth || auth.currentUser) {
+  if (allowProtectedRoute()) {
     return
   }
 

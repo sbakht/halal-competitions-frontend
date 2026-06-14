@@ -26,7 +26,7 @@ Cleanup and Nuxt-native patterns now that the app no longer uses `src/`, Vue Rou
 
 - [ ] Lean on auto-imports — remove redundant manual imports of `components/`, `composables/`, and `stores/` where Nuxt already provides them
 - [x] Migrate `pages/` from Options API (+ dual `<script setup>` blocks) to `<script setup>` (Dashboard, Stats, Login, Register, etc.)
-- [ ] Extract auth logic into composables — e.g. `useAuth()` wrapping `pendingAuth`, login/logout, and route guards; reduce duplication between `plugins/auth.client.js` and `middleware/auth.js`
+- [x] Extract auth logic into composables — e.g. `useAuth()` wrapping `pendingAuth`, login/logout, and route guards; reduce duplication between `plugins/auth.client.js` and `middleware/auth.js`
 - [ ] Replace `mounted()` data fetching in pages with composables or, when SSR is enabled later, `useAsyncData` / `await useAsyncData`
 - [ ] Rename middleware to `.global.ts` / client-only patterns consistently; document that Firebase middleware must skip on server (`import.meta.server`)
 

@@ -1,9 +1,13 @@
-import { useUserStore } from '@/stores/user'
+import { useAuth } from '@/composables/useAuth'
 
 export default defineNuxtRouteMiddleware(() => {
-  const userStore = useUserStore()
+  if (import.meta.server) {
+    return
+  }
 
-  if (userStore.isLoggedIn) {
+  const { shouldRedirectFromAnon } = useAuth()
+
+  if (shouldRedirectFromAnon()) {
     return navigateTo('/dashboard')
   }
 })

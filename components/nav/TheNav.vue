@@ -95,10 +95,8 @@ import NavLink from './BaseNavLink.vue'
 import NavMobileMenu from './MobileMenu.vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 
-const userStore = useUserStore()
+const { isLoggedIn } = useAuth()
 const navStore = useNavStore()
-
-const isLoggedIn = computed(() => userStore.isLoggedIn)
 const isMobileMenuOpen = computed(() => navStore.isMobileMenuOpen)
 
 function toggleMobile() {

@@ -194,7 +194,7 @@
 <script setup>
 definePageMeta({ middleware: 'anon' })
 
-const userStore = useUserStore()
+const { register } = useAuth()
 
 const username = ref('')
 const email = ref('')
@@ -243,12 +243,11 @@ function validate() {
 function onSubmit(e) {
   e.preventDefault()
   if (validate()) {
-    userStore
-      .register({
-        email: email.value,
-        username: username.value,
-        password: password.value,
-      })
+    register({
+      email: email.value,
+      username: username.value,
+      password: password.value,
+    })
       .then(() => {
         navigateTo('/login')
       })

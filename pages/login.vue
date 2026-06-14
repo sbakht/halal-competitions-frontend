@@ -216,7 +216,7 @@
 <script setup>
 definePageMeta({ middleware: 'anon' })
 
-const userStore = useUserStore()
+const { login } = useAuth()
 
 const username = ref('')
 const password = ref('')
@@ -225,11 +225,10 @@ const error = ref('')
 function onSubmit(e) {
   e.preventDefault()
   error.value = ''
-  userStore
-    .login({
-      email: username.value,
-      password: password.value,
-    })
+  login({
+    email: username.value,
+    password: password.value,
+  })
     .then(() => {
       navigateTo('/dashboard')
     })
