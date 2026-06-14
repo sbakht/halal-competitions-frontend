@@ -54,6 +54,20 @@ describe('groupBy', () => {
       b: [{ id: 2, category: 'b' }],
     })
   })
+
+  it('returns an empty object when grouping fails', () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const badItem = {
+      get missing() {
+        throw new Error('invalid key access')
+      },
+    }
+
+    expect(groupBy([badItem as { id: number }], 'missing' as 'id')).toEqual({})
+    expect(consoleSpy).toHaveBeenCalled()
+
+    consoleSpy.mockRestore()
+  })
 })
 
 describe('mapObj', () => {

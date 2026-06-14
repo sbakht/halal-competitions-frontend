@@ -4,5 +4,5 @@
     "strict": true,
     "noUncheckedIndexedAccess": true
   },
-  "exclude": ["tests/**", "**/*.stories.ts"]
+  "exclude": ["tests/**"]
 }
